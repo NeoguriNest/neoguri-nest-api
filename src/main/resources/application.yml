@@ -1,1 +1,6 @@
 
+spring:
+  datasource:
+    url: 'jdbc:mysql://localhost:3306/neoguri_db?useUnicode=true&serverTimeZone=Asia/Seoul'
+    username: root
+    password: 1234
