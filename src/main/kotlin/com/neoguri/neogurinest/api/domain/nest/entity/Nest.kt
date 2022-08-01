@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.domain.nest.entity
 
+import com.neoguri.neogurinest.api.domain.nest.enum.NestStatus
 import java.time.Instant
 import javax.persistence.*
 
@@ -19,9 +20,9 @@ open class Nest {
     @Column(name = "district", nullable = false)
     open var district: String? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: String? = null
+    open var status: NestStatus? = null
 
     @Column(name = "created_at", nullable = false)
     open var createdAt: Instant? = null

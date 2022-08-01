@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
+import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
 import java.time.Instant
 import javax.persistence.*
 
@@ -26,8 +27,9 @@ open class BoardPost {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: Int? = null
+    open var status: BoardPostStatus? = null
 
     @Column(name = "created_at", nullable = false)
     open var createdAt: Instant? = null

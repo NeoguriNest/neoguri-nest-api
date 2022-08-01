@@ -1,5 +1,7 @@
 package com.neoguri.neogurinest.api.domain.user.entity
 
+import com.neoguri.neogurinest.api.domain.user.enum.TermAndAgreementStatus
+import com.neoguri.neogurinest.api.domain.user.enum.TermAndAgreementType
 import java.time.Instant
 import javax.persistence.*
 
@@ -16,9 +18,9 @@ open class TermsAndAgreement {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    open var type: String? = null
+    open var type: TermAndAgreementType? = null
 
     @Column(name = "title", nullable = false)
     open var title: String? = null
@@ -27,7 +29,7 @@ open class TermsAndAgreement {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: String? = null
+    open var status: TermAndAgreementStatus? = null
 }

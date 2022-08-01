@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
+import com.neoguri.neogurinest.api.domain.board.enum.BoardCommentStatus
 import com.neoguri.neogurinest.api.domain.user.entity.User
 import java.time.Instant
 import javax.persistence.*
@@ -42,7 +43,7 @@ open class BoardComment {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: String? = null
+    open var status: BoardCommentStatus? = null
 }

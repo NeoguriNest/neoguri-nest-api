@@ -1,5 +1,7 @@
 package com.neoguri.neogurinest.api.domain.user.entity
 
+import com.neoguri.neogurinest.api.domain.user.enum.Gender
+import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
 import java.time.Instant
 import javax.persistence.*
 
@@ -34,11 +36,11 @@ open class User {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
-    open var gender: String? = null
+    open var gender: Gender? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: String? = null
+    open var status: UserStatus? = null
 }

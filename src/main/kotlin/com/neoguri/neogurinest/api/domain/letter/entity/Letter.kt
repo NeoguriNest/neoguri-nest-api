@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.domain.letter.entity
 
+import com.neoguri.neogurinest.api.domain.letter.enum.LetterStatus
 import com.neoguri.neogurinest.api.domain.user.entity.User
 import java.time.Instant
 import javax.persistence.*
@@ -22,9 +23,9 @@ open class Letter {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: String? = null
+    open var status: LetterStatus? = null
 
     @Column(name = "created_at", nullable = false)
     open var createdAt: Instant? = null

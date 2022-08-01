@@ -1,5 +1,7 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
+import com.neoguri.neogurinest.api.domain.board.enum.BoardCommentReportStatus
+import com.neoguri.neogurinest.api.domain.board.enum.BoardCommentReportType
 import com.neoguri.neogurinest.api.domain.user.entity.User
 import java.time.Instant
 import javax.persistence.*
@@ -34,11 +36,11 @@ open class BoardCommentReport {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "type", nullable = false)
-    open var type: String? = null
+    open var type: BoardCommentReportType? = null
 
-    @Lob
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: String? = null
+    open var status: BoardCommentReportStatus? = null
 }
