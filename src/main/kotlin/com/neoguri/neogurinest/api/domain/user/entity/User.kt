@@ -1,13 +1,16 @@
 package com.neoguri.neogurinest.api.domain.user.entity
 
+import com.neoguri.neogurinest.api.application.user.dto.UserAddDto
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
 import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
+import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import java.time.Instant
 import javax.persistence.*
 
 @Entity
 @Table(name = "users")
 open class User {
+    @GeneratedValue
     @Id
     @Column(name = "user_id", nullable = false)
     open var id: Int? = null
@@ -43,4 +46,32 @@ open class User {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: UserStatus? = null
+
+    @OneToMany(fetch = FetchType.LAZY)
+    open var agreements: MutableList<UserAgreement>? = null
+
+    @OneToMany(fetch = FetchType.LAZY)
+    open var files: MutableList<UserFile>? = null
+
+    @OneToMany
+    open var nests: MutableList<UserNest>? = null
+
+    companion object {
+        fun create(userAddDto: UserAddDto): User {
+            val self = User();
+            self.loginId = userAddDto.loginId
+            self.password = PasswordEncryptor.encrypt(userAddDto.password)
+            self.nickname = userAddDto.nickname
+            self.email = userAddDto.email
+            self.gender = userAddDto.gender
+            self.birthdate = userAddDto.birthdate
+            self.status = UserStatus.ACTIVATED
+            self.createdAt = Instant.now()
+            self.updatedAt = Instant.now()
+            self.introductionText = userAddDto.introductionText
+
+            return self
+        }
+    }
+
 }
