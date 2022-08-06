@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.domain.user.entity
 
-import com.neoguri.neogurinest.api.application.user.dto.UserAddDto
+import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
 import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
@@ -8,7 +8,12 @@ import java.time.Instant
 import javax.persistence.*
 
 @Entity
-@Table(name = "users")
+@Table(
+    name = "users",
+    uniqueConstraints = [
+        UniqueConstraint(name = "LOGIN_ID_UNIQUE", columnNames = ["login_id"])
+    ]
+)
 open class User {
     @GeneratedValue
     @Id
