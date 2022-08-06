@@ -1,9 +1,8 @@
-package com.neoguri.neogurinest.api.application.user.dto
+package com.neoguri.neogurinest.api.application.user.dto.response
 
 import com.neoguri.neogurinest.api.domain.user.entity.User
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
 import com.neoguri.neogurinest.api.util.DateFormatUtil
-import java.time.format.DateTimeFormatter
 
 data class UserDto(
     val userId: Int?,

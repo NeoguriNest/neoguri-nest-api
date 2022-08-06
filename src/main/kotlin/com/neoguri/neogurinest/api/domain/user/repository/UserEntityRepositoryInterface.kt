@@ -3,7 +3,8 @@ package com.neoguri.neogurinest.api.domain.user.repository
 import com.neoguri.neogurinest.api.domain.common.repository.AggregateRootRepository
 import com.neoguri.neogurinest.api.domain.user.entity.User
 
-interface UserEntityRepositoryInterface : AggregateRootRepository {
+interface UserEntityRepositoryInterface : AggregateRootRepository<User, Int> {
     fun save(entity: User): User
 
+    fun findByIdOrFail(id: Int): User?
 }

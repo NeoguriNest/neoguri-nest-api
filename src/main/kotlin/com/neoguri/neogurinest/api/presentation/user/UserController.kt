@@ -1,8 +1,10 @@
-package com.neoguri.neogurinest.api.controller.user;
+package com.neoguri.neogurinest.api.presentation.user;
 
-import com.neoguri.neogurinest.api.application.user.dto.UserAddDto
-import com.neoguri.neogurinest.api.application.user.dto.UserDto
+import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
+import com.neoguri.neogurinest.api.application.user.dto.response.UserDto
 import com.neoguri.neogurinest.api.application.user.usecase.UserAddUseCaseInterface
+import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,10 +21,12 @@ class UserController {
 
     @PostMapping("/register")
     fun register(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
-
-        val userDto = userAdd!!.execute(userAddDto)
-
-        return ResponseEntity.ok(userDto)
+        try {
+            val userDto = userAdd!!.execute(userAddDto)
+            return ResponseEntity.ok(userDto)
+        } catch (e: DuplicatedEntityException) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null)
+        }
     }
 
 }
