@@ -1,4 +1,4 @@
-package com.neoguri.neogurinest.api.controller;
+package com.neoguri.neogurinest.api.presentation;
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
