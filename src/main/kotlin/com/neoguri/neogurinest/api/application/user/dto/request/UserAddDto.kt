@@ -7,6 +7,12 @@ data class UserAddDto(
     val password: String,
     val nickname: String,
     val email: String,
+    val address: String,
+    val addressDetail: String,
+    val zipCode: String,
+    val sido: String,
+    val sigungu: String,
+    val eupmyeondong: String,
     val gender: Gender,
     val birthdate: String,
     val introductionText: String?

@@ -21,11 +21,11 @@ class UserController {
 
     @PostMapping("/register")
     fun register(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
-        try {
+        return try {
             val userDto = userAdd!!.execute(userAddDto)
-            return ResponseEntity.ok(userDto)
+            ResponseEntity.ok(userDto)
         } catch (e: DuplicatedEntityException) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null)
+            ResponseEntity.status(HttpStatus.CONFLICT).body(null)
         }
     }
 

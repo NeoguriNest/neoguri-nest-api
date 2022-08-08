@@ -7,6 +7,7 @@ import com.neoguri.neogurinest.api.persistence.repository.user.UserFileRepositor
 import com.neoguri.neogurinest.api.persistence.repository.user.UserNestRepository
 import com.neoguri.neogurinest.api.persistence.repository.user.UserRepository
 import com.neoguri.neogurinest.api.util.CollectionConverter
+import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -21,24 +22,18 @@ class UserEntityRepository(
 ) : UserEntityRepositoryInterface {
 
     override fun save(entity: User): User {
-        var user: User?
-        try {
-            user = userRepository.save(entity)
-            if (user.files !== null) {
-                userFileRepository.saveAll(CollectionConverter.mutableListToArrayList(user.files!!))
-            }
-            if (user.nests !== null) {
-                userNestRepository.saveAll(CollectionConverter.mutableListToArrayList(user.nests!!))
-            }
-            if (user.agreements !== null) {
-                userAgreementRepository.saveAll(CollectionConverter.mutableListToArrayList(user.agreements!!))
-            }
-        } catch (e: DataIntegrityViolationException) {
-            e.printStackTrace()
-            throw DuplicatedEntityException();
+        userRepository.save(entity)
+        if (entity.files !== null) {
+            userFileRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.files!!))
+        }
+        if (entity.nests !== null) {
+            userNestRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.nests!!))
+        }
+        if (entity.agreements !== null) {
+            userAgreementRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.agreements!!))
         }
 
-        return user
+        return entity
     }
 
     override fun findById(id: Int): User? {

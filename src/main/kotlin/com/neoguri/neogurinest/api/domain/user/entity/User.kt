@@ -38,11 +38,23 @@ open class User {
     @Column(name = "introduction_text", nullable = false)
     open var introductionText: String? = null
 
-    @Column(name = "created_at", nullable = false)
-    open var createdAt: Instant? = null
+    @Column(name = "address", nullable = false)
+    open var address: String? = null
 
-    @Column(name = "updated_at", nullable = false)
-    open var updatedAt: Instant? = null
+    @Column(name = "address_detail", nullable = false)
+    open var addressDetail: String? = null
+
+    @Column(name = "zip_code", nullable = false)
+    open var zipCode: String? = null
+
+    @Column(name = "sido", nullable = false)
+    open var sido: String? = null
+
+    @Column(name = "sigungu", nullable = false)
+    open var sigungu: String? = null
+
+    @Column(name = "eupmyeondong", nullable = false)
+    open var eupmyeondong: String? = null
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
@@ -51,6 +63,12 @@ open class User {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: UserStatus? = null
+
+    @Column(name = "created_at", nullable = false)
+    open var createdAt: Instant? = null
+
+    @Column(name = "updated_at", nullable = false)
+    open var updatedAt: Instant? = null
 
     @OneToMany(fetch = FetchType.LAZY)
     open var agreements: MutableList<UserAgreement>? = null
@@ -74,6 +92,12 @@ open class User {
             self.createdAt = Instant.now()
             self.updatedAt = Instant.now()
             self.introductionText = userAddDto.introductionText
+            self.address = userAddDto.address
+            self.addressDetail = userAddDto.addressDetail
+            self.zipCode = userAddDto.zipCode
+            self.sido = userAddDto.sido
+            self.sigungu = userAddDto.sigungu
+            self.eupmyeondong = userAddDto.eupmyeondong
 
             return self
         }
