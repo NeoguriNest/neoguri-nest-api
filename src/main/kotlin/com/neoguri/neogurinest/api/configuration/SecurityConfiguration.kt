@@ -17,7 +17,7 @@ class SecurityConfiguration {
     fun filterChain(http: HttpSecurity): SecurityFilterChain? {
         http
             .authorizeRequests()
-            .mvcMatchers("/", "/health-check", "/error", "/api/auth/login", "/api/users/register").permitAll()
+            .mvcMatchers("/", "/health-check", "/error", "/api/users/login", "/api/users/register").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
