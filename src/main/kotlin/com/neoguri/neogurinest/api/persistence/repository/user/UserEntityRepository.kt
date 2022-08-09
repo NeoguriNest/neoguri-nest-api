@@ -1,14 +1,9 @@
-package com.neoguri.neogurinest.api.domain.user.repository
+package com.neoguri.neogurinest.api.persistence.repository.user
 
-import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.domain.user.entity.User
-import com.neoguri.neogurinest.api.persistence.repository.user.UserAgreementRepository
-import com.neoguri.neogurinest.api.persistence.repository.user.UserFileRepository
-import com.neoguri.neogurinest.api.persistence.repository.user.UserNestRepository
-import com.neoguri.neogurinest.api.persistence.repository.user.UserRepository
+import com.neoguri.neogurinest.api.domain.user.repository.*
 import com.neoguri.neogurinest.api.util.CollectionConverter
-import org.hibernate.exception.ConstraintViolationException
-import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.data.domain.Example
 import org.springframework.stereotype.Repository
 import java.util.*
 import javax.persistence.EntityNotFoundException
@@ -49,6 +44,15 @@ class UserEntityRepository(
         }
 
         return user;
+    }
+
+    override fun findByLoginId(loginId: String): User? {
+        val example = User()
+        example.loginId = loginId;
+
+        val user: Optional<User> = userRepository.findOne(Example.of(example));
+
+        return user.get();
     }
 
 }
