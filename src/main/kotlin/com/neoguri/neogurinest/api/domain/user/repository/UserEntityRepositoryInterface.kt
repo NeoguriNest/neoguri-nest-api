@@ -7,4 +7,6 @@ interface UserEntityRepositoryInterface : AggregateRootRepository<User, Int> {
     fun save(entity: User): User
 
     fun findByIdOrFail(id: Int): User?
+
+    fun findByLoginId(loginId: String): User?
 }
