@@ -16,7 +16,7 @@ data class UserDto(
     val sido: String?,
     val sigungu: String?,
     val eupmyeondong: String?,
-    val gender: DescribedEnumDto,
+    val gender: DescribedEnumDto<Gender>,
     val birthdate: String?,
     val introductionText: String?,
     val createdAt: String?,
