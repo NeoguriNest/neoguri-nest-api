@@ -2,18 +2,23 @@ package com.neoguri.neogurinest.api.persistence.repository.user
 
 import com.neoguri.neogurinest.api.domain.user.entity.User
 import com.neoguri.neogurinest.api.domain.user.repository.*
+import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserAgreementRepositoryInterface
+import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserFileRepositoryInterface
+import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserNestRepositoryInterface
+import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserRepositoryInterface
 import com.neoguri.neogurinest.api.util.CollectionConverter
 import org.springframework.data.domain.Example
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import java.util.*
 import javax.persistence.EntityNotFoundException
 
 @Repository
 class UserEntityRepository(
-    val userRepository: UserRepository,
-    val userFileRepository: UserFileRepository,
-    val userAgreementRepository: UserAgreementRepository,
-    val userNestRepository: UserNestRepository
+    val userRepository: UserRepositoryInterface,
+    val userFileRepository: UserFileRepositoryInterface,
+    val userAgreementRepository: UserAgreementRepositoryInterface,
+    val userNestRepository: UserNestRepositoryInterface
 ) : UserEntityRepositoryInterface {
 
     override fun save(entity: User): User {
@@ -32,27 +37,25 @@ class UserEntityRepository(
     }
 
     override fun findById(id: Int): User? {
-        val user: Optional<User> = userRepository.findById(id);
-
-        return user.get();
+        return userRepository.findByIdOrNull(id)
     }
 
     override fun findByIdOrFail(id: Int): User {
-        val user: User? = this.findById(id);
+        val user: User? = this.findById(id)
         if (user === null) {
-            throw EntityNotFoundException();
+            throw EntityNotFoundException()
         }
 
-        return user;
+        return user
     }
 
     override fun findByLoginId(loginId: String): User? {
         val example = User()
-        example.loginId = loginId;
+        example.loginId = loginId
 
-        val user: Optional<User> = userRepository.findOne(Example.of(example));
+        val user: Optional<User> = userRepository.findOne(Example.of(example))
 
-        return user.get();
+        return user.get()
     }
 
 }
