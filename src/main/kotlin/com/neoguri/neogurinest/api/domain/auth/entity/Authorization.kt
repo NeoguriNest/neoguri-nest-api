@@ -1,6 +1,9 @@
 package com.neoguri.neogurinest.api.domain.auth.entity
 
+import com.neoguri.neogurinest.api.application.auth.service.NeoguriTokenService
+import com.neoguri.neogurinest.api.application.user.dto.response.LoginUserDto
 import com.neoguri.neogurinest.api.domain.auth.enum.AuthorizationStatus
+import com.neoguri.neogurinest.api.util.StringGenerator
 import java.time.Instant
 import javax.persistence.*
 
@@ -8,9 +11,8 @@ import javax.persistence.*
 @Table(name = "authorizations")
 open class Authorization {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "authentication_id", nullable = false)
-    open var id: Int? = null
+    open var id: String? = null
 
     @Column(name = "user_id", nullable = false)
     open var userId: Int? = null
@@ -39,4 +41,26 @@ open class Authorization {
 
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
+
+    companion object {
+        fun create(
+            loginUser: LoginUserDto,
+            accessToken: NeoguriTokenService.GeneratedTokenDto,
+            refreshToken: NeoguriTokenService.GeneratedTokenDto
+        ): Authorization {
+            val self = Authorization()
+            self.id = StringGenerator.getUuid(false)
+            self.userId = loginUser.userId
+            self.loginId = loginUser.loginId
+            self.accessToken = accessToken.token
+            self.accessTokenExpiredAt = accessToken.expiresAt
+            self.refreshToken = refreshToken.token
+            self.refreshTokenExpiredAt = refreshToken.expiresAt
+            self.status = AuthorizationStatus.AVAILABLE
+            self.createdAt = Instant.now()
+            self.updatedAt = Instant.now()
+
+            return self
+        }
+    }
 }

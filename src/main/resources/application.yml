@@ -18,3 +18,10 @@ logging:
   level:
     org:
       hibernate: info
+
+neoguri:
+  jwt:
+    secret: 'asljdfhalksdjhfklasdjfkasdfbkasjdhbkajshbvkhscbvaisufvghoasfdguyoiasbigb248t92bgoib0g9278rytg901b3flkh1bfejkhvasudvc67c8v7s8asljdfhalksdjhfklasdjfkasdfbkasjdhbkajshbvkhscbvaisufvghoasfdguyoiasbigb248t92bgoib0g9278rytg901b3flkh1bfejkhvasudvc67c8v7s8asdfivb34'
+    duration:
+      access-token: 60 # minutes, 1 hour
+      refresh-token: 10080 # minutes, = 7 days

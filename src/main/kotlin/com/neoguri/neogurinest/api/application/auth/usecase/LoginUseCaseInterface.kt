@@ -1,5 +1,6 @@
-package com.neoguri.neogurinest.api.application.user.usecase
+package com.neoguri.neogurinest.api.application.auth.usecase
 
+import com.neoguri.neogurinest.api.application.auth.dto.AuthorizationDto
 import com.neoguri.neogurinest.api.application.user.dto.request.LoginDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.application.user.dto.response.LoginUserDto
@@ -9,5 +10,5 @@ import com.neoguri.neogurinest.api.domain.user.exception.UsernameOrPasswordNotMa
 
 interface LoginUseCaseInterface {
     @Throws(UsernameOrPasswordNotMatchedException::class)
-    fun execute(loginDto: LoginDto): LoginUserDto
+    fun execute(loginDto: LoginDto): AuthorizationDto
 }
