@@ -5,7 +5,6 @@ import java.io.Serializable
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Embeddable
-import javax.persistence.Entity
 
 @Embeddable
 open class UserNestId : Serializable {

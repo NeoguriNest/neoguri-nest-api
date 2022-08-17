@@ -1,9 +1,8 @@
 package com.neoguri.neogurinest.api.presentation.auth
 
 import com.neoguri.neogurinest.api.application.auth.dto.AuthorizationDto
-import com.neoguri.neogurinest.api.application.user.dto.request.LoginDto
-import com.neoguri.neogurinest.api.application.user.dto.response.LoginUserDto
 import com.neoguri.neogurinest.api.application.auth.usecase.LoginUseCaseInterface
+import com.neoguri.neogurinest.api.application.user.dto.request.LoginDto
 import com.neoguri.neogurinest.api.domain.user.exception.UsernameOrPasswordNotMatchedException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

@@ -1,7 +1,7 @@
 package com.neoguri.neogurinest.api.application.auth.usecase.impl
 
-import com.neoguri.neogurinest.api.application.auth.service.NeoguriTokenService
 import com.neoguri.neogurinest.api.application.auth.dto.AuthorizationDto
+import com.neoguri.neogurinest.api.application.auth.service.NeoguriTokenService
 import com.neoguri.neogurinest.api.application.auth.usecase.LoginUseCaseInterface
 import com.neoguri.neogurinest.api.application.user.dto.request.LoginDto
 import com.neoguri.neogurinest.api.application.user.dto.response.LoginUserDto
@@ -11,7 +11,6 @@ import com.neoguri.neogurinest.api.domain.user.exception.UsernameOrPasswordNotMa
 import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import org.springframework.stereotype.Service
-import javax.annotation.Resource
 
 @Service
 class LoginUseCase(

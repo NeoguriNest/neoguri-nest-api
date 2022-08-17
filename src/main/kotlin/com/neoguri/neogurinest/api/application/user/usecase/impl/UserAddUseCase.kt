@@ -5,11 +5,9 @@ import com.neoguri.neogurinest.api.application.user.dto.response.UserDto
 import com.neoguri.neogurinest.api.application.user.usecase.UserAddUseCaseInterface
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.domain.user.entity.User
-import com.neoguri.neogurinest.api.domain.user.enum.Gender
 import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional

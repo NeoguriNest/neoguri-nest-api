@@ -1,9 +1,7 @@
 package com.neoguri.neogurinest.api.util
 
-import org.springframework.util.StringUtils
 import java.security.SecureRandom
 import java.util.*
-import java.util.concurrent.ThreadLocalRandom
 import kotlin.streams.toList
 
 object StringGenerator {

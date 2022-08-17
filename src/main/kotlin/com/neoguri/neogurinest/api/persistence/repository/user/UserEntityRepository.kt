@@ -1,7 +1,7 @@
 package com.neoguri.neogurinest.api.persistence.repository.user
 
 import com.neoguri.neogurinest.api.domain.user.entity.User
-import com.neoguri.neogurinest.api.domain.user.repository.*
+import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserAgreementRepositoryInterface
 import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserFileRepositoryInterface
 import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserNestRepositoryInterface
