@@ -1,4 +1,4 @@
-package com.neoguri.neogurinest.api.application.user.dto.response
+package com.neoguri.neogurinest.api.application.auth.dto
 
 import com.neoguri.neogurinest.api.domain.user.entity.User
 

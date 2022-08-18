@@ -1,7 +1,7 @@
 package com.neoguri.neogurinest.api.application.auth.usecase
 
 import com.neoguri.neogurinest.api.application.auth.dto.AuthorizationDto
-import com.neoguri.neogurinest.api.application.user.dto.request.LoginDto
+import com.neoguri.neogurinest.api.application.auth.dto.LoginDto
 import com.neoguri.neogurinest.api.domain.user.exception.UsernameOrPasswordNotMatchedException
 
 interface LoginUseCaseInterface {

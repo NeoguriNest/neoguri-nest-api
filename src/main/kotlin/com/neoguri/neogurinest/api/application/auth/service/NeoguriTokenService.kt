@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.application.auth.service
 
-import com.neoguri.neogurinest.api.application.user.dto.response.LoginUserDto
+import com.neoguri.neogurinest.api.application.auth.dto.LoginUserDto
 import com.neoguri.neogurinest.api.util.StringGenerator
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
