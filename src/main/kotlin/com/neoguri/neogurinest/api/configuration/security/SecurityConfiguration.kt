@@ -52,8 +52,6 @@ class SecurityConfiguration {
 //            .authenticationEntryPoint(authenticationEntryPoint())
 //            .and()
 //            .addFilterBefore(jwtAuthenticationFilter(jwt, tokenService), UsernamePasswordAuthenticationFilter::class.java)
-
-        println("Security Config applied");
         return http.build()
     }
 
