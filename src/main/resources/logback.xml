@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{YYYY-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logback.log</file>
+        <encoder>
+            <pattern>[%d{YYYY-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logback.log-%d{YYYY-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>16MB</maxFileSize>
+            <maxHistory>16</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FOUT"/>
+    </root>
+
+    <logger name="logger" level="info" additivity="true">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FOUT"/>
+    </logger>
+</configuration>
