@@ -7,7 +7,7 @@ import com.neoguri.neogurinest.api.application.auth.dto.LoginDto
 import com.neoguri.neogurinest.api.application.auth.dto.LoginUserDto
 import com.neoguri.neogurinest.api.domain.auth.entity.Authorization
 import com.neoguri.neogurinest.api.domain.auth.repository.AuthorizationEntityRepositoryInterface
-import com.neoguri.neogurinest.api.domain.user.exception.UsernameOrPasswordNotMatchedException
+import com.neoguri.neogurinest.api.domain.auth.exception.UsernameOrPasswordNotMatchedException
 import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import org.springframework.stereotype.Service

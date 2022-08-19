@@ -13,7 +13,8 @@ data class AuthorizationDto(
     val refreshTokenExpiredAt: Instant,
     val userId: Int,
     val loginId: String,
-    val status: DescribedEnumDto<AuthorizationStatus>
+    val status: DescribedEnumDto<AuthorizationStatus>,
+    val tokenType: String = "Bearer"
 ) {
     companion object {
         fun fromEntity(entity: Authorization): AuthorizationDto {
