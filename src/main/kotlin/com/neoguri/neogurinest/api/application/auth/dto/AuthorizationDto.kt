@@ -17,7 +17,7 @@ data class AuthorizationDto(
     val tokenType: String = "Bearer"
 ) {
     companion object {
-        fun fromEntity(entity: Authorization): AuthorizationDto {
+        fun of(entity: Authorization): AuthorizationDto {
             return AuthorizationDto(
                 entity.id!!,
                 entity.accessToken!!,
