@@ -30,14 +30,18 @@ class LoginUseCase(
             throw UsernameOrPasswordNotMatchedException()
         }
 
-        val loginUser = LoginUserDto.fromEntity(user)
+        val nestIds: Array<Int> =
+            if (user.nests == null) arrayOf()
+            else user.nests!!.map { it.nest?.id }.filterNotNull().toTypedArray()
+
+        val loginUser = LoginUserDto.of(user, nestIds)
 
         val accessToken = tokenUtil.generateAccessToken(loginUser)
         val refreshToken = tokenUtil.generateRefreshToken()
 
-        val authorization = Authorization.create(loginUser, accessToken, refreshToken)
+        val authorization = Authorization.c:reate(loginUser, accessToken, refreshToken)
         authRepository.save(authorization)
-        return AuthorizationDto.fromEntity(authorization)
+        return AuthorizationDto.of(authorization)
     }
 
 }

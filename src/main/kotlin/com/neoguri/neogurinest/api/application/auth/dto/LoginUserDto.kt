@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.application.auth.dto
 
+import com.neoguri.neogurinest.api.domain.auth.entity.Authorization
 import com.neoguri.neogurinest.api.domain.user.entity.User
 
 data class LoginUserDto(
@@ -9,14 +10,19 @@ data class LoginUserDto(
 ) {
 
     companion object {
-        fun fromEntity(entity: User): LoginUserDto {
-
-            val nestIds: Array<Int> = entity.nests!!.map { it.nest?.id }.filterNotNull().toTypedArray()
-
+        fun of(entity: User, nestIds: Array<Int>): LoginUserDto {
             return LoginUserDto(
                 entity.id!!,
                 entity.loginId!!,
                 nestIds
+            )
+        }
+
+        fun of(entity: Authorization): LoginUserDto {
+            return LoginUserDto(
+                entity.userId!!,
+                entity.loginId!!,
+                entity.nestIds!!.split(",").map { it -> Integer.parseInt(it) }.toTypedArray()
             )
         }
     }

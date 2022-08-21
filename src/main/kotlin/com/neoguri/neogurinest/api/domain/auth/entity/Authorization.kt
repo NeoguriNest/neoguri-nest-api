@@ -32,6 +32,9 @@ open class Authorization {
     @Column(name = "refresh_token_expired_at", nullable = false)
     open var refreshTokenExpiredAt: Instant? = null
 
+    @Column(name = "nest_ids", nullable = false)
+    open var nestIds: String? = null
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: AuthorizationStatus? = null
@@ -57,6 +60,7 @@ open class Authorization {
             self.refreshToken = refreshToken.token
             self.refreshTokenExpiredAt = refreshToken.expiresAt
             self.status = AuthorizationStatus.AVAILABLE
+            self.nestIds = loginUser.nestIds.joinToString(",")
             self.createdAt = Instant.now()
             self.updatedAt = Instant.now()
 
