@@ -24,7 +24,7 @@ data class UserDto(
 ) {
 
     companion object {
-        fun fromEntity(entity: User): UserDto {
+        fun of(entity: User): UserDto {
             val formatText = "yyyy-MM-dd hh:mm:ss"
             return UserDto(
                 entity.id,

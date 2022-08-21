@@ -21,7 +21,7 @@ class UserAddUseCase(
         val closure =
             @Transactional(isolation = Isolation.READ_COMMITTED)
             fun(addDto: UserAddDto): UserDto {
-                return UserDto.fromEntity(
+                return UserDto.of(
                     userRepository.save(User.create(addDto))
                 )
             }
