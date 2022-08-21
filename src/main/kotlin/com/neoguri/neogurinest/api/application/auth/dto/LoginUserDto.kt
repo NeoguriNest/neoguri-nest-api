@@ -19,10 +19,16 @@ data class LoginUserDto(
         }
 
         fun of(entity: Authorization): LoginUserDto {
+            val nestIdString = entity.nestIds
+            var nestIdsArray = arrayOf<Int>()
+            if (!nestIdString.isNullOrBlank()) {
+                nestIdsArray = nestIdString.split(",").map { it -> Integer.parseInt(it) }.toTypedArray()
+            }
+
             return LoginUserDto(
                 entity.userId!!,
                 entity.loginId!!,
-                entity.nestIds!!.split(",").map { it -> Integer.parseInt(it) }.toTypedArray()
+                nestIdsArray
             )
         }
     }

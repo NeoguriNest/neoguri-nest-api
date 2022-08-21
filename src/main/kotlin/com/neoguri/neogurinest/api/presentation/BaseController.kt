@@ -9,7 +9,10 @@ open class BaseController() {
         return request.getHeader("Authorization")
     }
 
-    @Throws(BadRequestException::class)
+    @Throws(
+        BadRequestException::class,
+        UnauthorizedException::class
+    )
     protected fun getBasicHeader(request: HttpServletRequest): String {
         val header = getAuthorizationHeader(request)
         if (header === null) {
@@ -22,16 +25,19 @@ open class BaseController() {
         return header.replace("Basic ", "").replace("basic ", "")
     }
 
-    @Throws(BadRequestException::class)
+    @Throws(
+        BadRequestException::class,
+        UnauthorizedException::class
+    )
     protected fun getBearerHeader(request: HttpServletRequest): String {
         val header = getAuthorizationHeader(request)
         if (header === null) {
             throw UnauthorizedException()
         }
-        if (!(header.contains("Basic ") || header.contains("basic "))) {
+        if (!(header.contains("Bearer ") || header.contains("bearer "))) {
             throw BadRequestException()
         }
 
-        return header.replace("Basic ", "").replace("basic ", "")
+        return header.replace("Bearer ", "").replace("bearer ", "")
     }
 }

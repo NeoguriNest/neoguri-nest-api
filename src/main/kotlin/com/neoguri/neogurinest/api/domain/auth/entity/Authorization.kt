@@ -67,4 +67,10 @@ open class Authorization {
             return self
         }
     }
+
+    fun updateAccessToken(accessToken: String, accessTokenExpiredAt: Instant) {
+        this.accessToken = accessToken
+        this.accessTokenExpiredAt = accessTokenExpiredAt
+        this.updatedAt = Instant.now()
+    }
 }
