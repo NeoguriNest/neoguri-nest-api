@@ -39,7 +39,7 @@ class LoginUseCase(
         val accessToken = tokenUtil.generateAccessToken(loginUser)
         val refreshToken = tokenUtil.generateRefreshToken()
 
-        val authorization = Authorization.c:reate(loginUser, accessToken, refreshToken)
+        val authorization = Authorization.create(loginUser, accessToken, refreshToken)
         authRepository.save(authorization)
         return AuthorizationDto.of(authorization)
     }
