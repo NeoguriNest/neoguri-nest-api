@@ -9,7 +9,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "authorizations")
-open class Authorization {
+open class Authorization() {
     @Id
     @Column(name = "authentication_id", nullable = false)
     open var id: String? = null
@@ -45,26 +45,45 @@ open class Authorization {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
+    constructor(
+        id: String,
+        userId: Int,
+        loginId: String,
+        accessToken: String,
+        accessTokenExpiredAt: Instant,
+        refreshToken: String,
+        refreshTokenExpiredAt: Instant,
+        nestIds: String
+    ) : this() {
+        this.id = id
+        this.userId = userId
+        this.loginId = loginId
+        this.accessToken = accessToken
+        this.accessTokenExpiredAt = accessTokenExpiredAt
+        this.refreshToken = refreshToken
+        this.refreshTokenExpiredAt = refreshTokenExpiredAt
+        this.nestIds = nestIds
+        this.status = AuthorizationStatus.AVAILABLE
+        this.createdAt = Instant.now()
+        this.updatedAt = Instant.now()
+    }
+
     companion object {
         fun create(
             loginUser: LoginUserDto,
             accessToken: NeoguriTokenService.GeneratedTokenDto,
             refreshToken: NeoguriTokenService.GeneratedTokenDto
         ): Authorization {
-            val self = Authorization()
-            self.id = StringGenerator.getUuid(false)
-            self.userId = loginUser.userId
-            self.loginId = loginUser.loginId
-            self.accessToken = accessToken.token
-            self.accessTokenExpiredAt = accessToken.expiresAt
-            self.refreshToken = refreshToken.token
-            self.refreshTokenExpiredAt = refreshToken.expiresAt
-            self.status = AuthorizationStatus.AVAILABLE
-            self.nestIds = loginUser.nestIds.joinToString(",")
-            self.createdAt = Instant.now()
-            self.updatedAt = Instant.now()
-
-            return self
+            return Authorization(
+                StringGenerator.getUuid(false),
+                    loginUser.userId,
+                    loginUser.loginId,
+                    accessToken.token,
+                    accessToken.expiresAt,
+                    refreshToken.token,
+                    refreshToken.expiresAt,
+                    loginUser.nestIds.joinToString(",")
+            )
         }
     }
 

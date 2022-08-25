@@ -10,6 +10,7 @@ import com.neoguri.neogurinest.api.domain.auth.exception.InvalidRefreshTokenExce
 import com.neoguri.neogurinest.api.domain.auth.exception.RefreshTokenExpiredException
 import com.neoguri.neogurinest.api.domain.auth.repository.AuthorizationEntityRepositoryInterface
 import org.springframework.stereotype.Service
+import java.time.Instant
 import javax.persistence.EntityNotFoundException
 
 @Service
@@ -21,8 +22,13 @@ class RefreshUseCase(
     @Throws(RefreshTokenExpiredException::class)
     override fun execute(refreshDto: RefreshDto): AuthorizationDto {
 
+        val now = Instant.now()
+
         try {
             val authorization: Authorization = authRepository.findByRefreshTokenOrFail(refreshDto.refreshToken)
+            if (!now.isBefore(authorization.refreshTokenExpiredAt)) {
+                throw RefreshTokenExpiredException()
+            }
 
             val newAccessToken = tokenUtil.generateAccessToken(LoginUserDto.of(authorization))
 

@@ -6,6 +6,7 @@ import com.neoguri.neogurinest.api.application.auth.dto.RefreshDto
 import com.neoguri.neogurinest.api.application.auth.usecase.LoginUseCaseInterface
 import com.neoguri.neogurinest.api.application.auth.usecase.RefreshUseCaseInterface
 import com.neoguri.neogurinest.api.domain.auth.entity.Authorization
+import com.neoguri.neogurinest.api.domain.auth.exception.RefreshTokenExpiredException
 import com.neoguri.neogurinest.api.domain.auth.exception.UsernameOrPasswordNotMatchedException
 import com.neoguri.neogurinest.api.presentation.BaseController
 import com.neoguri.neogurinest.api.presentation.exception.BadRequestException
@@ -34,15 +35,9 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(request: HttpServletRequest): ResponseEntity<AuthorizationDto> {
-        val authorization: String? = getAuthorizationHeader(request)
-        if (authorization === null || !(authorization.contains("Basic ") || authorization.contains("basic "))) {
-            throw UnauthorizedException()
-        }
+        val token: String = getBasicHeader(request)
 
-        val token = authorization.replace("Basic ", "").replace("basic ", "")
-
-        val credentials =
-            String(Base64Utils.decodeFromUrlSafeString(token)).split(":")
+        val credentials = String(Base64Utils.decodeFromUrlSafeString(token)).split(":")
         if (credentials.size != 2) {
             throw BadRequestException()
         }
@@ -63,7 +58,7 @@ class AuthController(
         return try {
             val authorizationDto = refresh.execute(RefreshDto(refreshToken))
             ResponseEntity.ok(authorizationDto)
-        } catch (e: UsernameOrPasswordNotMatchedException) {
+        } catch (e: RefreshTokenExpiredException) {
             logger.info(e.message)
             throw UnauthorizedException()
         }

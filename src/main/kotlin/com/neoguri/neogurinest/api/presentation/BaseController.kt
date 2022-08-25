@@ -5,6 +5,9 @@ import com.neoguri.neogurinest.api.presentation.exception.UnauthorizedException
 import javax.servlet.http.HttpServletRequest
 
 open class BaseController() {
+    val BASIC_TOKEN_REGEX = Regex("basic ", RegexOption.IGNORE_CASE)
+    val BEARER_TOKEN_REGEX = Regex("bearer ", RegexOption.IGNORE_CASE)
+
     protected fun getAuthorizationHeader(request: HttpServletRequest): String? {
         return request.getHeader("Authorization")
     }
@@ -18,11 +21,11 @@ open class BaseController() {
         if (header === null) {
             throw UnauthorizedException()
         }
-        if (!(header.contains("Basic ") || header.contains("basic "))) {
+        if (!header.contains(BASIC_TOKEN_REGEX)) {
             throw BadRequestException()
         }
 
-        return header.replace("Basic ", "").replace("basic ", "")
+        return header.replace(BASIC_TOKEN_REGEX, "")
     }
 
     @Throws(
@@ -34,10 +37,10 @@ open class BaseController() {
         if (header === null) {
             throw UnauthorizedException()
         }
-        if (!(header.contains("Bearer ") || header.contains("bearer "))) {
+        if (!header.contains(BEARER_TOKEN_REGEX)) {
             throw BadRequestException()
         }
 
-        return header.replace("Bearer ", "").replace("bearer ", "")
+        return header.replace(BEARER_TOKEN_REGEX, "")
     }
 }
