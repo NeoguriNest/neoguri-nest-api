@@ -31,8 +31,6 @@ class AuthController(
     val refresh: RefreshUseCaseInterface
 ): BaseController() {
 
-    val logger: Logger = LoggerFactory.getLogger(this@AuthController::class.java)
-
     @PostMapping("/login")
     fun login(request: HttpServletRequest): ResponseEntity<AuthorizationDto> {
         val token: String = getBasicHeader(request)
@@ -46,7 +44,6 @@ class AuthController(
             val authorizationDto = login.execute(LoginDto(credentials[0], credentials[1]))
             ResponseEntity.ok(authorizationDto)
         } catch (e: UsernameOrPasswordNotMatchedException) {
-            logger.info(e.message)
             throw UnauthorizedException()
         }
     }
@@ -59,7 +56,6 @@ class AuthController(
             val authorizationDto = refresh.execute(RefreshDto(refreshToken))
             ResponseEntity.ok(authorizationDto)
         } catch (e: RefreshTokenExpiredException) {
-            logger.info(e.message)
             throw UnauthorizedException()
         }
     }

@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class UserController(val userAdd: UserAddUseCaseInterface) {
 
-    val logger: Logger = LoggerFactory.getLogger(this@UserController::class.java)
-
     @PostMapping("/register")
     fun register(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
         return try {
