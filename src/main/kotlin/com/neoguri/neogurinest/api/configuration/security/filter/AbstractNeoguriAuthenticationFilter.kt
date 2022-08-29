@@ -32,7 +32,7 @@ abstract class AbstractNeoguriAuthenticationFilter(requestMatcher: RequestMatche
     }
 
     @Throws(IOException::class, ServletException::class)
-    private fun doFilter(request: HttpServletRequest?, response: HttpServletResponse?, chain: FilterChain?) {
+    protected open fun doFilter(request: HttpServletRequest?, response: HttpServletResponse?, chain: FilterChain?) {
         if (!requiresAuthentication(request, response)) {
             chain!!.doFilter(request, response)
             return
