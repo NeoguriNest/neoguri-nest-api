@@ -1,4 +1,4 @@
 package com.neoguri.neogurinest.api.domain.common.exception
 
-class DuplicatedEntityException : RuntimeException("Duplicated Entity Exception") {
+class DuplicatedEntityException : RuntimeException("Entity duplicated") {
 }
