@@ -1,6 +1,7 @@
 package com.neoguri.neogurinest.api.domain.user.entity
 
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
+import com.neoguri.neogurinest.api.application.user.dto.request.UserAddressUpdateDto
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
 import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
@@ -101,6 +102,15 @@ open class User {
 
             return self
         }
+    }
+
+    fun updateAddress(addressUpdateDto: UserAddressUpdateDto) {
+        this.address = addressUpdateDto.address
+        this.addressDetail = addressUpdateDto.addressDetail
+        this.zipCode = addressUpdateDto.zipCode
+        this.sido = addressUpdateDto.sido
+        this.sigungu = addressUpdateDto.sigungu
+        this.eupmyeondong = addressUpdateDto.eupmyeondong
     }
 
 }
