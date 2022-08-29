@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/users")
 @RestController
-class UserController(val userAdd: UserAddUseCaseInterface) {
+class RegisterController(val userAdd: UserAddUseCaseInterface) {
 
     @PostMapping("/register")
     fun register(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
@@ -24,7 +24,7 @@ class UserController(val userAdd: UserAddUseCaseInterface) {
             val userDto = userAdd.execute(userAddDto)
             ResponseEntity.ok(userDto)
         } catch (e: DuplicatedEntityException) {
-            throw ConflictException()
+            throw ConflictException(e.message!!)
         }
     }
 
