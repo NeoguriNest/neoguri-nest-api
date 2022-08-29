@@ -27,3 +27,9 @@ neoguri:
     duration:
       access-token: 60 # minutes, 1 hour
       refresh-token: 10080 # minutes, = 7 days
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
