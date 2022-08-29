@@ -1,6 +1,5 @@
 package com.neoguri.neogurinest.api.presentation
 
-import com.neoguri.neogurinest.api.presentation.exception.BadRequestException
 import com.neoguri.neogurinest.api.presentation.exception.UnauthorizedException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder

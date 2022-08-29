@@ -2,7 +2,6 @@ package com.neoguri.neogurinest.api.configuration.security.filter
 
 import com.neoguri.neogurinest.api.configuration.security.entrypoint.NeoguriAuthenticationEntryPoint
 import com.neoguri.neogurinest.api.domain.auth.exception.InvalidAccessTokenException
-import com.neoguri.neogurinest.api.presentation.exception.UnauthorizedException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer

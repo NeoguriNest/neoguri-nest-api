@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.stereotype.Component
 import java.time.Instant
-import java.time.temporal.ChronoField
 import javax.persistence.EntityNotFoundException
 
 @Component

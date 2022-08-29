@@ -3,14 +3,11 @@ package com.neoguri.neogurinest.api.configuration.security.filter
 import com.neoguri.neogurinest.api.configuration.security.dto.AccessTokenAuthentication
 import com.neoguri.neogurinest.api.configuration.security.entrypoint.NeoguriAuthenticationEntryPoint
 import com.neoguri.neogurinest.api.domain.auth.exception.InvalidAccessTokenException
-import com.neoguri.neogurinest.api.presentation.exception.BadRequestException
-import com.neoguri.neogurinest.api.presentation.exception.UnauthorizedException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.AuthenticationEntryPoint
-import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.security.web.csrf.CsrfFilter
 import org.springframework.security.web.util.matcher.RequestMatcher
 import javax.servlet.http.HttpServletRequest
