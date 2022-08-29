@@ -2,9 +2,6 @@ package com.neoguri.neogurinest.api.presentation.exception
 
 import org.springframework.http.HttpStatus
 
-class BadRequestException() : HttpException(HttpStatus.BAD_REQUEST.name) {
+class BadRequestException(override val message: String) : HttpException(HttpStatus.BAD_REQUEST, message)  {
 
-    override fun getStatusCode(): HttpStatus {
-        return HttpStatus.BAD_REQUEST
-    }
 }

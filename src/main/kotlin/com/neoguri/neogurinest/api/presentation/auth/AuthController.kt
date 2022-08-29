@@ -37,14 +37,14 @@ class AuthController(
 
         val credentials = String(Base64Utils.decodeFromUrlSafeString(token)).split(":")
         if (credentials.size != 2) {
-            throw BadRequestException()
+            throw UnauthorizedException("Invalid format, basic authentication token")
         }
 
         return try {
             val authorizationDto = login.execute(LoginDto(credentials[0], credentials[1]))
             ResponseEntity.ok(authorizationDto)
         } catch (e: UsernameOrPasswordNotMatchedException) {
-            throw UnauthorizedException()
+            throw UnauthorizedException(e.message!!)
         }
     }
 
@@ -56,7 +56,7 @@ class AuthController(
             val authorizationDto = refresh.execute(RefreshDto(refreshToken))
             ResponseEntity.ok(authorizationDto)
         } catch (e: RefreshTokenExpiredException) {
-            throw UnauthorizedException()
+            throw UnauthorizedException(e.message!!)
         }
     }
 }

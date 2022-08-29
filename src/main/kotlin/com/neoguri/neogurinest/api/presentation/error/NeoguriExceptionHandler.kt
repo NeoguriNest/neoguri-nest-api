@@ -18,14 +18,16 @@ class NeoguriExceptionHandler {
 
     @ExceptionHandler(HttpException::class)
     fun handleHttpException(exception: HttpException): ResponseEntity<ErrorResponseDto> {
-        logger.info("status code: {}\nstackTrace: {}", exception.message, exception.stackTrace);
+        logger.info("status code: {}\nstackTrace: {}", exception.message, exception.stackTrace)
 
-        return ResponseEntity.status(exception.getStatusCode()).body(
+        return ResponseEntity.status(exception.statusCode).body(
             ErrorResponseDto(
                 Instant.now().toString(),
-                exception.getStatusCode().value(),
-                exception.getStatusCode().reasonPhrase
+                exception.statusCode.value(),
+                exception.statusCode.reasonPhrase,
+                exception.message
             )
         )
     }
+
 }
