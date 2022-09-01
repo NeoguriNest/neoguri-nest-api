@@ -21,10 +21,8 @@ class NeoguriExceptionHandler {
         logger.info("status code: {}\nstackTrace: {}", exception.message, exception.stackTrace)
 
         return ResponseEntity.status(exception.statusCode).body(
-            ErrorResponseDto(
-                Instant.now().toString(),
-                exception.statusCode.value(),
-                exception.statusCode.reasonPhrase,
+            ErrorResponseDto.of(
+                exception.statusCode,
                 exception.message
             )
         )
