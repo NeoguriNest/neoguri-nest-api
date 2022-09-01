@@ -11,7 +11,7 @@ data class ErrorResponseDto(
 ) {
 
     companion object {
-        fun create(status: HttpStatus, message: String?): ErrorResponseDto {
+        fun of(status: HttpStatus, message: String?): ErrorResponseDto {
             return ErrorResponseDto(
                 Instant.now().toString(),
                 status.value(),

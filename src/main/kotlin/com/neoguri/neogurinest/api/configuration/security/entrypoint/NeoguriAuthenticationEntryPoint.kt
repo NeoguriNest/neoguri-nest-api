@@ -26,6 +26,6 @@ class NeoguriAuthenticationEntryPoint : AuthenticationEntryPoint {
         (response as HttpServletResponse)
         response.status = status.value()
         response.contentType = MediaType.APPLICATION_JSON_VALUE
-        objectMapper.writeValue(response.writer, ErrorResponseDto.create(status, authException.message))
+        objectMapper.writeValue(response.writer, ErrorResponseDto.of(status, authException.message))
     }
 }
