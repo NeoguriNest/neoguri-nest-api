@@ -5,7 +5,7 @@ spring:
     password: 1234
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     generate-ddl: false
     show-sql: true
     database: mysql
@@ -13,6 +13,12 @@ spring:
     properties:
       hiberneate:
         format_sql: true
+  liquibase:
+    enabled: true
+    change-log: migrations/changelog-master.yaml
+    user: liquibase
+    password: neoguri123!
+
 
 logging:
   pattern:

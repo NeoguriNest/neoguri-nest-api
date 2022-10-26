@@ -34,6 +34,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.retry:spring-retry")
 
+	// Liquibase
+	implementation("org.liquibase:liquibase-core")
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("mysql:mysql-connector-java")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
