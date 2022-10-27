@@ -1,0 +1,91 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: liquibase
+
+      - sqlCheck:
+          expectResult: 0
+          sql: select count(*) from DATABASECHANGELOGLOCK
+
+  - changeSet:
+      id: 1
+      author: parkjg20
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: password
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: nickname
+                  type: varchar(32)
+
+              - column:
+                  name: birthdate
+                  type: date
+
+              - column:
+                  name: introduction_text
+                  type: varchar(256)
+
+              - column:
+                  name: address
+                  type: varchar(64)
+
+              - column:
+                  name: address_detail
+                  type: varchar(128)
+
+              - column:
+                  name: address_detail
+                  type: varchar(128)
+
+              - column:
+                  name: zip_code
+                  type: varchar(6)
+
+              - column:
+                  name: sido
+                  type: varchar(16)
+
+              - column:
+                  name: sigungu
+                  type: varchar(32)
+
+              - column:
+                  name: eupmyeondong
+                  type: varchar(32)
+
+              - column:
+                  name: gender
+                  type: varchar(1)
+
+              - column:
+                  name: status
+                  type: varchar(1)
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime

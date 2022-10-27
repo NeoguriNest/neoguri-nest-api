@@ -11,7 +11,7 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
-      hiberneate:
+      hibernate:
         format_sql: true
   liquibase:
     enabled: true
