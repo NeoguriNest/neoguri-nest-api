@@ -1,28 +1,22 @@
-database-change-log:
-  - pre-conditions:
-      - running-as:
-          username: liquibase
-
-      - sql-check:
-          expect-result: 0
-          sql:
-            'SELECT COUNT(*)
-            FROM information_schema.TABLES
-            WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "terms_and_agreements"'
-
-  - change-set:
+databaseChangeLog:
+  - changeSet:
       id: 2
       author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "terms_and_agreements"
       changes:
-        - create-table:
-            table-name: terms_and_agreements
+        - createTable:
+            tableName: terms_and_agreements
             columns:
               - column:
                   name: term_id
                   type: int
-                  auto-increment: true
+                  autoIncrement: true
                   constraints:
-                    primary-key: true
+                    primaryKey: true
                     nullable: false
 
               - column:
@@ -55,22 +49,20 @@ database-change-log:
                   name: updated_at
                   type: datetime
 
-        - create-table:
-            table-name: user_agreements
+        - createTable:
+            tableName: user_agreements
             columns:
               - column:
                   name: term_id
                   type: int
                   constraints:
-                    primary-key: true
+                    primaryKey: true
                     nullable: false
-
               - column:
                   name: user_id
                   type: int
                   constraints:
                     nullable: false
-
               - column:
                   name: created_at
                   type: datetime

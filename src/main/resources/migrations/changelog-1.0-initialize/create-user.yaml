@@ -1,18 +1,13 @@
 databaseChangeLog:
-  - preConditions:
-      - runningAs:
-          username: liquibase
-
-      - sqlCheck:
-          expectResult: 0
-          sql:
-            'SELECT COUNT(*)
-            FROM information_schema.TABLES
-            WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "user"'
-
   - changeSet:
       id: 1
       author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "users"
+
       changes:
         - createTable:
             tableName: users
@@ -58,10 +53,6 @@ databaseChangeLog:
                   type: varchar(128)
 
               - column:
-                  name: address_detail
-                  type: varchar(128)
-
-              - column:
                   name: zip_code
                   type: varchar(6)
 
@@ -83,7 +74,7 @@ databaseChangeLog:
 
               - column:
                   name: status
-                  type: varchar(1)
+                  type: integer(1)
 
               - column:
                   name: created_at

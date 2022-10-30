@@ -19,7 +19,6 @@ spring:
     default-schema: neoguri_db
     database-change-log-table: database_change_log
     database-change-log-lock-table: database_change_log_lock
-    enabled: true
     change-log: classpath:migrations/changelog-master.yaml
 
 logging:

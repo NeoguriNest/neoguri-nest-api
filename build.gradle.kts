@@ -35,7 +35,7 @@ dependencies {
 	implementation("org.springframework.retry:spring-retry")
 
 	// Liquibase
-	implementation("org.liquibase:liquibase-core")
+	implementation("org.liquibase:liquibase-core:4.3.1")
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("mysql:mysql-connector-java")

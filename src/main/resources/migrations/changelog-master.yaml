@@ -1,6 +1,5 @@
-database-change-log:
-  - pre-conditions:
-      - running-as:
-          username: liquibase
-  - include:
-      file: classpath:migrations/changelog-1.0-initialize/**/*.yaml
+databaseChangeLog:
+#  - include:
+#      file: classpath:migrations/changelog-1.0-initialize/create-terms-and-agreement.yaml
+  - includeAll:
+      path: classpath:migrations/changelog-1.0-initialize/
