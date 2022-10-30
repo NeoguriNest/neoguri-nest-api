@@ -1,25 +1,30 @@
-databaseChangeLog:
-  - preConditions:
-      - runningAs:
+database-change-log:
+  - pre-conditions:
+      - running-as:
           username: liquibase
 
-      - sqlCheck:
-          expectResult: 0
-          sql: select count(*) from DATABASECHANGELOGLOCK
+      - sql-check:
+          expect-result: 0
+          sql:
+            SELECT COUNT(table_name)
+            FROM information_schema.tables
+            WHERE table_schema = 'neoguri_db'
+              AND TABLE_NAME = 'users'
 
-  - changeSet:
+  - change-set:
       id: 1
       author: parkjg20
       changes:
-        - createTable:
-            tableName: users
+        # 유저 테이블(users)
+        - create-table:
+            table-name: users
             columns:
               - column:
                   name: user_id
                   type: int
-                  autoIncrement: true
+                  auto-increment: true
                   constraints:
-                    primaryKey: true
+                    primary-key: true
                     nullable: false
 
               - column:

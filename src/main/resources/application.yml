@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: 'jdbc:mysql://localhost:3306/neoguri_db?useUnicode=true&serverTimeZone=Asia/Seoul'
+    url: 'jdbc:mysql://localhost:3306/neoguri_db?useUnicode=true&serverTimeZone=Asia/Seoul&case'
     username: root
     password: 1234
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     generate-ddl: false
     show-sql: true
     database: mysql
@@ -14,11 +14,13 @@ spring:
       hibernate:
         format_sql: true
   liquibase:
-    enabled: true
-    change-log: migrations/changelog-master.yaml
     user: liquibase
     password: neoguri123!
-
+    default-schema: neoguri_db
+    database-change-log-table: database_change_log
+    database-change-log-lock-table: database_change_log_lock
+    enabled: true
+    change-log: classpath:migrations/changelog-master.yaml
 
 logging:
   pattern:
