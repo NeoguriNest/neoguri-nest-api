@@ -1,0 +1,78 @@
+database-change-log:
+  - pre-conditions:
+      - running-as:
+          username: liquibase
+
+      - sql-check:
+          expect-result: 0
+          sql:
+            'SELECT COUNT(*)
+            FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "terms_and_agreements"'
+
+  - change-set:
+      id: 2
+      author: parkjg20
+      changes:
+        - create-table:
+            table-name: terms_and_agreements
+            columns:
+              - column:
+                  name: term_id
+                  type: int
+                  auto-increment: true
+                  constraints:
+                    primary-key: true
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: content
+                  type: longtext
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: varchar(16)
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime
+
+        - create-table:
+            table-name: user_agreements
+            columns:
+              - column:
+                  name: term_id
+                  type: int
+                  constraints:
+                    primary-key: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false

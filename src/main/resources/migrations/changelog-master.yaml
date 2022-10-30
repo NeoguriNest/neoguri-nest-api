@@ -3,4 +3,4 @@ database-change-log:
       - running-as:
           username: liquibase
   - include:
-      file: classpath:migrations/changelog-1.0.yaml
+      file: classpath:migrations/changelog-1.0-initialize/**/*.yaml
