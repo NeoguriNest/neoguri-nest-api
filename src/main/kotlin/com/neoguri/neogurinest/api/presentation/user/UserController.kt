@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/api/users")
 @RestController
-class RegisterController(val userAdd: UserAddUseCaseInterface) {
+class UserController(val userAdd: UserAddUseCaseInterface) {
 
-    @PostMapping("/register")
-    fun register(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
+    @PostMapping("/sign-up")
+    fun signUp(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
         return try {
             val userDto = userAdd.execute(userAddDto)
             ResponseEntity.ok(userDto)

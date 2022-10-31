@@ -21,9 +21,6 @@ open class User {
     @Column(name = "user_id", nullable = false)
     open var id: Int? = null
 
-    @Column(name = "login_id", nullable = false)
-    open var loginId: String? = null
-
     @Column(name = "password", nullable = false)
     open var password: String? = null
 
@@ -83,7 +80,6 @@ open class User {
     companion object {
         fun create(userAddDto: UserAddDto): User {
             val self = User();
-            self.loginId = userAddDto.loginId
             self.password = PasswordEncryptor.encrypt(userAddDto.password)
             self.nickname = userAddDto.nickname
             self.email = userAddDto.email
