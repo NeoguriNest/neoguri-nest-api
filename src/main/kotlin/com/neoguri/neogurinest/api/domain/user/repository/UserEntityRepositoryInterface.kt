@@ -5,8 +5,10 @@ import com.neoguri.neogurinest.api.domain.user.entity.User
 
 interface UserEntityRepositoryInterface : AggregateRootRepository<User, Int> {
 
+    fun checkExistsByEmail(email: String): Boolean
+
     fun findByIdOrFail(id: Int): User
 
-    fun findByLoginId(loginId: String): User?
+    fun findByEmail(email: String): User?
 
 }

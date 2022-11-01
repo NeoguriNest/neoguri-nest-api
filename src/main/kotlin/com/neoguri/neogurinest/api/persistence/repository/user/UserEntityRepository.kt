@@ -36,6 +36,13 @@ class UserEntityRepository(
         return entity
     }
 
+    override fun checkExistsByEmail(email: String): Boolean {
+        val example = User()
+        example.email = email
+
+        return userRepository.exists(Example.of(example))
+    }
+
     override fun findById(id: Int): User? {
         return userRepository.findByIdOrNull(id)
     }
@@ -49,9 +56,9 @@ class UserEntityRepository(
         return user
     }
 
-    override fun findByLoginId(loginId: String): User? {
+    override fun findByEmail(email: String): User? {
         val example = User()
-        example.loginId = loginId
+        example.email = email
 
         val user: Optional<User> = userRepository.findOne(Example.of(example))
 
