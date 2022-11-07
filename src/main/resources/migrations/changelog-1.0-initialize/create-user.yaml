@@ -28,7 +28,7 @@ databaseChangeLog:
 
               - column:
                   name: password
-                  type: varchar(12)
+                  type: varchar(256)
                   constraints:
                     nullable: false
 
@@ -83,3 +83,8 @@ databaseChangeLog:
               - column:
                   name: updated_at
                   type: datetime
+
+        - addUniqueConstraint:
+            tableName: users
+            constraintName: EMAIL_UNIQUE
+            columnNames: email

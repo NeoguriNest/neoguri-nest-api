@@ -3,20 +3,16 @@ package com.neoguri.neogurinest.api.domain.user.entity
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddressUpdateDto
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
+import com.neoguri.neogurinest.api.domain.user.enum.GenderAttributeConverter
 import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import java.time.Instant
 import javax.persistence.*
 
 @Entity
-@Table(
-    name = "users",
-    uniqueConstraints = [
-        UniqueConstraint(name = "LOGIN_ID_UNIQUE", columnNames = ["login_id"])
-    ]
-)
+@Table(name = "users")
 open class User {
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "user_id", nullable = false)
     open var id: Int? = null
@@ -36,25 +32,24 @@ open class User {
     @Column(name = "introduction_text", nullable = false)
     open var introductionText: String? = null
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     open var address: String? = null
 
-    @Column(name = "address_detail", nullable = false)
+    @Column(name = "address_detail")
     open var addressDetail: String? = null
 
-    @Column(name = "zip_code", nullable = false)
+    @Column(name = "zip_code")
     open var zipCode: String? = null
 
-    @Column(name = "sido", nullable = false)
+    @Column(name = "sido")
     open var sido: String? = null
 
-    @Column(name = "sigungu", nullable = false)
+    @Column(name = "sigungu")
     open var sigungu: String? = null
 
-    @Column(name = "eupmyeondong", nullable = false)
+    @Column(name = "eupmyeondong")
     open var eupmyeondong: String? = null
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     open var gender: Gender? = null
 
@@ -89,12 +84,6 @@ open class User {
             self.createdAt = Instant.now()
             self.updatedAt = Instant.now()
             self.introductionText = userAddDto.introductionText
-            self.address = userAddDto.address
-            self.addressDetail = userAddDto.addressDetail
-            self.zipCode = userAddDto.zipCode
-            self.sido = userAddDto.sido
-            self.sigungu = userAddDto.sigungu
-            self.eupmyeondong = userAddDto.eupmyeondong
 
             return self
         }

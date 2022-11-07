@@ -7,7 +7,6 @@ import com.neoguri.neogurinest.api.util.DateFormatUtil
 
 data class UserDto(
     val userId: Int?,
-    val loginId: String?,
     val nickname: String?,
     val email: String?,
     val address: String?,
@@ -28,7 +27,6 @@ data class UserDto(
             val formatText = "yyyy-MM-dd hh:mm:ss"
             return UserDto(
                 entity.id,
-                entity.loginId,
                 entity.nickname,
                 entity.email,
                 entity.address,
