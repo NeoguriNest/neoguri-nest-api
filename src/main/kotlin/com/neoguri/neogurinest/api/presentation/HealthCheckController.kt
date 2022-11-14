@@ -1,4 +1,4 @@
-package com.neoguri.neogurinest.api.presentation;
+package com.neoguri.neogurinest.api.presentation
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,8 +11,6 @@ class HealthCheckController {
 
     @GetMapping("")
     fun healthCheck(): ResponseEntity<String> {
-
-        return ResponseEntity.ok("I'm Healthy");
+        return ResponseEntity.ok("I'm Healthy")
     }
-
 }
