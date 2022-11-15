@@ -69,7 +69,7 @@ open class User {
     @OneToMany(fetch = FetchType.LAZY)
     open var files: MutableList<UserFile>? = null
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     open var nests: MutableList<UserNest>? = null
 
     companion object {

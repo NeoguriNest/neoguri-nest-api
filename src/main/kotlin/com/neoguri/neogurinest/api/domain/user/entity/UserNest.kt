@@ -12,7 +12,7 @@ open class UserNest {
     open var id: UserNestId? = null
 
     @MapsId("userId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = User::class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     open var user: User? = null
 

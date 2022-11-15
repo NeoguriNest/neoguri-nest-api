@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "nests"
+
+      changes:
+        - createTable:
+            tableName: nests
+            columns:
+              - column:
+                  name: nest_id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    autoIncrement: true
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: city
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: district
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: last_uploaded_at
+                  type: datetime
+
+        - createTable:
+            tableName: user_nests
+            columns:
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: nest_id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: village
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime

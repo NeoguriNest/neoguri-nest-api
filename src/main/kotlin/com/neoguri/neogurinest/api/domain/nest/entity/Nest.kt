@@ -7,6 +7,8 @@ import javax.persistence.*
 @Entity
 @Table(name = "nests")
 open class Nest {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "nest_id", nullable = false)
     open var id: Int? = null
