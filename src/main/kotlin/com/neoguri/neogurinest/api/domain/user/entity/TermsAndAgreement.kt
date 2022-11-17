@@ -8,6 +8,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "terms_and_agreements")
 open class TermsAndAgreement {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "term_id", nullable = false)
     open var id: Int? = null
