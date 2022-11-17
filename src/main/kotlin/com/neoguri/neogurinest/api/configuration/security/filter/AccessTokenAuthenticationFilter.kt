@@ -2,7 +2,6 @@ package com.neoguri.neogurinest.api.configuration.security.filter
 
 import com.neoguri.neogurinest.api.configuration.security.dto.AccessTokenAuthentication
 import com.neoguri.neogurinest.api.configuration.security.entrypoint.NeoguriAuthenticationEntryPoint
-import com.neoguri.neogurinest.api.domain.auth.exception.InvalidAccessTokenException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
@@ -30,7 +29,7 @@ class AccessTokenAuthenticationFilter(override val authenticationEntryPoint: Aut
         }
 
         if (!(authorization.contains(BEARER_PREFIX))) {
-            throw InvalidAccessTokenException()
+            return null
         }
 
         val accessToken: String = authorization.replace(BEARER_PREFIX, "")

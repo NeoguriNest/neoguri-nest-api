@@ -12,6 +12,7 @@ import com.neoguri.neogurinest.api.presentation.exception.UnauthorizedException
 import org.springframework.http.ResponseEntity
 import org.springframework.util.Base64Utils
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
@@ -23,10 +24,13 @@ class AuthController(
     val refresh: RefreshUseCaseInterface
 ): BaseController() {
 
-    @PostMapping("/login")
-    fun login(request: HttpServletRequest): ResponseEntity<AuthorizationDto> {
-        val token: String = getBasicHeader(request)
+    @PostMapping("/sign-in")
+    fun login(
+        @RequestHeader(name = "Authorization", required = true) basicToken: String,
+        request: HttpServletRequest
+    ): ResponseEntity<AuthorizationDto> {
 
+        val token: String = getBasicTokenValue(basicToken)
         val credentials = String(Base64Utils.decodeFromUrlSafeString(token)).split(":")
         if (credentials.size != 2) {
             throw UnauthorizedException("Invalid format, basic authentication token")

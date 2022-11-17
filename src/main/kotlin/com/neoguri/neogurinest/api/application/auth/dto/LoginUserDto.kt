@@ -5,7 +5,7 @@ import com.neoguri.neogurinest.api.domain.user.entity.User
 
 data class LoginUserDto(
     val userId: Int,
-    val loginId: String,
+    val email: String,
     val nestIds: Array<Int>
 ) {
 
@@ -13,7 +13,7 @@ data class LoginUserDto(
         fun of(entity: User, nestIds: Array<Int>): LoginUserDto {
             return LoginUserDto(
                 entity.id!!,
-                entity.loginId!!,
+                entity.email!!,
                 nestIds
             )
         }
@@ -27,7 +27,7 @@ data class LoginUserDto(
 
             return LoginUserDto(
                 entity.userId!!,
-                entity.loginId!!,
+                entity.email!!,
                 nestIdsArray
             )
         }
@@ -40,7 +40,7 @@ data class LoginUserDto(
         other as LoginUserDto
 
         if (userId != other.userId) return false
-        if (loginId != other.loginId) return false
+        if (email != other.email) return false
         if (!nestIds.contentEquals(other.nestIds)) return false
 
         return true
@@ -48,7 +48,7 @@ data class LoginUserDto(
 
     override fun hashCode(): Int {
         var result = userId
-        result = 31 * result + loginId.hashCode()
+        result = 31 * result + email.hashCode()
         result = 31 * result + nestIds.contentHashCode()
         return result
     }

@@ -29,7 +29,7 @@ class NeoguriTokenService {
         val expiresAt = Instant.from(now).plus(ACCESS_TOKEN_DURATION!!, DURATION_UNIT)
 
         val accessToken = Jwts.builder()
-            .setSubject(payload.loginId)
+            .setSubject(payload.email)
             .setIssuedAt(Date.from(now))
             .setExpiration(Date.from(expiresAt))
             .signWith(Keys.hmacShaKeyFor(SECRET_KEY!!.toByteArray(StandardCharsets.UTF_8)))

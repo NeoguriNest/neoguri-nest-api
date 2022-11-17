@@ -8,6 +8,7 @@ import com.neoguri.neogurinest.api.application.auth.usecase.LoginUseCaseInterfac
 import com.neoguri.neogurinest.api.domain.auth.entity.Authorization
 import com.neoguri.neogurinest.api.domain.auth.exception.UsernameOrPasswordNotMatchedException
 import com.neoguri.neogurinest.api.domain.auth.repository.AuthorizationEntityRepositoryInterface
+import com.neoguri.neogurinest.api.domain.user.entity.User
 import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import org.springframework.stereotype.Service
@@ -21,10 +22,12 @@ class LoginUseCase(
 
     @Throws(UsernameOrPasswordNotMatchedException::class)
     override fun execute(loginDto: LoginDto): AuthorizationDto {
-        val user = userRepository.findByLoginId(loginDto.loginId)
-        if (user === null) {
+        val optionalUser = userRepository.findByEmail(loginDto.loginId)
+        if (optionalUser.isEmpty) {
             throw UsernameOrPasswordNotMatchedException()
         }
+
+        val user: User = optionalUser.get()
 
         if (!PasswordEncryptor.matches(user.password!!, loginDto.password)) {
             throw UsernameOrPasswordNotMatchedException()

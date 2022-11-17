@@ -14,16 +14,12 @@ open class BaseController {
     }
 
     @Throws(UnauthorizedException::class)
-    protected fun getBasicHeader(request: HttpServletRequest): String {
-        val header = getAuthorizationHeader(request)
-        if (header === null) {
-            throw UnauthorizedException("Basic token is not found")
+    protected fun getBasicTokenValue(token: String): String {
+        return try {
+            token.replace(BASIC_TOKEN_REGEX, "")
+        } catch (e: Exception) {
+            throw UnauthorizedException("Cannot parse basic auth token")
         }
-        if (!header.contains(BASIC_TOKEN_REGEX)) {
-            throw UnauthorizedException("Invalid format, basic authentication token")
-        }
-
-        return header.replace(BASIC_TOKEN_REGEX, "")
     }
 
     @Throws(UnauthorizedException::class)
