@@ -56,11 +56,18 @@ class UserEntityRepository(
         return user
     }
 
-    override fun findByEmail(email: String): User? {
+    override fun findByEmail(email: String): Optional<User> {
         val example = User()
         example.email = email
 
-        val user: Optional<User> = userRepository.findOne(Example.of(example))
+        return userRepository.findOne(Example.of(example))
+    }
+
+    override fun findByEmailOrFail(email: String): User {
+        val user: Optional<User> = this.findByEmail(email)
+        if (user.isEmpty) {
+            throw EntityNotFoundException()
+        }
 
         return user.get()
     }

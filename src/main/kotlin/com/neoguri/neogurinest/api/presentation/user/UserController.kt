@@ -1,8 +1,9 @@
-package com.neoguri.neogurinest.api.presentation.user;
+package com.neoguri.neogurinest.api.presentation.user
 
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserExistenceCheckDto
 import com.neoguri.neogurinest.api.application.user.dto.response.UserDto
+import com.neoguri.neogurinest.api.application.user.dto.response.UserExistenceDto
 import com.neoguri.neogurinest.api.application.user.usecase.UserAddUseCaseInterface
 import com.neoguri.neogurinest.api.application.user.usecase.UserExistenceCheckUseCaseInterface
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
@@ -18,7 +19,7 @@ class UserController(
 ) {
 
     @GetMapping("/exists")
-    fun getExistence(checkDto: UserExistenceCheckDto): ResponseEntity<Boolean> {
+    fun getExistence(checkDto: UserExistenceCheckDto): ResponseEntity<UserExistenceDto> {
         return try {
             ResponseEntity.ok(userExistenceCheck.execute(checkDto))
         } catch (e: DuplicatedEntityException) {
