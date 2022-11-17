@@ -45,8 +45,10 @@ class AuthController(
     }
 
     @PostMapping("/refresh")
-    fun refresh(request: HttpServletRequest): ResponseEntity<AuthorizationDto> {
-        val refreshToken: String = getBearerHeader(request)
+    fun refresh(
+        @RequestHeader(name = "Authorization", required = true) bearerToken: String,
+        request: HttpServletRequest): ResponseEntity<AuthorizationDto> {
+        val refreshToken: String = getBearerTokenValue(bearerToken)
 
         return try {
             val authorizationDto = refresh.execute(RefreshDto(refreshToken))
