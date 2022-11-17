@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "authorizations"
+
+      changes:
+        - createTable:
+            tableName: authorizations
+            columns:
+              - column:
+                  name: authentication_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: access_token
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: refresh_token
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: access_token_expired_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: refresh_token_expired_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: nest_ids
+                  type: varchar(256)
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime

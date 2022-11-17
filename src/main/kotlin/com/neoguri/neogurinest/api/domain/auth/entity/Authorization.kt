@@ -9,46 +9,46 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "authorizations")
-open class Authorization() {
+class Authorization() {
     @Id
     @Column(name = "authentication_id", nullable = false)
-    open var id: String? = null
+    var id: String? = null
 
     @Column(name = "user_id", nullable = false)
-    open var userId: Int? = null
+    var userId: Int? = null
 
-    @Column(name = "login_id", nullable = false)
-    open var loginId: String? = null
+    @Column(name = "email", nullable = false)
+    var email: String? = null
 
     @Column(name = "access_token", nullable = false, length = 256)
-    open var accessToken: String? = null
+    var accessToken: String? = null
 
     @Column(name = "access_token_expired_at", nullable = false)
-    open var accessTokenExpiredAt: Instant? = null
+    var accessTokenExpiredAt: Instant? = null
 
     @Column(name = "refresh_token", nullable = false, length = 256)
-    open var refreshToken: String? = null
+    var refreshToken: String? = null
 
     @Column(name = "refresh_token_expired_at", nullable = false)
-    open var refreshTokenExpiredAt: Instant? = null
+    var refreshTokenExpiredAt: Instant? = null
 
     @Column(name = "nest_ids", nullable = false)
-    open var nestIds: String? = null
+    var nestIds: String? = null
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    open var status: AuthorizationStatus? = null
+    var status: AuthorizationStatus? = null
 
     @Column(name = "created_at", nullable = false)
-    open var createdAt: Instant? = null
+    var createdAt: Instant? = null
 
     @Column(name = "updated_at", nullable = false)
-    open var updatedAt: Instant? = null
+    var updatedAt: Instant? = null
 
     constructor(
         id: String,
         userId: Int,
-        loginId: String,
+        email: String,
         accessToken: String,
         accessTokenExpiredAt: Instant,
         refreshToken: String,
@@ -57,7 +57,7 @@ open class Authorization() {
     ) : this() {
         this.id = id
         this.userId = userId
-        this.loginId = loginId
+        this.email = email
         this.accessToken = accessToken
         this.accessTokenExpiredAt = accessTokenExpiredAt
         this.refreshToken = refreshToken
@@ -77,7 +77,7 @@ open class Authorization() {
             return Authorization(
                 StringGenerator.getUuid(false),
                     loginUser.userId,
-                    loginUser.loginId,
+                    loginUser.email,
                     accessToken.token,
                     accessToken.expiresAt,
                     refreshToken.token,

@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "files"
+
+      changes:
+        - createTable:
+            tableName: files
+            columns:
+              - column:
+                  name: file_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: file_extension
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: fileName
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: file_original_name
+                  type: varchar(256)
+
+              - column:
+                  name: file_url
+                  type: text
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: integer(1)
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime

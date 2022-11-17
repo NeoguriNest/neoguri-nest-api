@@ -12,7 +12,7 @@ data class AuthorizationDto(
     val refreshToken: String,
     val refreshTokenExpiredAt: Instant,
     val userId: Int,
-    val loginId: String,
+    val email: String,
     val status: DescribedEnumDto<AuthorizationStatus>,
     val tokenType: String = "Bearer"
 ) {
@@ -25,7 +25,7 @@ data class AuthorizationDto(
                 entity.refreshToken!!,
                 entity.refreshTokenExpiredAt!!,
                 entity.userId!!,
-                entity.loginId!!,
+                entity.email!!,
                 DescribedEnumDto(
                     entity.status!!,
                     when (entity.status) {
