@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.domain.nest.entity
 
+import com.neoguri.neogurinest.api.application.nest.dto.request.NestAddDto
 import com.neoguri.neogurinest.api.domain.nest.enum.NestStatus
 import java.time.Instant
 import javax.persistence.*
@@ -31,4 +32,18 @@ open class Nest {
 
     @Column(name = "last_uploaded_at", nullable = false)
     open var lastUploadedAt: Instant? = null
+
+    companion object {
+        fun create(nestAddDto: NestAddDto): Nest {
+            val self = Nest()
+
+            self.title = nestAddDto.title
+            self.city = nestAddDto.city
+            self.district = nestAddDto.district
+            self.status = NestStatus.CREATED
+            self.createdAt = Instant.now()
+
+            return self
+        }
+    }
 }
