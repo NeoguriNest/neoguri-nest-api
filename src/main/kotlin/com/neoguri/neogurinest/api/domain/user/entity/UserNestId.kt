@@ -26,6 +26,16 @@ open class UserNestId : Serializable {
     }
 
     companion object {
+
+        fun of(userId: Int, nestId: Int): UserNestId {
+            val userNestId = UserNestId()
+
+            userNestId.userId = userId
+            userNestId.nestId = nestId
+
+            return userNestId
+        }
+
         private const val serialVersionUID = -2302719886587941756L
     }
 }

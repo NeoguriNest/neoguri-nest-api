@@ -1,5 +1,6 @@
 package com.neoguri.neogurinest.api.domain.user.entity
 
+import com.neoguri.neogurinest.api.application.user.dto.request.UserNestAddDto
 import com.neoguri.neogurinest.api.domain.nest.entity.Nest
 import com.neoguri.neogurinest.api.domain.user.enum.UserNestStatus
 import java.time.Instant
@@ -33,4 +34,17 @@ open class UserNest {
 
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
+
+    companion object {
+        fun create(addDto: UserNestAddDto): UserNest {
+            val userNest = UserNest()
+
+            userNest.id = UserNestId.of(addDto.userId, addDto.nestId)
+            userNest.village = addDto.village
+            userNest.status = UserNestStatus.JOINED
+            userNest.createdAt = Instant.now()
+
+            return userNest
+        }
+    }
 }
