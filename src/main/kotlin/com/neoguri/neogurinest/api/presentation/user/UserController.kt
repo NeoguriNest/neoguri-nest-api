@@ -18,6 +18,10 @@ class UserController(
     val userAdd: UserAddUseCaseInterface,
 ) {
 
+    /**
+     * @uri GET /api/users/exists
+     * 유저 가입 여부 조회
+     */
     @GetMapping("/exists")
     fun getExistence(checkDto: UserExistenceCheckDto): ResponseEntity<UserExistenceDto> {
         return try {
@@ -27,6 +31,10 @@ class UserController(
         }
     }
 
+    /**
+     * @uri POST /api/users/sign-up
+     * 회원가입
+     */
     @PostMapping("/sign-up")
     fun signUp(@RequestBody userAddDto: UserAddDto): ResponseEntity<UserDto> {
         return try {

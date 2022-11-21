@@ -15,7 +15,7 @@ class NestController(
 ) {
 
     /**
-     * POST /api/nests
+     * @uri POST /api/nests
      * 소굴 추가
      */
     @PostMapping("")

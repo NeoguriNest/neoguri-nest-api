@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class HealthCheckController {
 
+    /**
+     * @uri GET /health-check
+     */
     @GetMapping("")
     fun healthCheck(): ResponseEntity<String> {
         return ResponseEntity.ok("I'm Healthy")

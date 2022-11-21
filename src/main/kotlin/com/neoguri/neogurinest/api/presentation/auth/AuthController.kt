@@ -24,6 +24,10 @@ class AuthController(
     val refresh: RefreshUseCaseInterface
 ): BaseController() {
 
+    /**
+     * @uri POST /api/auth/sign-in
+     * 로그인
+     */
     @PostMapping("/sign-in")
     fun login(
         @RequestHeader(name = "Authorization", required = true) basicToken: String,
@@ -44,6 +48,10 @@ class AuthController(
         }
     }
 
+    /**
+     * @uri POST /api/auth/refresh
+     * 토큰 갱신
+     */
     @PostMapping("/refresh")
     fun refresh(
         @RequestHeader(name = "Authorization", required = true) bearerToken: String,
