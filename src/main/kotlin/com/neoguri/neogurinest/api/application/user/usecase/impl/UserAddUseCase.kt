@@ -8,6 +8,7 @@ import com.neoguri.neogurinest.api.domain.user.entity.User
 import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
@@ -20,14 +21,15 @@ class UserAddUseCase(
 
         val closure =
             @Transactional(isolation = Isolation.READ_COMMITTED)
+            @Retryable(maxAttempts = 3)
             fun(addDto: UserAddDto): UserDto {
                 return UserDto.of(
                     userRepository.save(User.create(addDto))
                 )
             }
 
-        try {
-            return closure(userAddDto)
+        return try {
+            closure(userAddDto)
         } catch (e: DataIntegrityViolationException) {
             if (ConstraintViolationException::class.java.isAssignableFrom(e.cause!!::class.java)
                 && (e.cause as ConstraintViolationException).constraintName.contains("UNIQUE")) {

@@ -3,7 +3,6 @@ package com.neoguri.neogurinest.api.domain.user.entity
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddressUpdateDto
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
-import com.neoguri.neogurinest.api.domain.user.enum.GenderAttributeConverter
 import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import java.time.Instant
@@ -64,17 +63,17 @@ open class User {
     open var updatedAt: Instant? = null
 
     @OneToMany(fetch = FetchType.LAZY)
-    open var agreements: MutableList<UserAgreement>? = null
+    open var agreements: MutableList<UserAgreement> = mutableListOf()
 
     @OneToMany(fetch = FetchType.LAZY)
-    open var files: MutableList<UserFile>? = null
+    open var files: MutableList<UserFile> = mutableListOf()
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    open var nests: MutableList<UserNest>? = null
+    open var nests: MutableList<UserNest> = mutableListOf()
 
     companion object {
         fun create(userAddDto: UserAddDto): User {
-            val self = User();
+            val self = User()
             self.password = PasswordEncryptor.encrypt(userAddDto.password)
             self.nickname = userAddDto.nickname
             self.email = userAddDto.email
@@ -96,6 +95,10 @@ open class User {
         this.sido = addressUpdateDto.sido
         this.sigungu = addressUpdateDto.sigungu
         this.eupmyeondong = addressUpdateDto.eupmyeondong
+    }
+
+    fun addUserNest(nest: UserNest) {
+        this.nests.add(nest)
     }
 
 }

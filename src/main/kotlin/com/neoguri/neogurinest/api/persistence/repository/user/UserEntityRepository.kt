@@ -23,15 +23,9 @@ class UserEntityRepository(
 
     override fun save(entity: User): User {
         userRepository.save(entity)
-        if (entity.files !== null) {
-            userFileRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.files!!))
-        }
-        if (entity.nests !== null) {
-            userNestRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.nests!!))
-        }
-        if (entity.agreements !== null) {
-            userAgreementRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.agreements!!))
-        }
+        userFileRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.files))
+        userNestRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.nests))
+        userAgreementRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.agreements))
 
         return entity
     }
