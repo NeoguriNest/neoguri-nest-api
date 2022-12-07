@@ -15,9 +15,9 @@ databaseChangeLog:
               - column:
                   name: nest_id
                   type: integer
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
-                    autoIncrement: true
                     nullable: false
 
               - column:

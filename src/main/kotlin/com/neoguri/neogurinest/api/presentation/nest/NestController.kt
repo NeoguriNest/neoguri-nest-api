@@ -19,7 +19,7 @@ class NestController(
      * 소굴 추가
      */
     @PostMapping("")
-    fun getExistence(nestAddDto: NestAddDto): ResponseEntity<NestDto> {
+    fun addNest(@RequestBody nestAddDto: NestAddDto): ResponseEntity<NestDto> {
         return try {
             ResponseEntity.ok(nestAdd.execute(nestAddDto))
         } catch (e: DuplicatedEntityException) {

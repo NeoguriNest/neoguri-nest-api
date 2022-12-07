@@ -30,7 +30,7 @@ open class Nest {
     @Column(name = "created_at", nullable = false)
     open var createdAt: Instant? = null
 
-    @Column(name = "last_uploaded_at", nullable = false)
+    @Column(name = "last_uploaded_at")
     open var lastUploadedAt: Instant? = null
 
     companion object {
