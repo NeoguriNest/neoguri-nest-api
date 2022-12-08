@@ -35,7 +35,7 @@ class UserMeController(
      * @uri POST /api/users/me/nests
      * 소굴 가입
      */
-    @PostMapping("/nests")
+    @PostMapping("/user-nests")
     fun addUserNest(@RequestBody userNestAddDto: UserNestAddDto): ResponseEntity<UserDto> {
 
         isResourceOwnerOrFail(userNestAddDto.userId)
