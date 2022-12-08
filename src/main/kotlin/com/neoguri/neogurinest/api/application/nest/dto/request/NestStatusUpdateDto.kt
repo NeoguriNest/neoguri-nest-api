@@ -1,7 +1,8 @@
 package com.neoguri.neogurinest.api.application.nest.dto.request
 
-data class NestAddDto(
-    val title: String,
-    val city: String,
-    val district: String
+import com.neoguri.neogurinest.api.domain.nest.enum.NestStatus
+
+data class NestStatusUpdateDto(
+    val nestId: Int,
+    val status: NestStatus
 ) {}

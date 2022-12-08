@@ -26,10 +26,10 @@ class NestAddUseCase(
             @Retryable(maxAttempts = 3)
             fun (nestAddDto: NestAddDto): NestDto {
 
-            return NestDto.of(
-                nestEntityRepository.save(Nest.create(nestAddDto))
-            )
-        }
+                return NestDto.of(
+                    nestEntityRepository.save(Nest.create(nestAddDto))
+                )
+            }
 
         return try {
             closure(nestAddDto)
