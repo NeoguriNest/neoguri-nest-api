@@ -42,12 +42,7 @@ class UserEntityRepository(
     }
 
     override fun findByIdOrFail(id: Int): User {
-        val user: User? = this.findById(id)
-        if (user === null) {
-            throw EntityNotFoundException()
-        }
-
-        return user
+        return findById(id) ?: throw EntityNotFoundException()
     }
 
     override fun findByEmail(email: String): Optional<User> {

@@ -23,12 +23,7 @@ class NestEntityRepository(
     }
 
     override fun findByIdOrFail(id: Int): Nest {
-        val nest: Nest? = this.findById(id)
-        if (nest === null) {
-            throw EntityNotFoundException()
-        }
-
-        return nest
+        return findById(id) ?: throw EntityNotFoundException()
     }
 
 }
