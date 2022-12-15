@@ -52,3 +52,32 @@ databaseChangeLog:
               - column:
                   name: updated_at
                   type: datetime
+
+        - createTable:
+            tableName: user_files
+            columns:
+              - column:
+                  name: user_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: file_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: file_url
+                  type: text
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
