@@ -15,6 +15,7 @@ import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
+import javax.persistence.EntityNotFoundException
 
 @Service
 class UserProfileUpdateUseCase(
@@ -22,7 +23,7 @@ class UserProfileUpdateUseCase(
     val fileRepository: FileEntityRepositoryInterface
 ) : UserProfileUpdateUseCaseInterface {
 
-    @Throws(DuplicatedEntityException::class)
+    @Throws(EntityNotFoundException::class)
     override fun execute(userProfileUpdateDto: UserProfileUpdateDto): UserDto {
         val closure =
             @Retryable(maxAttempts = 3)
@@ -44,12 +45,7 @@ class UserProfileUpdateUseCase(
                 return UserDto.of(userRepository.save(user))
             }
 
-        try {
-            return closure(userProfileUpdateDto)
-        } catch (e: DataIntegrityViolationException) {
-            e.printStackTrace()
-            throw e
-        }
+        return closure(userProfileUpdateDto)
     }
 
     /**
