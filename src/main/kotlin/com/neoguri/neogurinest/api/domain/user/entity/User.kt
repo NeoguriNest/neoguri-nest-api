@@ -2,7 +2,10 @@ package com.neoguri.neogurinest.api.domain.user.entity
 
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserAddressUpdateDto
+import com.neoguri.neogurinest.api.application.user.dto.request.UserProfileUpdateDto
+import com.neoguri.neogurinest.api.domain.file.entity.File
 import com.neoguri.neogurinest.api.domain.user.enum.Gender
+import com.neoguri.neogurinest.api.domain.user.enum.UserFileType
 import com.neoguri.neogurinest.api.domain.user.enum.UserStatus
 import com.neoguri.neogurinest.api.util.PasswordEncryptor
 import java.time.Instant
@@ -95,6 +98,17 @@ open class User {
         this.sido = addressUpdateDto.sido
         this.sigungu = addressUpdateDto.sigungu
         this.eupmyeondong = addressUpdateDto.eupmyeondong
+    }
+
+    fun updateProfile(profileUpdateDto: UserProfileUpdateDto, file: File?) {
+        this.nickname = profileUpdateDto.nickname
+        this.gender = profileUpdateDto.gender
+
+        if (file != null) {
+            this.files.add(
+                UserFile.create(this, file, UserFileType.PROFILE)
+            )
+        }
     }
 
     fun addUserNest(nest: UserNest) {
