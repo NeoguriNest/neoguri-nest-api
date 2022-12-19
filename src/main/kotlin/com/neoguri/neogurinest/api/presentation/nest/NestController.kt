@@ -9,6 +9,7 @@ import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityExcep
 import com.neoguri.neogurinest.api.presentation.exception.ConflictException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 
 @RequestMapping("/api/nests")
 @RestController
@@ -24,7 +25,8 @@ class NestController(
     @PostMapping("")
     fun addNest(@RequestBody nestAddDto: NestAddDto): ResponseEntity<NestDto> {
         return try {
-            ResponseEntity.ok(nestAdd.execute(nestAddDto))
+            val nest = nestAdd.execute(nestAddDto)
+            ResponseEntity.created(URI("/api/nests/${nest.nestId}")).body(null)
         } catch (e: DuplicatedEntityException) {
             throw ConflictException(e.message!!)
         }

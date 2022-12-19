@@ -13,6 +13,7 @@ import com.neoguri.neogurinest.api.presentation.exception.ConflictException
 import com.neoguri.neogurinest.api.presentation.exception.NotFoundException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 import javax.persistence.EntityNotFoundException
 
 @RestController
@@ -37,7 +38,7 @@ class UserMeController(
     }
 
     /**
-     * @uri POST /api/users/me/nests
+     * @uri POST /api/users/me/user-nests
      * 소굴 가입
      */
     @PostMapping("/user-nests")
@@ -47,7 +48,7 @@ class UserMeController(
 
         return try {
             val userDto = userNestAdd.execute(userNestAddDto)
-            ResponseEntity.ok(userDto)
+            ResponseEntity.created(URI("/api/users/me/user-nests/${userDto.userId}")).body(userDto)
         } catch (e: DuplicatedEntityException) {
             throw ConflictException(e.message!!)
         }
