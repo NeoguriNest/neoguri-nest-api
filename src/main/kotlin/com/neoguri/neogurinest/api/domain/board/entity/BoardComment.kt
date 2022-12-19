@@ -12,7 +12,7 @@ open class BoardComment {
     @Column(name = "comment_id", nullable = false, length = 36)
     open var id: String? = null
 
-    @Column(name = "nest_id", nullable = false)
+    @Column(name = "nest_id")
     open var nestId: Int? = null
 
     @Column(name = "board_id", nullable = false)
@@ -26,24 +26,22 @@ open class BoardComment {
     @JoinColumn(name = "user_id", nullable = false)
     open var user: User? = null
 
-    @Column(name = "title", nullable = false)
-    open var title: String? = null
-
     @Lob
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "parent_id", nullable = false)
+    @JoinColumn(name = "parent_id")
     open var parent: BoardComment? = null
-
-    @Column(name = "created_at", nullable = false)
-    open var createdAt: Instant? = null
-
-    @Column(name = "updated_at", nullable = false)
-    open var updatedAt: Instant? = null
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: BoardCommentStatus? = null
+
+    @Column(name = "created_at")
+    open var createdAt: Instant? = null
+
+    @Column(name = "updated_at")
+    open var updatedAt: Instant? = null
+
 }

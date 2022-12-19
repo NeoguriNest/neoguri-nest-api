@@ -27,6 +27,9 @@ open class BoardPost {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
+    @OneToMany(fetch = FetchType.LAZY)
+    open var hashTags: MutableList<BoardPostHashtag> = mutableListOf()
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: BoardPostStatus? = null

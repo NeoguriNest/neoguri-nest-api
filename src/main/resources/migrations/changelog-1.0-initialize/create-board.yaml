@@ -1,0 +1,178 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "boards"
+
+      changes:
+        # BOARD
+        - createTable:
+            tableName: boards
+            columns:
+              - column:
+                  name: board_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: nest_id
+                  type: int
+
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: integer(1)
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: last_uploaded_at
+                  type: datetime
+
+        # 게시글
+        - createTable:
+            tableName: board_posts
+            columns:
+              - column:
+                  name: post_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: nest_id
+                  type: int
+
+              - column:
+                  name: board_id
+                  type: varchar(36)
+
+              - column:
+                  name: user_id
+                  type: int
+
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: content
+                  type: longtext
+
+              - column:
+                  name: status
+                  type: int
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime
+
+        # 해시태그
+        - createTable:
+            tableName: board_hashtags
+            columns:
+              - column:
+                  name: hash_tag_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(64)
+
+              - column:
+                  name: total_post_count
+                  type: int
+
+              - column:
+                  name: last_uploaded_at
+                  type: datetime
+
+        # 게시글 해시태그
+        - createTable:
+            tableName: board_post_hashtags
+            columns:
+              - column:
+                  name: hash_tag_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: post_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+        # 게시글 댓글
+        - createTable:
+            tableName: board_comments
+            columns:
+              - column:
+                  name: comment_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: nest_id
+                  type: int
+
+              - column:
+                  name: board_id
+                  type: varchar(36)
+
+              - column:
+                  name: post_id
+                  type: varchar(36)
+
+              - column:
+                  name: user_id
+                  type: int
+
+              - column:
+                  name: content
+                  type: longtext
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: parent_id
+                  type: varchar(36)
+
+              - column:
+                  name: status
+                  type: int
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime
