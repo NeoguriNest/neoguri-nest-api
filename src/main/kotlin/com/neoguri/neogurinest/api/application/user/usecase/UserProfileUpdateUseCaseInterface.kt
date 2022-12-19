@@ -2,9 +2,9 @@ package com.neoguri.neogurinest.api.application.user.usecase
 
 import com.neoguri.neogurinest.api.application.user.dto.request.UserProfileUpdateDto
 import com.neoguri.neogurinest.api.application.user.dto.response.UserDto
-import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
+import javax.persistence.EntityNotFoundException
 
 interface UserProfileUpdateUseCaseInterface {
-    @Throws(DuplicatedEntityException::class)
+    @Throws(EntityNotFoundException::class)
     fun execute(userProfileUpdateDto: UserProfileUpdateDto): UserDto
 }
