@@ -15,7 +15,6 @@ data class NestDto(
     val lastUpdatedAt: String?
 ) {
 
-
     companion object {
         fun of(entity: Nest): NestDto {
 
