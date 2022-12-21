@@ -2,8 +2,8 @@ package com.neoguri.neogurinest.api.domain.board.entity
 
 import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardStatus
+import com.neoguri.neogurinest.api.util.StringGenerator
 import java.time.Instant
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -11,7 +11,7 @@ import javax.persistence.*
 open class Board {
     @Id
     @Column(name = "board_id", nullable = false, length = 36)
-    open var id: UUID? = null
+    open var id: String? = null
 
     @Column(name = "nest_id")
     open var nestId: Int? = null
@@ -32,7 +32,7 @@ open class Board {
     companion object {
         fun create(boardAddDto: BoardAddDto): Board {
             val board = Board()
-            board.id = UUID.randomUUID()
+            board.id = StringGenerator.getUuid(false)
             board.nestId = boardAddDto.nestId
             board.title = boardAddDto.title
             board.status = BoardStatus.CREATED

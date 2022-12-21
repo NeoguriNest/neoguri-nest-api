@@ -42,6 +42,11 @@ databaseChangeLog:
                   name: last_uploaded_at
                   type: datetime
 
+        - addUniqueConstraint:
+            tableName: boards
+            constraintName: BOARD_TITLE_UNIQUE
+            columnNames: nest_id, title
+
         # 게시글
         - createTable:
             tableName: board_posts
