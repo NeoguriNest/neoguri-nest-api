@@ -6,8 +6,8 @@ import java.time.temporal.TemporalAccessor
 
 object DateFormatUtil {
     fun format(formatString: String, instant: TemporalAccessor): String {
-        val formatter = DateTimeFormatter.ofPattern(formatString).withZone(ZoneId.systemDefault());
+        val formatter = DateTimeFormatter.ofPattern(formatString).withZone(ZoneId.systemDefault())
 
-        return formatter.format(instant);
+        return formatter.format(instant)
     }
 }
