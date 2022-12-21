@@ -1,11 +1,11 @@
 package com.neoguri.neogurinest.api.application.board.usecase
 
-import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
+import com.neoguri.neogurinest.api.application.board.dto.request.BoardStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.dto.response.BoardDto
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 
-interface BoardAddUseCaseInterface {
+interface BoardStatusUpdateUseCaseInterface {
 
     @Throws(DuplicatedEntityException::class)
-    fun execute(addDto: BoardAddDto): BoardDto
+    fun execute(updateDto: BoardStatusUpdateDto): BoardDto
 }
