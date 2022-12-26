@@ -6,7 +6,6 @@ import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserAgreementRepos
 import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserFileRepositoryInterface
 import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserNestRepositoryInterface
 import com.neoguri.neogurinest.api.domain.user.repository.jpa.UserRepositoryInterface
-import com.neoguri.neogurinest.api.util.CollectionConverter
 import org.springframework.data.domain.Example
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
@@ -23,9 +22,9 @@ class UserEntityRepository(
 
     override fun save(entity: User): User {
         userRepository.save(entity)
-        userFileRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.files))
-        userNestRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.nests))
-        userAgreementRepository.saveAll(CollectionConverter.mutableListToArrayList(entity.agreements))
+        userFileRepository.saveAll(entity.files.toMutableList())
+        userNestRepository.saveAll(entity.nests.toMutableList())
+        userAgreementRepository.saveAll(entity.agreements.toMutableList())
 
         return entity
     }

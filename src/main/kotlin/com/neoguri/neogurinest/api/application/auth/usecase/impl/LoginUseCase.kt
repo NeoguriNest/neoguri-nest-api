@@ -28,14 +28,11 @@ class LoginUseCase(
         }
 
         val user: User = optionalUser.get()
-
         if (!PasswordEncryptor.matches(user.password!!, loginDto.password)) {
             throw UsernameOrPasswordNotMatchedException()
         }
 
-        val nestIds: Array<Int> =
-            if (user.nests == null) arrayOf()
-            else user.nests!!.map { it.nest?.id }.filterNotNull().toTypedArray()
+        val nestIds: Array<Int> = user.nests.map { it.nest?.id }.filterNotNull().toTypedArray()
 
         val loginUser = LoginUserDto.of(user, nestIds)
 
