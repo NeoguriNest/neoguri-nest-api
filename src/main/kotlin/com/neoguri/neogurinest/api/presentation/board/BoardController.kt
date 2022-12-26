@@ -3,9 +3,11 @@ package com.neoguri.neogurinest.api.presentation.board
 import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
 import com.neoguri.neogurinest.api.application.board.dto.request.BoardStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.dto.response.BoardDto
-import com.neoguri.neogurinest.api.application.board.usecase.BoardAddUseCaseInterface
-import com.neoguri.neogurinest.api.application.board.usecase.BoardStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.usecase.board.BoardAddUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.usecase.board.BoardStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.domain.board.exception.BoardStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
+import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
 import com.neoguri.neogurinest.api.presentation.BaseController
 import com.neoguri.neogurinest.api.presentation.exception.BadRequestException
 import com.neoguri.neogurinest.api.presentation.exception.ConflictException
@@ -41,7 +43,9 @@ class BoardController(
 
         return try {
             ResponseEntity.ok(updateStatus.execute(boardStatusUpdateDto))
-        } catch (e: DuplicatedEntityException) {
+        } catch (e: BoardStatusNotConvertableException) {
+            throw BadRequestException(e.message!!)
+        } catch (e: StatusAlreadyChangedException) {
             throw ConflictException(e.message!!)
         }
     }
