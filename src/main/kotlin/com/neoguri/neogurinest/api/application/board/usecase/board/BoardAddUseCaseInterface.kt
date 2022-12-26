@@ -1,4 +1,4 @@
-package com.neoguri.neogurinest.api.application.board.usecase
+package com.neoguri.neogurinest.api.application.board.usecase.board
 
 import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
 import com.neoguri.neogurinest.api.application.board.dto.response.BoardDto
