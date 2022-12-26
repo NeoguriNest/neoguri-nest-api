@@ -9,7 +9,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "authorizations")
-class Authorization() {
+class Authorization {
     @Id
     @Column(name = "authentication_id", nullable = false)
     var id: String? = null
@@ -45,45 +45,27 @@ class Authorization() {
     @Column(name = "updated_at", nullable = false)
     var updatedAt: Instant? = null
 
-    constructor(
-        id: String,
-        userId: Int,
-        email: String,
-        accessToken: String,
-        accessTokenExpiredAt: Instant,
-        refreshToken: String,
-        refreshTokenExpiredAt: Instant,
-        nestIds: String
-    ) : this() {
-        this.id = id
-        this.userId = userId
-        this.email = email
-        this.accessToken = accessToken
-        this.accessTokenExpiredAt = accessTokenExpiredAt
-        this.refreshToken = refreshToken
-        this.refreshTokenExpiredAt = refreshTokenExpiredAt
-        this.nestIds = nestIds
-        this.status = AuthorizationStatus.AVAILABLE
-        this.createdAt = Instant.now()
-        this.updatedAt = Instant.now()
-    }
-
     companion object {
         fun create(
             loginUser: LoginUserDto,
             accessToken: NeoguriTokenService.GeneratedTokenDto,
             refreshToken: NeoguriTokenService.GeneratedTokenDto
         ): Authorization {
-            return Authorization(
-                StringGenerator.getUuid(false),
-                    loginUser.userId,
-                    loginUser.email,
-                    accessToken.token,
-                    accessToken.expiresAt,
-                    refreshToken.token,
-                    refreshToken.expiresAt,
-                    loginUser.nestIds.joinToString(",")
-            )
+
+            val entity = Authorization()
+            entity.id = StringGenerator.getUuid(false)
+            entity.userId = loginUser.userId
+            entity.email = loginUser.email
+            entity.accessToken = accessToken.token
+            entity.accessTokenExpiredAt = accessToken.expiresAt
+            entity.refreshToken = refreshToken.token
+            entity.refreshTokenExpiredAt = refreshToken.expiresAt
+            entity.nestIds = loginUser.nestIds.joinToString(",")
+            entity.status = AuthorizationStatus.AVAILABLE
+            entity.createdAt = Instant.now()
+            entity.updatedAt = Instant.now()
+
+            return entity
         }
     }
 
