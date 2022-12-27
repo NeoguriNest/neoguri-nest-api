@@ -55,7 +55,6 @@ open class User {
     @Column(name = "gender", nullable = false)
     open var gender: Gender? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: UserStatus? = null
 

@@ -30,7 +30,6 @@ open class BoardPostReport {
     @Column(name = "reported_content", nullable = false)
     open var reportedContent: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: BoardPostReportStatus? = null
 

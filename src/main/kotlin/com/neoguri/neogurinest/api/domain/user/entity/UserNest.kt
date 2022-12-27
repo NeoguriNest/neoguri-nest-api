@@ -25,7 +25,6 @@ open class UserNest {
     @Column(name = "village", nullable = false)
     open var village: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: UserNestStatus? = null
 

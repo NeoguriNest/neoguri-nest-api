@@ -17,4 +17,18 @@ open class BoardPostHashtag {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     open var post: BoardPost? = null
+
+    companion object {
+        fun create(post: BoardPost, hashTag: BoardHashtag): BoardPostHashtag {
+            val entity = BoardPostHashtag()
+            val id = BoardPostHashtagId()
+            id.postId = post.id
+            id.hashTagId = hashTag.id
+
+            entity.id = id
+
+            return entity
+        }
+    }
+
 }

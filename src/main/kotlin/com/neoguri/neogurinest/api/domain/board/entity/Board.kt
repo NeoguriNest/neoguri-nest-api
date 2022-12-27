@@ -19,7 +19,6 @@ open class Board {
     @Column(name = "title", nullable = false)
     open var title: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: BoardStatus? = null
 

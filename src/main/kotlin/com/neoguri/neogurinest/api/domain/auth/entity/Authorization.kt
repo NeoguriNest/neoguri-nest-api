@@ -35,7 +35,6 @@ class Authorization {
     @Column(name = "nest_ids", nullable = false)
     var nestIds: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     var status: AuthorizationStatus? = null
 

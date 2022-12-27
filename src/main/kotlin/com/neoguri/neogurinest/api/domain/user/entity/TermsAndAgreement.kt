@@ -19,7 +19,6 @@ open class TermsAndAgreement {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     open var type: TermAndAgreementType? = null
 
@@ -30,7 +29,6 @@ open class TermsAndAgreement {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: TermAndAgreementStatus? = null
 }

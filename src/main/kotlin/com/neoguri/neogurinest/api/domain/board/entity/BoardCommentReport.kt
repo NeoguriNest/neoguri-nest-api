@@ -36,11 +36,9 @@ open class BoardCommentReport {
     @Column(name = "updated_at", nullable = false)
     open var updatedAt: Instant? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "type", nullable = false)
     open var type: BoardCommentReportType? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: BoardCommentReportStatus? = null
 }

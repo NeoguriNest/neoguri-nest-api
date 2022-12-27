@@ -24,7 +24,7 @@ class GenderAttributeConverter : AttributeConverter<Gender, String> {
         return if (dbData === null) {
             Gender.NONE
         } else {
-            Gender.values().first { it.value === "M" }
+            Gender.values().first { it.value === dbData }
         }
     }
 }

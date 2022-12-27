@@ -23,7 +23,6 @@ open class Letter {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: LetterStatus? = null
 

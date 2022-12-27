@@ -1,5 +1,9 @@
 package com.neoguri.neogurinest.api.domain.board.enum
 
+import com.neoguri.neogurinest.api.domain.common.exception.UnexpectedStatusException
+import javax.persistence.AttributeConverter
+import javax.persistence.Converter
+
 enum class BoardStatus(val value: Int) {
     CREATED(0),
     ACTIVATED(1),
@@ -28,4 +32,24 @@ enum class BoardStatus(val value: Int) {
             return arrayListOf(CREATED, SUSPENDED, ACTIVATED)
         }
     }
+}
+
+@Converter(autoApply = true)
+class BoardStatusTypeHandler : AttributeConverter<BoardStatus, Int> {
+    override fun convertToDatabaseColumn(attribute: BoardStatus?): Int {
+        return if (attribute === null) {
+            throw UnexpectedStatusException()
+        } else {
+            attribute.value
+        }
+    }
+
+    override fun convertToEntityAttribute(dbData: Int?): BoardStatus {
+        return if (dbData === null){
+            throw UnexpectedStatusException()
+        } else {
+            BoardStatus.values().first { it.value == dbData }
+        }
+    }
+
 }

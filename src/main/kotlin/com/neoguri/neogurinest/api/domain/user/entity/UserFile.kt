@@ -14,7 +14,6 @@ open class UserFile {
     @Column(name = "file_url", nullable = false)
     open var fileUrl: String? = null
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     open var type: UserFileType? = null
 

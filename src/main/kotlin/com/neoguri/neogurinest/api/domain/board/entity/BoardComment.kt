@@ -34,7 +34,6 @@ open class BoardComment {
     @JoinColumn(name = "parent_id")
     open var parent: BoardComment? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: BoardCommentStatus? = null
 

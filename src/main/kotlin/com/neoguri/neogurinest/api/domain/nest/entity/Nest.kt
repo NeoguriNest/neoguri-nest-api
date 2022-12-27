@@ -23,7 +23,6 @@ open class Nest {
     @Column(name = "district", nullable = false)
     open var district: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     open var status: NestStatus? = null
 
