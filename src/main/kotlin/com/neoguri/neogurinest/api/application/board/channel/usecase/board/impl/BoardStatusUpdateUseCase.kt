@@ -1,9 +1,8 @@
-package com.neoguri.neogurinest.api.application.board.usecase.board.impl
+package com.neoguri.neogurinest.api.application.board.channel.usecase.board.impl
 
-import com.neoguri.neogurinest.api.application.board.dto.request.BoardStatusUpdateDto
-import com.neoguri.neogurinest.api.application.board.dto.response.BoardDto
-import com.neoguri.neogurinest.api.application.board.usecase.board.BoardStatusUpdateUseCaseInterface
-import com.neoguri.neogurinest.api.domain.board.enum.BoardStatus
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardDto
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
+import com.neoguri.neogurinest.api.application.board.channel.usecase.board.BoardStatusUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.exception.BoardStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
@@ -34,8 +33,7 @@ class BoardStatusUpdateUseCase(
                     throw StatusAlreadyChangedException()
                 }
 
-                val preConvertStatus = BoardStatus.getConvertable(updateDto.status)
-                if (!preConvertStatus.contains(board.status)) {
+                if (!board.isStatusConvertable(updateDto.status)) {
                     throw BoardStatusNotConvertableException()
                 }
 

@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
-import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardStatus
 import com.neoguri.neogurinest.api.util.StringGenerator
 import java.time.Instant
@@ -40,4 +40,13 @@ open class Board {
             return board
         }
     }
+
+    fun isPostAddable(): Boolean {
+        return status === BoardStatus.ACTIVATED
+    }
+
+    fun isStatusConvertable(to: BoardStatus): Boolean {
+        return (BoardStatus.getConvertable(to).any{ status === it })
+    }
+
 }

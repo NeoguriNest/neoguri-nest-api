@@ -1,4 +1,4 @@
-package com.neoguri.neogurinest.api.application.board.dto.response
+package com.neoguri.neogurinest.api.application.board.channel.dto
 
 import com.neoguri.neogurinest.api.application.common.dto.DescribedEnumDto
 import com.neoguri.neogurinest.api.domain.board.entity.Board

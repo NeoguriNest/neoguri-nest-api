@@ -1,10 +1,10 @@
 package com.neoguri.neogurinest.api.presentation.board
 
-import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
-import com.neoguri.neogurinest.api.application.board.dto.request.BoardStatusUpdateDto
-import com.neoguri.neogurinest.api.application.board.dto.response.BoardDto
-import com.neoguri.neogurinest.api.application.board.usecase.board.BoardAddUseCaseInterface
-import com.neoguri.neogurinest.api.application.board.usecase.board.BoardStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardDto
+import com.neoguri.neogurinest.api.application.board.channel.usecase.board.BoardAddUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.board.BoardStatusUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.exception.BoardStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
@@ -38,7 +38,7 @@ class BoardController(
         }
     }
 
-    @PutMapping("/status")
+    @PutMapping("/{boardId}/status")
     fun updateStatus(@RequestBody boardStatusUpdateDto: BoardStatusUpdateDto): ResponseEntity<BoardDto> {
 
         return try {

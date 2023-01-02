@@ -1,8 +1,8 @@
-package com.neoguri.neogurinest.api.application.board.usecase.board.impl
+package com.neoguri.neogurinest.api.application.board.channel.usecase.board.impl
 
-import com.neoguri.neogurinest.api.application.board.dto.request.BoardAddDto
-import com.neoguri.neogurinest.api.application.board.dto.response.BoardDto
-import com.neoguri.neogurinest.api.application.board.usecase.board.BoardAddUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardDto
+import com.neoguri.neogurinest.api.application.board.channel.usecase.board.BoardAddUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.entity.Board
 import com.neoguri.neogurinest.api.domain.board.repository.BoardEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException

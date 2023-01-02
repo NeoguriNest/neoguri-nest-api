@@ -1,4 +1,4 @@
-package com.neoguri.neogurinest.api.application.board.dto.request
+package com.neoguri.neogurinest.api.application.board.channel.dto
 
 data class BoardAddDto(
     val nestId: Int?,
