@@ -1,6 +1,10 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
+import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostActorDto
+import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
+import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostUpdateDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
+import com.neoguri.neogurinest.api.util.StringGenerator
 import java.time.Instant
 import javax.persistence.*
 
@@ -17,7 +21,7 @@ open class BoardPost {
     @Column(name = "board_id", nullable = false)
     open var boardId: String? = null
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     open var userId: Int? = null
 
     @Column(name = "title", nullable = false)
@@ -27,15 +31,40 @@ open class BoardPost {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     open var hashTags: MutableList<BoardPostHashtag> = mutableListOf()
 
     @Column(name = "status", nullable = false)
     open var status: BoardPostStatus? = null
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     open var createdAt: Instant? = null
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     open var updatedAt: Instant? = null
+
+    companion object {
+        fun create(boardPostAddDto: BoardPostAddDto, board: Board, actor: BoardPostActorDto?): BoardPost {
+            val entity = BoardPost()
+
+            entity.id = StringGenerator.getUuid(false)
+            entity.boardId = board.id
+            entity.nestId = board.nestId
+            entity.userId = actor?.id
+            entity.title = boardPostAddDto.title
+            entity.content = boardPostAddDto.content
+            entity.title = boardPostAddDto.title
+            entity.status = BoardPostStatus.CREATED
+            entity.createdAt = Instant.now()
+
+            return entity
+        }
+    }
+
+    fun update(boardPostUpdateDto: BoardPostUpdateDto, board: Board, hashTags: List<BoardPostHashtag>) {
+        this.boardId = board.id
+        this.title = boardPostUpdateDto.title
+        this.content = boardPostUpdateDto.content
+        this.hashTags = hashTags.toMutableList()
+    }
 }

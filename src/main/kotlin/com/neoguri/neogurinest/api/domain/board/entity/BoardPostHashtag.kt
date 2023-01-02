@@ -9,12 +9,12 @@ open class BoardPostHashtag {
     open var id: BoardPostHashtagId? = null
 
     @MapsId("hashTagId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = BoardHashtag::class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "hash_tag_id", nullable = false)
     open var hashTag: BoardHashtag? = null
 
     @MapsId("postId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = BoardPost::class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     open var post: BoardPost? = null
 
@@ -26,6 +26,8 @@ open class BoardPostHashtag {
             id.hashTagId = hashTag.id
 
             entity.id = id
+            entity.post = post
+            entity.hashTag = hashTag
 
             return entity
         }

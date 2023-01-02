@@ -115,6 +115,11 @@ databaseChangeLog:
                   name: last_uploaded_at
                   type: datetime
 
+        - addUniqueConstraint:
+            tableName: board_hashtags
+            constraintName: BOARD_HASHTAG_UNIQUE
+            columnNames: name
+
         # 게시글 해시태그
         - createTable:
             tableName: board_post_hashtags
