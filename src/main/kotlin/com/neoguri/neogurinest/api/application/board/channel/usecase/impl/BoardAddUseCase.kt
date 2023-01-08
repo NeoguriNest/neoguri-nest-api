@@ -1,10 +1,10 @@
-package com.neoguri.neogurinest.api.application.board.channel.usecase.board.impl
+package com.neoguri.neogurinest.api.application.board.channel.usecase.impl
 
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
-import com.neoguri.neogurinest.api.application.board.channel.dto.BoardDto
-import com.neoguri.neogurinest.api.application.board.channel.usecase.board.BoardAddUseCaseInterface
-import com.neoguri.neogurinest.api.domain.board.entity.Board
-import com.neoguri.neogurinest.api.domain.board.repository.BoardEntityRepositoryInterface
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardAddUseCaseInterface
+import com.neoguri.neogurinest.api.domain.board.entity.BoardChannel
+import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
@@ -14,19 +14,19 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BoardAddUseCase(
-    val boardRepository: BoardEntityRepositoryInterface
+    val boardRepository: BoardChannelEntityRepositoryInterface
 ) : BoardAddUseCaseInterface {
 
     @Throws(DuplicatedEntityException::class)
-    override fun execute(addDto: BoardAddDto): BoardDto {
+    override fun execute(addDto: BoardAddDto): BoardChannelDto {
 
         val closure =
             @Retryable(maxAttempts = 3)
             @Transactional
-            fun (addDto: BoardAddDto): BoardDto {
+            fun (addDto: BoardAddDto): BoardChannelDto {
 
-                val board = boardRepository.save(Board.create(addDto))
-                return BoardDto.of(board)
+                val channel = boardRepository.save(BoardChannel.create(addDto))
+                return BoardChannelDto.of(channel)
             }
 
         return try {

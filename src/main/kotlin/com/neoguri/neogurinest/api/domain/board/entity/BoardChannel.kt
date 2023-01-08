@@ -7,10 +7,10 @@ import java.time.Instant
 import javax.persistence.*
 
 @Entity
-@Table(name = "boards")
-open class Board {
+@Table(name = "board_channels")
+open class BoardChannel {
     @Id
-    @Column(name = "board_id", nullable = false, length = 36)
+    @Column(name = "channel_id", nullable = false, length = 36)
     open var id: String? = null
 
     @Column(name = "nest_id")
@@ -29,8 +29,8 @@ open class Board {
     open var lastUploadedAt: Instant? = null
 
     companion object {
-        fun create(boardAddDto: BoardAddDto): Board {
-            val board = Board()
+        fun create(boardAddDto: BoardAddDto): BoardChannel {
+            val board = BoardChannel()
             board.id = StringGenerator.getUuid(false)
             board.nestId = boardAddDto.nestId
             board.title = boardAddDto.title

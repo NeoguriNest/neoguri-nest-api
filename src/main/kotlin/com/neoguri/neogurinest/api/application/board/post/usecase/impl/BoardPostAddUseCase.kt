@@ -9,7 +9,7 @@ import com.neoguri.neogurinest.api.domain.board.entity.BoardHashtag
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPostHashtag
 import com.neoguri.neogurinest.api.domain.board.exception.BoardNotAvailableStatusException
-import com.neoguri.neogurinest.api.domain.board.repository.BoardEntityRepositoryInterface
+import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardHashtagEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import org.springframework.retry.annotation.Retryable
@@ -20,7 +20,7 @@ import javax.persistence.EntityNotFoundException
 @Service
 class BoardPostAddUseCase(
     val boardService: BoardServiceInterface,
-    val boardRepository: BoardEntityRepositoryInterface,
+    val boardRepository: BoardChannelEntityRepositoryInterface,
     val boardHashtagRepository: BoardHashtagEntityRepositoryInterface,
     val boardPostRepository: BoardPostEntityRepositoryInterface
 ) : BoardPostAddUseCaseInterface {

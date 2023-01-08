@@ -6,15 +6,15 @@ databaseChangeLog:
         - onFail: CONTINUE
         - sqlCheck:
             expectedResult: 0
-            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "boards"
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "board_channels"
 
       changes:
         # BOARD
         - createTable:
-            tableName: boards
+            tableName: board_channels
             columns:
               - column:
-                  name: board_id
+                  name: channel_id
                   type: varchar(36)
                   constraints:
                     primaryKey: true
@@ -43,7 +43,7 @@ databaseChangeLog:
                   type: datetime
 
         - addUniqueConstraint:
-            tableName: boards
+            tableName: board_channels
             constraintName: BOARD_TITLE_UNIQUE
             columnNames: nest_id, title
 
@@ -63,7 +63,7 @@ databaseChangeLog:
                   type: int
 
               - column:
-                  name: board_id
+                  name: channel_id
                   type: varchar(36)
 
               - column:
@@ -154,7 +154,7 @@ databaseChangeLog:
                   type: int
 
               - column:
-                  name: board_id
+                  name: channel_id
                   type: varchar(36)
 
               - column:

@@ -1,24 +1,24 @@
 package com.neoguri.neogurinest.api.application.board.channel.dto
 
 import com.neoguri.neogurinest.api.application.common.dto.DescribedEnumDto
-import com.neoguri.neogurinest.api.domain.board.entity.Board
+import com.neoguri.neogurinest.api.domain.board.entity.BoardChannel
 import com.neoguri.neogurinest.api.domain.board.enum.BoardStatus
 import com.neoguri.neogurinest.api.util.DateFormatUtil
 
-data class BoardDto(
-   val boardId: String,
-   val nestId: Int?,
-   val title: String,
-   val status: DescribedEnumDto<BoardStatus>,
-   val createdAt: String,
-   val lastUploadedAt: String?
+data class BoardChannelDto(
+    val channelId: String,
+    val nestId: Int?,
+    val title: String,
+    val status: DescribedEnumDto<BoardStatus>,
+    val createdAt: String,
+    val lastUploadedAt: String?
 ) {
     
     companion object {
-        fun of(entity: Board): BoardDto {
+        fun of(entity: BoardChannel): BoardChannelDto {
             val formatText = "yyyy-MM-dd HH:mm:ss"
 
-            return BoardDto(
+            return BoardChannelDto(
                 entity.id!!.toString(),
                 entity.nestId,
                 entity.title!!,

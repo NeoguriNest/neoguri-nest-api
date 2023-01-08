@@ -18,8 +18,8 @@ open class BoardPost {
     @Column(name = "nest_id", nullable = false)
     open var nestId: Int? = null
 
-    @Column(name = "board_id", nullable = false)
-    open var boardId: String? = null
+    @Column(name = "channel_id", nullable = false)
+    open var channelId: String? = null
 
     @Column(name = "user_id")
     open var userId: Int? = null
@@ -44,12 +44,12 @@ open class BoardPost {
     open var updatedAt: Instant? = null
 
     companion object {
-        fun create(boardPostAddDto: BoardPostAddDto, board: Board, actor: BoardPostActorDto?): BoardPost {
+        fun create(boardPostAddDto: BoardPostAddDto, channel: BoardChannel, actor: BoardPostActorDto?): BoardPost {
             val entity = BoardPost()
 
             entity.id = StringGenerator.getUuid(false)
-            entity.boardId = board.id
-            entity.nestId = board.nestId
+            entity.channelId = channel.id
+            entity.nestId = channel.nestId
             entity.userId = actor?.id
             entity.title = boardPostAddDto.title
             entity.content = boardPostAddDto.content
@@ -61,10 +61,11 @@ open class BoardPost {
         }
     }
 
-    fun update(boardPostUpdateDto: BoardPostUpdateDto, board: Board, hashTags: List<BoardPostHashtag>) {
-        this.boardId = board.id
+    fun update(boardPostUpdateDto: BoardPostUpdateDto, channel: BoardChannel, hashTags: List<BoardPostHashtag>) {
+        this.channelId = channel.id
         this.title = boardPostUpdateDto.title
         this.content = boardPostUpdateDto.content
         this.hashTags = hashTags.toMutableList()
+        this.updatedAt = Instant.now()
     }
 }
