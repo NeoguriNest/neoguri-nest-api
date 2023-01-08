@@ -5,23 +5,28 @@ import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostActorDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostAddUseCaseInterface
+//import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostGetManyUseCaseInterface
+//import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.configuration.security.dto.AccessTokenAuthentication
+import com.neoguri.neogurinest.api.domain.board.exception.BoardNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.presentation.BaseController
 import com.neoguri.neogurinest.api.presentation.exception.BadRequestException
 import com.neoguri.neogurinest.api.presentation.exception.ConflictException
+import com.neoguri.neogurinest.api.presentation.exception.NotFoundException
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.net.URI
+import javax.persistence.EntityNotFoundException
 
 @RestController
-@RequestMapping("/api/boards/{boardId}")
+@RequestMapping("/api/board/posts")
 class BoardPostController(
     val add: BoardPostAddUseCaseInterface,
-//    val updateStatus: BoardStatusUpdateUseCaseInterface
+//    val getMany: BoardPostGetManyUseCaseInterface,
+    val update: BoardPostUpdateUseCaseInterface,
+//    val statusUpdate: BoardPostStatusUpdateUseCaseInterface
 ) : BaseController() {
 
     @PostMapping("/posts")
@@ -48,22 +53,34 @@ class BoardPostController(
         return try {
             val boardPost = add.execute(boardPostAddDto, actor)
             ResponseEntity
-                .created(URI("/api/boards/${boardPost.boardId}/posts/${boardPost.postId}"))
+                .created(URI("/api/board/posts/${boardPost.postId}"))
                 .body(boardPost)
         } catch (e: DuplicatedEntityException) {
             throw ConflictException(e.message!!)
         }
     }
 
-//    @PutMapping("/posts/{postId}/status")
-//    fun updateStatus(@RequestBody boardStatusUpdateDto: BoardStatusUpdateDto): ResponseEntity<BoardDto> {
+    @PutMapping("/{postId}")
+    fun update(@RequestBody boardPostUpdateDto: BoardPostUpdateDto): ResponseEntity<BoardPostDto> {
+
+        return try {
+            ResponseEntity.ok(update.execute(boardPostUpdateDto))
+        } catch (e: EntityNotFoundException) {
+            throw NotFoundException(e.message!!)
+        } catch (e: BoardNotAvailableStatusException) {
+            throw BadRequestException(e.message!!)
+        }
+    }
+
+//    @PatchMapping("/{postId}/status")
+//    fun updateStatus(@RequestBody boardPostStatusUpdateDto: BoardPostStatusUpdateDto): ResponseEntity<BoardPostDto> {
 //
 //        return try {
-//            ResponseEntity.ok(updateStatus.execute(boardStatusUpdateDto))
-//        } catch (e: BoardStatusNotConvertableException) {
+//            ResponseEntity.ok(statusUpdate.execute(boardPostStatusUpdateDto))
+//        } catch (e: EntityNotFoundException) {
+//            throw NotFoundException(e.message!!)
+//        } catch (e: BoardNotAvailableStatusException) {
 //            throw BadRequestException(e.message!!)
-//        } catch (e: StatusAlreadyChangedException) {
-//            throw ConflictException(e.message!!)
 //        }
 //    }
 }

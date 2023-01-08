@@ -31,9 +31,6 @@ open class BoardPost {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
-    open var hashTags: MutableList<BoardPostHashtag> = mutableListOf()
-
     @Column(name = "status", nullable = false)
     open var status: BoardPostStatus? = null
 
@@ -42,6 +39,16 @@ open class BoardPost {
 
     @Column(name = "updated_at")
     open var updatedAt: Instant? = null
+
+    /**
+     * relations
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "board_id", nullable = false)
+    open var channel: BoardChannel? = null
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    open var hashTags: MutableList<BoardPostHashtag> = mutableListOf()
 
     companion object {
         fun create(boardPostAddDto: BoardPostAddDto, channel: BoardChannel, actor: BoardPostActorDto?): BoardPost {
@@ -66,6 +73,11 @@ open class BoardPost {
         this.title = boardPostUpdateDto.title
         this.content = boardPostUpdateDto.content
         this.hashTags = hashTags.toMutableList()
+        this.updatedAt = Instant.now()
+    }
+
+    fun updateStatus(status: BoardPostStatus) {
+        this.status = status
         this.updatedAt = Instant.now()
     }
 }
