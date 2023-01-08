@@ -24,7 +24,7 @@ class TermAndAgreementTypeAttributeConverter : AttributeConverter<TermAndAgreeme
         return if (dbData === null) {
             throw UnexpectedStatusException()
         } else {
-            TermAndAgreementType.values().first { it.value === dbData }
+            TermAndAgreementType.values().first { it.value == dbData }
         }
     }
 }

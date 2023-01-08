@@ -10,21 +10,21 @@ enum class Gender(val value: String) {
 }
 
 @Converter(autoApply = true)
-class GenderAttributeConverter : AttributeConverter<Gender, String> {
+class GenderAttributeConverter : AttributeConverter<Gender?, String> {
 
-    override fun convertToDatabaseColumn(attribute: Gender?): String {
+    override fun convertToDatabaseColumn(attribute: Gender?): String? {
         return if (attribute === null) {
-            "X"
+            null
         } else {
-            attribute.value
+            return attribute.value
         }
     }
 
-    override fun convertToEntityAttribute(dbData: String?): Gender {
+    override fun convertToEntityAttribute(dbData: String?): Gender? {
         return if (dbData === null) {
-            Gender.NONE
+            null
         } else {
-            Gender.values().first { it.value === dbData }
+            Gender.values().first { it.value == dbData }
         }
     }
 }

@@ -23,7 +23,7 @@ class UserFileTypeAttributeConverter : AttributeConverter<UserFileType, String> 
         return if (dbData === null) {
             throw UnexpectedStatusException()
         } else {
-            UserFileType.values().first { it.value === dbData }
+            UserFileType.values().first { it.value == dbData }
         }
     }
 }
