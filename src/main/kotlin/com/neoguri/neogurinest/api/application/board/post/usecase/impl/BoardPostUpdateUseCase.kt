@@ -5,14 +5,15 @@ import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.entity.BoardHashtag
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPostHashtag
-import com.neoguri.neogurinest.api.domain.board.exception.BoardNotAvailableStatusException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardHashtagEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import javax.persistence.EntityNotFoundException
 
 @Service
 class BoardPostUpdateUseCase(
@@ -21,7 +22,7 @@ class BoardPostUpdateUseCase(
     val boardPostRepository: BoardPostEntityRepositoryInterface
 ) : BoardPostUpdateUseCaseInterface {
 
-    @Throws(EntityNotFoundException::class, BoardNotAvailableStatusException::class)
+    @Throws(BoardChannelNotFoundException::class, BoardPostNotFoundException::class, BoardChannelNotAvailableStatusException::class)
     override fun execute(updateDto: BoardPostUpdateDto): BoardPostDto {
 
         val closure =
@@ -33,7 +34,7 @@ class BoardPostUpdateUseCase(
                 val targetBoardId = updateDto.boardId ?: post.channelId
                 val board = boardRepository.findByIdOrFail(targetBoardId!!)
                 if (!board.isPostAddable()) {
-                    throw BoardNotAvailableStatusException()
+                    throw BoardChannelNotAvailableStatusException()
                 }
 
                 val registeredHashtags = boardHashtagRepository.findByNameIn(updateDto.hashTags)

@@ -8,14 +8,14 @@ import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostAddUs
 import com.neoguri.neogurinest.api.domain.board.entity.BoardHashtag
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPostHashtag
-import com.neoguri.neogurinest.api.domain.board.exception.BoardNotAvailableStatusException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardHashtagEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import javax.persistence.EntityNotFoundException
 
 @Service
 class BoardPostAddUseCase(
@@ -27,12 +27,12 @@ class BoardPostAddUseCase(
 
     @Retryable(maxAttempts = 3)
     @Transactional
-    @Throws(EntityNotFoundException::class, BoardNotAvailableStatusException::class)
+    @Throws(BoardChannelNotFoundException::class, BoardChannelNotAvailableStatusException::class)
     override fun execute(addDto: BoardPostAddDto, actor: BoardPostActorDto?): BoardPostDto {
 
         val board = boardRepository.findByIdOrFail(addDto.boardId)
         if (!board.isPostAddable()) {
-            throw BoardNotAvailableStatusException()
+            throw BoardChannelNotAvailableStatusException()
         }
 
         val registeredHashtags = boardHashtagRepository.findByNameIn(addDto.hashTags)

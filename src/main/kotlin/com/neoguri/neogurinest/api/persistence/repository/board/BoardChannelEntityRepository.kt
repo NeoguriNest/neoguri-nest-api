@@ -1,10 +1,10 @@
 package com.neoguri.neogurinest.api.persistence.repository.board
 
 import com.neoguri.neogurinest.api.domain.board.entity.BoardChannel
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.jpa.BoardChannelRepositoryInterface
 import org.springframework.stereotype.Repository
-import javax.persistence.EntityNotFoundException
 
 @Repository
 class BoardChannelEntityRepository(
@@ -20,6 +20,6 @@ class BoardChannelEntityRepository(
     }
 
     override fun findByIdOrFail(id: String): BoardChannel {
-        return findById(id) ?: throw EntityNotFoundException()
+        return findById(id) ?: throw BoardChannelNotFoundException()
     }
 }

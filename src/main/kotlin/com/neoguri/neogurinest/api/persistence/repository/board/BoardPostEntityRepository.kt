@@ -1,6 +1,7 @@
 package com.neoguri.neogurinest.api.persistence.repository.board
 
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
+import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.jpa.BoardPostHashtagRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.jpa.BoardPostRepositoryInterface
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Repository
-import javax.persistence.EntityNotFoundException
 
 @Repository
 class BoardPostEntityRepository(
@@ -32,7 +32,7 @@ class BoardPostEntityRepository(
     }
 
     override fun findByIdOrFail(id: String): BoardPost {
-        return findById(id) ?: throw EntityNotFoundException()
+        return findById(id) ?: throw BoardPostNotFoundException()
     }
 
     override fun findBySpecification(

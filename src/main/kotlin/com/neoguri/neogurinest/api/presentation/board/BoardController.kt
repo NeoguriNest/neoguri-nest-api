@@ -5,7 +5,7 @@ import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpda
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
 import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardAddUseCaseInterface
 import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardStatusUpdateUseCaseInterface
-import com.neoguri.neogurinest.api.domain.board.exception.BoardStatusNotConvertableException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
 import com.neoguri.neogurinest.api.presentation.BaseController
@@ -43,7 +43,7 @@ class BoardController(
 
         return try {
             ResponseEntity.ok(updateStatus.execute(boardStatusUpdateDto))
-        } catch (e: BoardStatusNotConvertableException) {
+        } catch (e: BoardChannelStatusNotConvertableException) {
             throw BadRequestException(e.message!!)
         } catch (e: StatusAlreadyChangedException) {
             throw ConflictException(e.message!!)

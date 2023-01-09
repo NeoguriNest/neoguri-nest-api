@@ -1,5 +1,5 @@
 package com.neoguri.neogurinest.api.domain.board.exception
 
-class BoardNotAvailableStatusException : RuntimeException() {
+class BoardPostNotFoundException : RuntimeException() {
 
 }

@@ -3,7 +3,7 @@ package com.neoguri.neogurinest.api.application.board.channel.usecase.impl
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardStatusUpdateUseCaseInterface
-import com.neoguri.neogurinest.api.domain.board.exception.BoardStatusNotConvertableException
+import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
 import org.springframework.retry.annotation.Retryable
@@ -19,7 +19,7 @@ class BoardStatusUpdateUseCase(
     @Throws(
         EntityNotFoundException::class,
         StatusAlreadyChangedException::class,
-        BoardStatusNotConvertableException::class
+        BoardChannelStatusNotConvertableException::class
     )
     override fun execute(updateDto: BoardStatusUpdateDto): BoardChannelDto {
 
@@ -34,7 +34,7 @@ class BoardStatusUpdateUseCase(
                 }
 
                 if (!board.isStatusConvertable(updateDto.status)) {
-                    throw BoardStatusNotConvertableException()
+                    throw BoardChannelStatusNotConvertableException()
                 }
 
                 board.status = updateDto.status
