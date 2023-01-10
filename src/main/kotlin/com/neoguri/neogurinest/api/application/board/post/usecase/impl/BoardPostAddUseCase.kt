@@ -30,7 +30,7 @@ class BoardPostAddUseCase(
     @Throws(BoardChannelNotFoundException::class, BoardChannelNotAvailableStatusException::class)
     override fun execute(addDto: BoardPostAddDto, actor: BoardPostActorDto?): BoardPostDto {
 
-        val board = boardRepository.findByIdOrFail(addDto.boardId)
+        val board = boardRepository.findByIdOrFail(addDto.channelId)
         if (!board.isPostAddable()) {
             throw BoardChannelNotAvailableStatusException()
         }

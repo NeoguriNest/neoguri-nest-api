@@ -18,7 +18,7 @@ open class BoardPost {
     @Column(name = "nest_id", nullable = false)
     open var nestId: Int? = null
 
-    @Column(name = "channel_id", nullable = false)
+    @Column(name = "channel_id", nullable = false, insertable = false, updatable = false)
     open var channelId: String? = null
 
     @Column(name = "user_id")
@@ -43,8 +43,8 @@ open class BoardPost {
     /**
      * relations
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "board_id", nullable = false)
+    @ManyToOne(targetEntity = BoardChannel::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "channel_id", nullable = false)
     open var channel: BoardChannel? = null
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
@@ -55,7 +55,7 @@ open class BoardPost {
             val entity = BoardPost()
 
             entity.id = StringGenerator.getUuid(false)
-            entity.channelId = channel.id
+            entity.channel = channel
             entity.nestId = channel.nestId
             entity.userId = actor?.id
             entity.title = boardPostAddDto.title
@@ -69,7 +69,7 @@ open class BoardPost {
     }
 
     fun update(boardPostUpdateDto: BoardPostUpdateDto, channel: BoardChannel, hashTags: List<BoardPostHashtag>) {
-        this.channelId = channel.id
+        this.channel = channel
         this.title = boardPostUpdateDto.title
         this.content = boardPostUpdateDto.content
         this.hashTags = hashTags.toMutableList()

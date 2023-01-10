@@ -25,7 +25,7 @@ data class BoardPostDto(
             return BoardPostDto(
                 entity.id!!.toString(),
                 entity.nestId,
-                entity.channelId!!,
+                entity.channel!!.id!!,
                 entity.title!!,
                 entity.content!!,
                 DescribedEnumDto<BoardPostStatus>(

@@ -31,7 +31,7 @@ class BoardPostUpdateUseCase(
             fun(updateDto: BoardPostUpdateDto): BoardPostDto {
                 val post = boardPostRepository.findByIdOrFail(updateDto.postId)
 
-                val targetBoardId = updateDto.boardId ?: post.channelId
+                val targetBoardId = updateDto.boardId ?: post.channel!!.id
                 val board = boardRepository.findByIdOrFail(targetBoardId!!)
                 if (!board.isPostAddable()) {
                     throw BoardChannelNotAvailableStatusException()

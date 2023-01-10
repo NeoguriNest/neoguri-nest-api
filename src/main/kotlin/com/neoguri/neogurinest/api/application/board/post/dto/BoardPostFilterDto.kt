@@ -4,7 +4,7 @@ import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
 import com.neoguri.neogurinest.api.persistence.specification.RangeInstant
 
 data class BoardPostFilterDto(
-    val boardId: String,
+    val channelId: String,
     val status: BoardPostStatus?,
     val title: String?,
     val content: String?,
