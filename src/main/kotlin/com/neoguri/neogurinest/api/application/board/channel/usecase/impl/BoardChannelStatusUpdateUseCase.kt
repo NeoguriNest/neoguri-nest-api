@@ -2,7 +2,7 @@ package com.neoguri.neogurinest.api.application.board.channel.usecase.impl
 
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelStatusUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityNotFoundException
 
 @Service
-class BoardStatusUpdateUseCase(
+class BoardChannelStatusUpdateUseCase(
     val boardRepository: BoardChannelEntityRepositoryInterface
-) : BoardStatusUpdateUseCaseInterface {
+) : BoardChannelStatusUpdateUseCaseInterface {
 
     @Throws(
         EntityNotFoundException::class,

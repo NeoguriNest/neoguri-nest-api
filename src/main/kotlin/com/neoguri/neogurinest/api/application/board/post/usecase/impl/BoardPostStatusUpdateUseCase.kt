@@ -4,7 +4,6 @@ import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostStatusUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.entity.BoardHashtag
-import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostCannotUpdateException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException

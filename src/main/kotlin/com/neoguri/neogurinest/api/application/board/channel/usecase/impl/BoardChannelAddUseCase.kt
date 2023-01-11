@@ -2,7 +2,7 @@ package com.neoguri.neogurinest.api.application.board.channel.usecase.impl
 
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardAddUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelAddUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.entity.BoardChannel
 import com.neoguri.neogurinest.api.domain.board.repository.BoardChannelEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class BoardAddUseCase(
+class BoardChannelAddUseCase(
     val boardRepository: BoardChannelEntityRepositoryInterface
-) : BoardAddUseCaseInterface {
+) : BoardChannelAddUseCaseInterface {
 
     @Throws(DuplicatedEntityException::class)
     override fun execute(addDto: BoardAddDto): BoardChannelDto {

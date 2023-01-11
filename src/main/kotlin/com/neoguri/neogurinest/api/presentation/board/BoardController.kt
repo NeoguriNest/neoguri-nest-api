@@ -3,8 +3,8 @@ package com.neoguri.neogurinest.api.presentation.board
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardAddUseCaseInterface
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelAddUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelStatusUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
@@ -18,8 +18,8 @@ import java.net.URI
 @RestController
 @RequestMapping("/api/board/channels")
 class BoardController(
-    val add: BoardAddUseCaseInterface,
-    val updateStatus: BoardStatusUpdateUseCaseInterface
+    val add: BoardChannelAddUseCaseInterface,
+    val updateStatus: BoardChannelStatusUpdateUseCaseInterface
 ) : BaseController() {
 
     @PostMapping("")
