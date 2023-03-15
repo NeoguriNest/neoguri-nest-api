@@ -4,4 +4,6 @@ import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
-interface BoardPostRepositoryInterface : JpaRepository<BoardPost, String>, JpaSpecificationExecutor<BoardPost> {}
+interface BoardPostRepositoryInterface : JpaRepository<BoardPost, String>, JpaSpecificationExecutor<BoardPost> {
+
+}

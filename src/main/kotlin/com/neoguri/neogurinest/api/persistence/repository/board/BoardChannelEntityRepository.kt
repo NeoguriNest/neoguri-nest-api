@@ -25,7 +25,7 @@ class BoardChannelEntityRepository(
         return findById(id) ?: throw BoardChannelNotFoundException()
     }
 
-    override fun findBySpecification(specification: Specification<BoardChannel>, limit: Int?): List<BoardChannel> {
+    override fun findBySpecification(specification: Specification<BoardChannel>?, limit: Int?): List<BoardChannel> {
         return boardRepository.findAll(specification, Pageable.ofSize(limit ?: 100)).toList()
     }
 }

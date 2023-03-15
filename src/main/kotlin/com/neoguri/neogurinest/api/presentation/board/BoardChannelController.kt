@@ -3,7 +3,10 @@ package com.neoguri.neogurinest.api.presentation.board
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
+import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelFilterDto
 import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelAddUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelGetManyUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelGetUseCaseInterface
 import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelStatusUpdateUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
@@ -17,10 +20,24 @@ import java.net.URI
 
 @RestController
 @RequestMapping("/api/board/channels")
-class BoardController(
+class BoardChannelController(
+    val get: BoardChannelGetUseCaseInterface,
+    val getMany: BoardChannelGetManyUseCaseInterface,
     val add: BoardChannelAddUseCaseInterface,
     val updateStatus: BoardChannelStatusUpdateUseCaseInterface
 ) : BaseController() {
+
+    @GetMapping("/{channelId}")
+    fun get(@PathVariable("channelId") channelId: String): ResponseEntity<BoardChannelDto> {
+
+        return ResponseEntity.ok().body(get.execute(channelId))
+    }
+
+    @GetMapping("")
+    fun getMany(filterDto: BoardChannelFilterDto): ResponseEntity<List<BoardChannelDto>> {
+
+        return ResponseEntity.ok().body(getMany.execute(filterDto))
+    }
 
     @PostMapping("")
     fun add(@RequestBody boardAddDto: BoardAddDto): ResponseEntity<BoardChannelDto> {
