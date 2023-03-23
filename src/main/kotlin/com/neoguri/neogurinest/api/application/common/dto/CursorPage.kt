@@ -8,8 +8,8 @@ data class CursorPage<T>(
     val total: Int
 ) {
     companion object {
-        fun <T> empty(): CursorPage<T> {
-            return CursorPage(emptyList(), emptyList(), 0)
+        fun <T> emptyPage(total: Int): CursorPage<T> {
+            return CursorPage(emptyList(), emptyList(), total)
         }
     }
 }

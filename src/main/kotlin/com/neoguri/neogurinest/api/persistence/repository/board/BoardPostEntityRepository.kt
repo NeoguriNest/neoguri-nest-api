@@ -59,11 +59,15 @@ class BoardPostEntityRepository(
         val cursors = cursorRequest.cursors
         val cursorSpec = CursorSpecificationBuilder<BoardPost>().build(cursors)
 
-        val count = countBySpecification(cursorRequest.specification)
-        return if (count < 1) {
-            CursorPage.empty()
+        val filterSpec = cursorRequest.specification
+        val specification = combineSpecifications(cursorSpec, filterSpec)
+        val totalCount = countBySpecification(filterSpec)
+        val cursorCount = countBySpecification(specification)
+
+        return if (cursorCount < 1) {
+            CursorPage.emptyPage(totalCount)
         } else {
-            val specification = combineSpecifications(cursorSpec, cursorRequest.specification)
+
             val page = repository.findAll(specification, cursorRequest.page)
 
             val newCursor =
@@ -75,7 +79,7 @@ class BoardPostEntityRepository(
                     }
                 ).fromEntity(page.last())
 
-            CursorPage(newCursor, page.toList(), count)
+            CursorPage(newCursor, page.toList(), totalCount)
         }
     }
 
