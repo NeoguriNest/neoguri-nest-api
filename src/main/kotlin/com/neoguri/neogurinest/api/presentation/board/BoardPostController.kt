@@ -10,7 +10,6 @@ import com.neoguri.neogurinest.api.configuration.security.dto.AccessTokenAuthent
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
-import com.neoguri.neogurinest.api.domain.common.Cursor
 import com.neoguri.neogurinest.api.domain.common.CursorStringParser
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.presentation.BaseController
@@ -23,7 +22,6 @@ import com.neoguri.neogurinest.api.util.Decoder
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
-import javax.annotation.Resource
 
 @RestController
 @RequestMapping("/api/board/posts")
@@ -54,8 +52,8 @@ class BoardPostController(
             ResponseEntity
                 .ok()
                 .body(payload)
-        } catch (e: DuplicatedEntityException) {
-            throw ConflictException(e.message!!)
+        } catch (e: BoardPostNotFoundException) {
+            throw NotFoundException(postId)
         }
     }
 
@@ -78,6 +76,7 @@ class BoardPostController(
             cursorPaginationRequest.size
         )
 
+        // TODO: 정렬 조건 적용
         val order = OrderDtoBuilder(cursorPaginationRequest.order).build()
 
         return try {
