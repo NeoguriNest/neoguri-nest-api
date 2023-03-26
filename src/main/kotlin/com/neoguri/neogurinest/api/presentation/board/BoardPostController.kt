@@ -1,6 +1,7 @@
 package com.neoguri.neogurinest.api.presentation.board
 
 import com.neoguri.neogurinest.api.application.auth.dto.LoginUserDto
+import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.*
 import com.neoguri.neogurinest.api.application.board.post.usecase.*
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginatedResultDto
@@ -40,11 +41,11 @@ class BoardPostController(
         authentication: AccessTokenAuthentication?
     ): ResponseEntity<BoardPostDto> {
 
-        val actor: BoardPostActorDto? =
+        val actor: BoardActor? =
             if (authentication == null) {
                 null
             } else {
-                BoardPostActorDto((authentication.details as LoginUserDto).userId)
+                BoardActor((authentication.details as LoginUserDto).userId)
             }
 
         return try {
@@ -64,11 +65,11 @@ class BoardPostController(
         authentication: AccessTokenAuthentication?
     ): ResponseEntity<CursorPaginatedResultDto<BoardPostDto>> {
 
-        val actor: BoardPostActorDto? =
+        val actor: BoardActor? =
             if (authentication == null) {
                 null
             } else {
-                BoardPostActorDto((authentication.details as LoginUserDto).userId)
+                BoardActor((authentication.details as LoginUserDto).userId)
             }
 
         val cursorPaginationDto = CursorPaginationDto(
@@ -103,11 +104,11 @@ class BoardPostController(
         }
 
 
-        val actor: BoardPostActorDto? =
+        val actor: BoardActor? =
             if (authentication == null) {
                 null
             } else {
-                BoardPostActorDto((authentication.details as LoginUserDto).userId)
+                BoardActor((authentication.details as LoginUserDto).userId)
             }
 
         return try {

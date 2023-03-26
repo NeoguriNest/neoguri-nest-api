@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.application.board.post.usecase
 
-import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostActorDto
+import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
@@ -9,5 +9,5 @@ import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailab
 interface BoardPostAddUseCaseInterface {
 
     @Throws(BoardChannelNotFoundException::class, BoardChannelNotAvailableStatusException::class)
-    fun execute(addDto: BoardPostAddDto, actor: BoardPostActorDto?): BoardPostDto
+    fun execute(addDto: BoardPostAddDto, actor: BoardActor?): BoardPostDto
 }

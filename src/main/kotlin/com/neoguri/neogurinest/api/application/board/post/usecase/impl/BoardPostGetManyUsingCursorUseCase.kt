@@ -1,21 +1,17 @@
 package com.neoguri.neogurinest.api.application.board.post.usecase.impl
 
-import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostActorDto
+import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostFilterDto
 import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostGetManyUsingCursorUseCaseInterface
-import com.neoguri.neogurinest.api.application.common.dto.CursorPage
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginatedResultDto
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginationDto
-import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.CursorPageRequest
 import com.neoguri.neogurinest.api.persistence.specification.board.post.BoardPostSpecification
-import org.apache.logging.log4j.util.Base64Util
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Order
-import org.springframework.data.jpa.domain.Specification
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +24,7 @@ class BoardPostGetManyUsingCursorUseCase(
 
     @Retryable(maxAttempts = 3)
     @Transactional
-    override fun execute(filter: BoardPostFilterDto, pagination: CursorPaginationDto, actor: BoardPostActorDto?): CursorPaginatedResultDto<BoardPostDto> {
+    override fun execute(filter: BoardPostFilterDto, pagination: CursorPaginationDto, actor: BoardActor?): CursorPaginatedResultDto<BoardPostDto> {
 
         val filterSpec = BoardPostSpecification.of(filter)
 

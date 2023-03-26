@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.application.board.post.usecase.impl
 
-import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostActorDto
+import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.service.BoardServiceInterface
@@ -28,7 +28,7 @@ class BoardPostAddUseCase(
     @Retryable(maxAttempts = 3)
     @Transactional
     @Throws(BoardChannelNotFoundException::class, BoardChannelNotAvailableStatusException::class)
-    override fun execute(addDto: BoardPostAddDto, actor: BoardPostActorDto?): BoardPostDto {
+    override fun execute(addDto: BoardPostAddDto, actor: BoardActor?): BoardPostDto {
 
         val board = boardRepository.findByIdOrFail(addDto.channelId)
         if (!board.isPostAddable()) {

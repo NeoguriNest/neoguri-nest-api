@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.application.board.post.usecase.impl
 
-import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostActorDto
+import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostGetUseCaseInterface
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
@@ -14,7 +14,7 @@ class BoardPostGetUseCase(
 ): BoardPostGetUseCaseInterface {
 
     @Throws(BoardPostNotFoundException::class)
-    override fun execute(postId: String, actor: BoardPostActorDto?): BoardPostDto {
+    override fun execute(postId: String, actor: BoardActor?): BoardPostDto {
 
         return try {
             val post = boardPostRepository.findByIdOrFail(postId)
