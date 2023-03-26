@@ -7,7 +7,11 @@ import javax.persistence.Converter
 enum class BoardPostStatus(val value: Int) {
     DELETED(-2),
     BLOCKED(-1),
-    CREATED(0)
+    CREATED(0);
+
+    fun isCommentable(): Boolean {
+        return (arrayListOf(CREATED).firstOrNull { it.value == this.value } != null)
+    }
 }
 
 @Converter(autoApply = true)

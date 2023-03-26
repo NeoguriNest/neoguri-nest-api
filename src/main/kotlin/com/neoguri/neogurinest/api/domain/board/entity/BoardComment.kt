@@ -1,7 +1,9 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
+import com.neoguri.neogurinest.api.application.board.comment.dto.BoardCommentAddDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardCommentStatus
 import com.neoguri.neogurinest.api.domain.user.entity.User
+import com.neoguri.neogurinest.api.util.StringGenerator
 import java.time.Instant
 import javax.persistence.*
 
@@ -15,8 +17,8 @@ open class BoardComment {
     @Column(name = "nest_id")
     open var nestId: Int? = null
 
-    @Column(name = "board_id", nullable = false)
-    open var boardId: String? = null
+    @Column(name = "channel_id", nullable = false)
+    open var channelId: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
@@ -30,7 +32,7 @@ open class BoardComment {
     @Column(name = "content", nullable = false)
     open var content: String? = null
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     open var parent: BoardComment? = null
 
@@ -43,4 +45,20 @@ open class BoardComment {
     @Column(name = "updated_at")
     open var updatedAt: Instant? = null
 
+    companion object AddDto {
+        fun create(actor: User, addDto: BoardCommentAddDto, post: BoardPost, parent: BoardComment?): BoardComment {
+            val comment = BoardComment()
+            comment.id = StringGenerator.getUuid(false)
+            comment.nestId = post.nestId
+            comment.post = post
+            comment.channelId = post.channelId
+            comment.user = actor
+            comment.content = addDto.content
+            comment.parent = parent
+            comment.status = BoardCommentStatus.CREATED
+            comment.createdAt = Instant.now()
+
+            return comment
+        }
+    }
 }
