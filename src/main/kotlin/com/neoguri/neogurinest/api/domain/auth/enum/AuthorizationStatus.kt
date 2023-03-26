@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.domain.auth.enum;
 
-enum class AuthorizationStatus(value: Int) {
+enum class AuthorizationStatus(val value: Int) {
     EXPIRED(-1),
     AVAILABLE(1);
 }

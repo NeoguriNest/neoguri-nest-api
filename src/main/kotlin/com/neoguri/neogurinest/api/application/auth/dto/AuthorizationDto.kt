@@ -30,7 +30,8 @@ data class AuthorizationDto(
                     entity.status!!,
                     when (entity.status) {
                         AuthorizationStatus.AVAILABLE -> "활성화됨"
-                        else -> "만료됨"
+                        AuthorizationStatus.EXPIRED -> "만료됨"
+                        else -> "-"
                     }
                 )
             )

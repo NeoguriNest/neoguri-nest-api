@@ -1,6 +1,7 @@
 package com.neoguri.neogurinest.api.application.board.post.dto
 
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardHashtagDto
+import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.common.dto.DescribedEnumDto
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
 import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
@@ -14,7 +15,7 @@ data class BoardPostDto(
     val content: String,
     val status: DescribedEnumDto<BoardPostStatus>,
     val hashTags: List<BoardHashtagDto>,
-    val creator: BoardPostActorDto?,
+    val creator: BoardActor?,
     val createdAt: String
 ) {
 
@@ -38,7 +39,7 @@ data class BoardPostDto(
                     }
                 ),
                 entity.hashTags.map { BoardHashtagDto.of(it.hashTag!!) },
-                if (entity.userId != null) BoardPostActorDto(entity.userId!!) else null,
+                if (entity.userId != null) BoardActor(entity.userId!!) else null,
                 DateFormatUtil.format(dateFormat, entity.createdAt!!)
             )
         }

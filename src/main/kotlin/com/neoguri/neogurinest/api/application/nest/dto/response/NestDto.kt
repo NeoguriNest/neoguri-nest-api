@@ -25,14 +25,14 @@ data class NestDto(
                 entity.title!!,
                 entity.city!!,
                 entity.district!!,
-                DescribedEnumDto<NestStatus>(
+                DescribedEnumDto(
                     entity.status!!,
                     when (entity.status) {
                         NestStatus.ACTIVATED -> "승인"
                         NestStatus.DELETED -> "삭제"
                         NestStatus.CREATED -> "승인대기"
                         NestStatus.SUSPENDED -> "일시차단"
-                        else -> "비공개"
+                        else -> "-"
                     }
                 ),
                 DateFormatUtil.format(formatText, entity.createdAt!!),
