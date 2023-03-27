@@ -4,8 +4,8 @@ import com.neoguri.neogurinest.api.application.user.dto.request.UserAddDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserExistenceCheckDto
 import com.neoguri.neogurinest.api.application.user.dto.response.UserDto
 import com.neoguri.neogurinest.api.application.user.dto.response.UserExistenceDto
-import com.neoguri.neogurinest.api.application.user.usecase.UserAddUseCaseInterface
-import com.neoguri.neogurinest.api.application.user.usecase.UserExistenceCheckUseCaseInterface
+import com.neoguri.neogurinest.api.application.user.usecase.UserAddUseCase
+import com.neoguri.neogurinest.api.application.user.usecase.UserExistenceCheckUseCase
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.presentation.exception.ConflictException
 import org.springframework.http.ResponseEntity
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/users")
 @RestController
 class UserController(
-    val userExistenceCheck: UserExistenceCheckUseCaseInterface,
-    val userAdd: UserAddUseCaseInterface,
+    val userExistenceCheck: UserExistenceCheckUseCase,
+    val userAdd: UserAddUseCase,
 ) {
 
     /**

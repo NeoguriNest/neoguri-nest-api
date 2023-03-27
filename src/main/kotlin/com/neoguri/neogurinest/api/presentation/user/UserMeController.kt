@@ -4,9 +4,9 @@ import com.neoguri.neogurinest.api.application.user.dto.request.UserAddressUpdat
 import com.neoguri.neogurinest.api.application.user.dto.request.UserNestAddDto
 import com.neoguri.neogurinest.api.application.user.dto.request.UserProfileUpdateDto
 import com.neoguri.neogurinest.api.application.user.dto.response.UserDto
-import com.neoguri.neogurinest.api.application.user.usecase.UserAddressUpdateUseCaseInterface
-import com.neoguri.neogurinest.api.application.user.usecase.UserNestAddUseCaseInterface
-import com.neoguri.neogurinest.api.application.user.usecase.UserProfileUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.user.usecase.UserAddressUpdateUseCase
+import com.neoguri.neogurinest.api.application.user.usecase.UserNestAddUseCase
+import com.neoguri.neogurinest.api.application.user.usecase.UserProfileUpdateUseCase
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.presentation.BaseController
 import com.neoguri.neogurinest.api.presentation.exception.ConflictException
@@ -19,9 +19,9 @@ import javax.persistence.EntityNotFoundException
 @RestController
 @RequestMapping("/api/users/me")
 class UserMeController(
-    val userAddressUpdate: UserAddressUpdateUseCaseInterface,
-    val userNestAdd: UserNestAddUseCaseInterface,
-    val userProfileUpdate: UserProfileUpdateUseCaseInterface
+    val userAddressUpdate: UserAddressUpdateUseCase,
+    val userNestAdd: UserNestAddUseCase,
+    val userProfileUpdate: UserProfileUpdateUseCase
 ) : BaseController() {
 
     /**

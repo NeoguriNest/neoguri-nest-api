@@ -27,12 +27,12 @@ import java.net.URI
 @RestController
 @RequestMapping("/api/board/posts")
 class BoardPostController(
-    val add: BoardPostAddUseCaseInterface,
-    val get: BoardPostGetUseCaseInterface,
-    val getManyUsingCursorPagination: BoardPostGetManyUsingCursorUseCaseInterface,
+    val add: BoardPostAddUseCase,
+    val get: BoardPostGetUseCase,
+    val getManyUsingCursorPagination: BoardPostGetManyUsingCursorUseCase,
     val cursorStringParser: CursorStringParser,
-    val update: BoardPostUpdateUseCaseInterface,
-    val statusUpdate: BoardPostStatusUpdateUseCaseInterface
+    val update: BoardPostUpdateUseCase,
+    val statusUpdate: BoardPostStatusUpdateUseCase
 ) : BaseController() {
 
     @GetMapping("{postId}")

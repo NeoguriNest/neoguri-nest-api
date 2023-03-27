@@ -4,10 +4,10 @@ import com.neoguri.neogurinest.api.application.board.channel.dto.BoardAddDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardStatusUpdateDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelDto
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardChannelFilterDto
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelAddUseCaseInterface
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelGetManyUseCaseInterface
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelGetUseCaseInterface
-import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelStatusUpdateUseCaseInterface
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelAddUseCase
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelGetManyUseCase
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelGetUseCase
+import com.neoguri.neogurinest.api.application.board.channel.usecase.BoardChannelStatusUpdateUseCase
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelStatusNotConvertableException
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.domain.common.exception.StatusAlreadyChangedException
@@ -21,10 +21,10 @@ import java.net.URI
 @RestController
 @RequestMapping("/api/board/channels")
 class BoardChannelController(
-    val get: BoardChannelGetUseCaseInterface,
-    val getMany: BoardChannelGetManyUseCaseInterface,
-    val add: BoardChannelAddUseCaseInterface,
-    val updateStatus: BoardChannelStatusUpdateUseCaseInterface
+    val get: BoardChannelGetUseCase,
+    val getMany: BoardChannelGetManyUseCase,
+    val add: BoardChannelAddUseCase,
+    val updateStatus: BoardChannelStatusUpdateUseCase
 ) : BaseController() {
 
     @GetMapping("/{channelId}")

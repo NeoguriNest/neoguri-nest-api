@@ -3,8 +3,8 @@ package com.neoguri.neogurinest.api.presentation.auth
 import com.neoguri.neogurinest.api.application.auth.dto.AuthorizationDto
 import com.neoguri.neogurinest.api.application.auth.dto.LoginDto
 import com.neoguri.neogurinest.api.application.auth.dto.RefreshDto
-import com.neoguri.neogurinest.api.application.auth.usecase.LoginUseCaseInterface
-import com.neoguri.neogurinest.api.application.auth.usecase.RefreshUseCaseInterface
+import com.neoguri.neogurinest.api.application.auth.usecase.LoginUseCase
+import com.neoguri.neogurinest.api.application.auth.usecase.RefreshUseCase
 import com.neoguri.neogurinest.api.domain.auth.exception.RefreshTokenExpiredException
 import com.neoguri.neogurinest.api.domain.auth.exception.UsernameOrPasswordNotMatchedException
 import com.neoguri.neogurinest.api.presentation.BaseController
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
-    val login: LoginUseCaseInterface,
-    val refresh: RefreshUseCaseInterface
+    val login: LoginUseCase,
+    val refresh: RefreshUseCase
 ): BaseController() {
 
     /**
