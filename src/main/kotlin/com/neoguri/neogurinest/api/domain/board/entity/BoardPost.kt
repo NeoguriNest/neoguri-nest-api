@@ -4,6 +4,7 @@ import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostUpdateDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
+import com.neoguri.neogurinest.api.domain.user.entity.User
 import com.neoguri.neogurinest.api.util.StringGenerator
 import java.time.Instant
 import javax.persistence.*
@@ -21,7 +22,7 @@ open class BoardPost {
     @Column(name = "channel_id", nullable = false, insertable = false, updatable = false)
     open var channelId: String? = null
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     open var userId: Int? = null
 
     @Column(name = "title", nullable = false)
@@ -43,6 +44,10 @@ open class BoardPost {
     /**
      * relations
      */
+    @ManyToOne(targetEntity = User::class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    open var user: User? = null
+
     @ManyToOne(targetEntity = BoardChannel::class, fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id", nullable = false)
     open var channel: BoardChannel? = null
