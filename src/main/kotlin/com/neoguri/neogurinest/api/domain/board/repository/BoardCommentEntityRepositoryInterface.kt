@@ -4,6 +4,8 @@ import com.neoguri.neogurinest.api.application.common.dto.CursorPage
 import com.neoguri.neogurinest.api.domain.board.entity.BoardComment
 import com.neoguri.neogurinest.api.domain.common.CursorPageRequest
 import com.neoguri.neogurinest.api.domain.common.repository.AggregateRootRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
@@ -14,7 +16,7 @@ interface BoardCommentEntityRepositoryInterface : AggregateRootRepository<BoardC
 
     fun findBySpecification(
         specification: Specification<BoardComment>,
-        order: Sort.Order,
+        order: Sort,
         limit: Int
     ): List<BoardComment>
 
@@ -23,5 +25,10 @@ interface BoardCommentEntityRepositoryInterface : AggregateRootRepository<BoardC
     fun findBySpecificationUsingCursorPagination(
         cursorRequest: CursorPageRequest<BoardComment>
     ): CursorPage<BoardComment>
+
+    fun findBySpecificationUsingPagination(
+        specification: Specification<BoardComment>?,
+        pageRequest: PageRequest
+    ): Page<BoardComment>
 
 }

@@ -9,6 +9,8 @@ import com.neoguri.neogurinest.api.domain.common.Cursor
 import com.neoguri.neogurinest.api.domain.common.CursorBuilder
 import com.neoguri.neogurinest.api.domain.common.CursorPageRequest
 import com.neoguri.neogurinest.api.persistence.specification.CursorSpecificationBuilder
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Repository
@@ -34,11 +36,11 @@ class BoardCommentEntityRepository(
 
     override fun findBySpecification(
         specification: Specification<BoardComment>,
-        order: Sort.Order,
+        order: Sort,
         limit: Int
     ): List<BoardComment> {
 
-        return repository.findAll(specification, Sort.by(order))
+        return repository.findAll(specification, order)
     }
 
     override fun countBySpecification(specification: Specification<BoardComment>?): Int {
@@ -76,6 +78,14 @@ class BoardCommentEntityRepository(
             CursorPage(newCursor, page.toList(), totalCount)
         }
     }
+
+    override fun findBySpecificationUsingPagination(
+        specification: Specification<BoardComment>?,
+        pageRequest: PageRequest
+    ): Page<BoardComment> {
+        return repository.findAll(specification, pageRequest)
+    }
+
 
     private fun combineSpecifications(vararg specs: Specification<BoardComment>?): Specification<BoardComment>? {
         return if (specs.filterNotNull().isEmpty()) {

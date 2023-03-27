@@ -20,21 +20,12 @@ open class BoardComment {
     @Column(name = "channel_id", nullable = false)
     open var channelId: String? = null
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    open var post: BoardPost? = null
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    open var user: User? = null
+    @Column(name = "post_id", nullable = false, insertable = false, updatable = false)
+    open var postId: String? = null
 
     @Lob
     @Column(name = "content", nullable = false)
     open var content: String? = null
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    open var parent: BoardComment? = null
 
     @Column(name = "status", nullable = false)
     open var status: BoardCommentStatus? = null
@@ -45,7 +36,27 @@ open class BoardComment {
     @Column(name = "updated_at")
     open var updatedAt: Instant? = null
 
-    companion object AddDto {
+    /**
+     * relations
+     */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    open var post: BoardPost? = null
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    open var user: User? = null
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    open var parent: BoardComment? = null
+
+    fun updateContent(newContent: String) {
+        this.content = newContent
+        this.updatedAt = Instant.now()
+    }
+
+    companion object {
         fun create(actor: User, addDto: BoardCommentAddDto, post: BoardPost, parent: BoardComment?): BoardComment {
             val comment = BoardComment()
             comment.id = StringGenerator.getUuid(false)
