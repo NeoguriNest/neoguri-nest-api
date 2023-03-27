@@ -4,8 +4,10 @@ import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostFilterDto
 import com.neoguri.neogurinest.api.application.board.post.usecase.BoardPostGetManyUsingCursorUseCase
+import com.neoguri.neogurinest.api.application.board.usecase.AbstractGetMany
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginatedResultDto
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginationDto
+import com.neoguri.neogurinest.api.application.common.dto.OrderRequestDto
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.CursorPageRequest
 import com.neoguri.neogurinest.api.persistence.specification.board.post.BoardPostSpecification
@@ -20,23 +22,27 @@ import org.springframework.util.Base64Utils
 @Service
 class BoardPostGetManyUsingCursor(
     val boardPostRepository: BoardPostEntityRepositoryInterface
-) : BoardPostGetManyUsingCursorUseCase {
+) : AbstractGetMany(), BoardPostGetManyUsingCursorUseCase {
 
     @Retryable(maxAttempts = 3)
     @Transactional
-    override fun execute(filter: BoardPostFilterDto, pagination: CursorPaginationDto, actor: BoardActor?): CursorPaginatedResultDto<BoardPostDto> {
+    override fun execute(filter: BoardPostFilterDto, pagination: CursorPaginationDto, orders: List<OrderRequestDto>, actor: BoardActor?): CursorPaginatedResultDto<BoardPostDto> {
 
         val filterSpec = BoardPostSpecification.of(filter)
 
-        val orders: MutableList<Order> = pagination.cursors.map { it.order }.toMutableList()
+        val sort: Sort = if (pagination.cursors.isEmpty()) {
+            makeSort(orders)
+        } else {
+            Sort.by(pagination.cursors.map { it.order }.toMutableList())
+        }
 
         // Default
-        if (orders.isEmpty()) {
-            orders.add(Order(Sort.Direction.DESC, "createdAt"))
+        if (sort.isEmpty()) {
+            Sort.by(Order(Sort.Direction.DESC, "createdAt"))
         }
 
         val boardPosts = boardPostRepository.findBySpecificationUsingCursorPagination(
-            CursorPageRequest(pagination.cursors, filterSpec, PageRequest.of(0, pagination.size, Sort.by(orders)))
+            CursorPageRequest(pagination.cursors, filterSpec, PageRequest.of(0, pagination.size, sort))
         )
 
         return CursorPaginatedResultDto<BoardPostDto>(

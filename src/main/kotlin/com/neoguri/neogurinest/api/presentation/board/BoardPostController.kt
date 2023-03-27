@@ -77,11 +77,10 @@ class BoardPostController(
             cursorPaginationRequest.size
         )
 
-        // TODO: 정렬 조건 적용
-        val order = OrderDtoBuilder(cursorPaginationRequest.order).build()
+        val orders = OrderDtoBuilder(cursorPaginationRequest.order).build()
 
         return try {
-            val payload = getManyUsingCursorPagination.execute(filter, cursorPaginationDto, actor)
+            val payload = getManyUsingCursorPagination.execute(filter, cursorPaginationDto, orders, actor)
             ResponseEntity
                 .ok()
                 .body(payload)
