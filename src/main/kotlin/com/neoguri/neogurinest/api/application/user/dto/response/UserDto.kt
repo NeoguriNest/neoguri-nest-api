@@ -6,9 +6,9 @@ import com.neoguri.neogurinest.api.domain.user.enum.Gender
 import com.neoguri.neogurinest.api.util.DateFormatUtil
 
 data class UserDto(
-    val userId: Int?,
+    val userId: Int,
+    val email: String,
     val nickname: String?,
-    val email: String?,
     val address: String?,
     val addressDetail: String?,
     val zipCode: String?,
@@ -18,17 +18,17 @@ data class UserDto(
     val gender: DescribedEnumDto<Gender>,
     val birthdate: String?,
     val introductionText: String?,
-    val createdAt: String?,
+    val createdAt: String,
     val updatedAt: String?
 ) {
 
     companion object {
         fun of(entity: User): UserDto {
-            val formatText = "yyyy-MM-dd hh:mm:ss"
+
             return UserDto(
-                entity.id,
+                entity.id!!,
+                entity.email!!,
                 entity.nickname,
-                entity.email,
                 entity.address,
                 entity.addressDetail,
                 entity.zipCode,
@@ -40,13 +40,14 @@ data class UserDto(
                     when (entity.gender) {
                         Gender.MALE -> "남성"
                         Gender.FEMALE -> "여성"
-                        else -> "비공개"
+                        Gender.NONE -> "비공개"
+                        else -> "-"
                     }
                 ),
                 entity.birthdate,
                 entity.introductionText,
-                if (entity.createdAt === null) null else DateFormatUtil.format(formatText, entity.createdAt!!),
-                if (entity.updatedAt === null) null else DateFormatUtil.format(formatText, entity.updatedAt!!)
+                entity.createdAt!!.toString(),
+                entity.updatedAt?.toString()
             )
         }
     }

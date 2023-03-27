@@ -7,7 +7,7 @@ import com.neoguri.neogurinest.api.util.DateFormatUtil
 
 data class NestDto(
     val nestId: Int,
-    val ttile: String,
+    val title: String,
     val city: String,
     val district: String,
     val status: DescribedEnumDto<NestStatus>,
@@ -17,8 +17,6 @@ data class NestDto(
 
     companion object {
         fun of(entity: Nest): NestDto {
-
-            val formatText = "yyyy-MM-dd hh:mm:ss"
 
             return NestDto(
                 entity.id!!,
@@ -35,8 +33,8 @@ data class NestDto(
                         else -> "-"
                     }
                 ),
-                DateFormatUtil.format(formatText, entity.createdAt!!),
-                if (entity.lastUploadedAt === null) null else DateFormatUtil.format(formatText, entity.lastUploadedAt!!)
+                entity.createdAt!!.toString(),
+                entity.lastUploadedAt?.toString()
             )
 
         }

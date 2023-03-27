@@ -4,7 +4,7 @@ import com.neoguri.neogurinest.api.application.board.dto.BoardActorDto
 import com.neoguri.neogurinest.api.application.common.dto.DescribedEnumDto
 import com.neoguri.neogurinest.api.domain.board.entity.BoardComment
 import com.neoguri.neogurinest.api.domain.board.enum.BoardCommentStatus
-import com.neoguri.neogurinest.api.domain.user.entity.User
+import com.neoguri.neogurinest.api.util.DateFormatUtil
 
 data class BoardCommentDto(
     val id: String,
@@ -12,10 +12,13 @@ data class BoardCommentDto(
     val postId: String,
     val content: String,
     val status: DescribedEnumDto<BoardCommentStatus>,
-    val actor: BoardActorDto
+    val creator: BoardActorDto?,
+    val createdAt: String,
+    val updatedAt: String?
 ) {
     companion object {
-        fun of(entity: BoardComment, actor: User): BoardCommentDto {
+        fun of(entity: BoardComment): BoardCommentDto {
+            val user = entity.user
             return BoardCommentDto(
                 entity.id!!,
                 entity.nestId,
@@ -23,13 +26,20 @@ data class BoardCommentDto(
                 entity.content!!,
                 DescribedEnumDto(
                     entity.status!!,
-                    when (entity.status!!) {
+                    when (entity.status) {
                         BoardCommentStatus.CREATED -> "생성됨"
                         BoardCommentStatus.BLOCKED -> "차단됨"
                         BoardCommentStatus.DELETED -> "삭제됨"
+                        else -> "-"
                     }
                 ),
-                BoardActorDto(actor.id!!, actor.nickname!!)
+                if (user != null) {
+                    BoardActorDto(user.id!!, user.nickname!!)
+                } else {
+                    null
+                },
+                entity.createdAt!!.toString(),
+                entity.updatedAt?.toString()
             )
         }
     }

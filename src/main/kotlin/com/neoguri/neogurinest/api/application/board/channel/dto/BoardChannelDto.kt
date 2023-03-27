@@ -16,7 +16,6 @@ data class BoardChannelDto(
     
     companion object {
         fun of(entity: BoardChannel): BoardChannelDto {
-            val formatText = "yyyy-MM-dd HH:mm:ss"
 
             return BoardChannelDto(
                 entity.id!!.toString(),
@@ -32,8 +31,8 @@ data class BoardChannelDto(
                         else -> "-"
                     }
                 ),
-                DateFormatUtil.format(formatText, entity.createdAt!!),
-                if (entity.lastUploadedAt === null) null else DateFormatUtil.format(formatText, entity.lastUploadedAt!!)
+                entity.createdAt!!.toString(),
+                entity.lastUploadedAt?.toString()
             )
         }
     }
