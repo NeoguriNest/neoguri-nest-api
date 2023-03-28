@@ -1,6 +1,6 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
-import com.neoguri.neogurinest.api.application.board.dto.BoardActor
+import com.neoguri.neogurinest.api.domain.board.bean.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostUpdateDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus

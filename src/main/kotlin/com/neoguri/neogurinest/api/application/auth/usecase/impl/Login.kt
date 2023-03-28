@@ -32,8 +32,7 @@ class Login(
             throw UsernameOrPasswordNotMatchedException()
         }
 
-        val nestIds: Array<Int> = user.nests.map { it.nest?.id }.filterNotNull().toTypedArray()
-
+        val nestIds = user.nests.map { it.nest?.id }.filterNotNull().toList()
         val loginUser = LoginUserDto.of(user, nestIds)
 
         val accessToken = tokenUtil.generateAccessToken(loginUser)

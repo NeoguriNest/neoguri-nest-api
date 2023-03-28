@@ -1,12 +1,10 @@
 package com.neoguri.neogurinest.api.application.board.post.dto
 
 import com.neoguri.neogurinest.api.application.board.channel.dto.BoardHashtagDto
-import com.neoguri.neogurinest.api.application.board.dto.BoardActor
 import com.neoguri.neogurinest.api.application.board.dto.BoardActorDto
 import com.neoguri.neogurinest.api.application.common.dto.DescribedEnumDto
 import com.neoguri.neogurinest.api.domain.board.entity.BoardPost
 import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
-import com.neoguri.neogurinest.api.util.DateFormatUtil
 
 data class BoardPostDto(
     val postId: String,

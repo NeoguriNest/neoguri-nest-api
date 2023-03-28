@@ -29,7 +29,7 @@ enum class BoardStatus(val value: Int) {
         }
 
         private fun getSuspendable(): List<BoardStatus> {
-            return arrayListOf(CREATED, SUSPENDED, ACTIVATED)
+            return arrayListOf(CREATED, ACTIVATED)
         }
     }
 }
