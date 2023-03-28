@@ -7,6 +7,7 @@ import com.neoguri.neogurinest.api.domain.board.bean.BoardActor
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostCannotUpdateException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
+import com.neoguri.neogurinest.api.domain.board.exception.ModifyingOtherUsersPostException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
@@ -17,16 +18,19 @@ class BoardPostStatusUpdate(
     val boardPostRepository: BoardPostEntityRepositoryInterface
 ) : BoardPostStatusUpdateUseCase {
 
-    @Throws(BoardPostNotFoundException::class, BoardPostCannotUpdateException::class)
+    @Throws(BoardPostNotFoundException::class, BoardPostCannotUpdateException::class, ModifyingOtherUsersPostException::class)
     override fun execute(statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto {
 
-        return closure(statusUpdateDto)
+        return executeImpl(statusUpdateDto, actor)
     }
 
     @Retryable(maxAttempts = 3)
     @Transactional
-    protected fun closure(statusUpdateDto: BoardPostStatusUpdateDto): BoardPostDto {
+    protected fun executeImpl(statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto {
         val post = boardPostRepository.findByIdOrFail(statusUpdateDto.postId)
+        if (post.userId != actor.id) {
+            throw ModifyingOtherUsersPostException()
+        }
 
         val board = post.channel
         if (!board!!.isPostAddable()) {

@@ -9,6 +9,7 @@ import com.neoguri.neogurinest.api.application.common.dto.CursorPaginationReques
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
+import com.neoguri.neogurinest.api.domain.board.exception.ModifyingOtherUsersPostException
 import com.neoguri.neogurinest.api.domain.common.CursorStringParser
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.presentation.BaseController
@@ -111,6 +112,8 @@ class BoardPostController(
             throw NotFoundException(e.message!!)
         } catch (e: BoardChannelNotAvailableStatusException) {
             throw BadRequestException(e.message!!)
+        } catch (e: ModifyingOtherUsersPostException) {
+            throw ForbiddenException(e.message!!)
         }
     }
 
@@ -127,6 +130,8 @@ class BoardPostController(
             throw NotFoundException(e.message!!)
         } catch (e: BoardChannelNotAvailableStatusException) {
             throw BadRequestException(e.message!!)
+        } catch (e: ModifyingOtherUsersPostException) {
+            throw ForbiddenException(e.message!!)
         }
     }
 
