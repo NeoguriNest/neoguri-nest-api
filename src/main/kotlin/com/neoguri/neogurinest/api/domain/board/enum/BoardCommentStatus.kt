@@ -7,7 +7,25 @@ import javax.persistence.Converter
 enum class BoardCommentStatus(val value: Int) {
     DELETED(-2),
     BLOCKED(-1),
-    CREATED(0)
+    CREATED(0);
+
+    companion object {
+        fun getConvertable(to: BoardCommentStatus): List<BoardCommentStatus> {
+            return when (to) {
+                DELETED -> getDeletable()
+                BLOCKED -> getBlockable()
+                else -> emptyList()
+            }
+        }
+
+        private fun getDeletable(): List<BoardCommentStatus> {
+            return arrayListOf(CREATED, BLOCKED)
+        }
+
+        private fun getBlockable(): List<BoardCommentStatus> {
+            return arrayListOf(CREATED)
+        }
+    }
 }
 
 @Converter(autoApply = true)

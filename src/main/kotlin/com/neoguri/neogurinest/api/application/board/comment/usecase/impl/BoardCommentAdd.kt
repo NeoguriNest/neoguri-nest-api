@@ -3,7 +3,7 @@ package com.neoguri.neogurinest.api.application.board.comment.usecase.impl
 import com.neoguri.neogurinest.api.application.board.comment.dto.BoardCommentAddDto
 import com.neoguri.neogurinest.api.application.board.comment.dto.BoardCommentDto
 import com.neoguri.neogurinest.api.application.board.comment.usecase.BoardCommentAddUseCase
-import com.neoguri.neogurinest.api.application.board.dto.BoardActor
+import com.neoguri.neogurinest.api.domain.board.bean.BoardActor
 import com.neoguri.neogurinest.api.domain.board.entity.BoardComment
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostStatusNotCommentableException
 import com.neoguri.neogurinest.api.domain.board.repository.BoardCommentEntityRepositoryInterface
@@ -42,7 +42,7 @@ class BoardCommentAdd(
     @Transactional
     fun closure(addDto: BoardCommentAddDto, actor: BoardActor): BoardCommentDto {
 
-        val user = userRepository.findByIdOrFail(actor.id)
+        val actor = userRepository.findByIdOrFail(actor.id)
         val post = boardPostRepository.findByIdOrFail(addDto.postId)
         if (!post.status!!.isCommentable()) {
             throw BoardPostStatusNotCommentableException()
@@ -54,9 +54,9 @@ class BoardCommentAdd(
             repository.findById(addDto.commentId)
         }
 
-        val comment = BoardComment.create(user, addDto, post, parent)
+        val comment = BoardComment.create(actor, addDto, post, parent)
         repository.save(comment)
-        return BoardCommentDto.of(comment, user)
+        return BoardCommentDto.of(comment)
     }
 
 }

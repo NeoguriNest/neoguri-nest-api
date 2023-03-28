@@ -3,7 +3,7 @@ package com.neoguri.neogurinest.api.application.board.comment.usecase.impl
 import com.neoguri.neogurinest.api.application.board.comment.dto.BoardCommentDto
 import com.neoguri.neogurinest.api.application.board.comment.dto.BoardCommentFilterDto
 import com.neoguri.neogurinest.api.application.board.comment.usecase.BoardCommentGetManyUsingCursorUseCase
-import com.neoguri.neogurinest.api.application.board.dto.BoardActor
+import com.neoguri.neogurinest.api.domain.board.bean.BoardActor
 import com.neoguri.neogurinest.api.application.board.usecase.AbstractGetMany
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginatedResultDto
 import com.neoguri.neogurinest.api.application.common.dto.CursorPaginationDto
