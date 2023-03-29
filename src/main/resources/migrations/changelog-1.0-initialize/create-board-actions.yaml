@@ -1,0 +1,186 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: parkjg20
+      preConditions:
+        - onFail: CONTINUE
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = "neoguri_db" AND TABLE_NAME = "board_post_likes"
+
+      changes:
+        # 게시글 좋아요
+        - createTable:
+            tableName: board_post_likes
+            columns:
+              - column:
+                  name: post_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+        # 댓글 좋아요
+        - createTable:
+            tableName: board_comment_likes
+            columns:
+              - column:
+                  name: comment_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+        # 게시글 북마크
+        - createTable:
+            tableName: board_post_bookmarks
+            columns:
+              - column:
+                  name: post_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+        # 게시글 신고
+        - createTable:
+            tableName: board_post_reports
+            columns:
+              - column:
+                  name: report_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: post_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: reported_content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime
+
+        # 댓글 신고
+        - createTable:
+            tableName: board_comment_reports
+            columns:
+              - column:
+                  name: report_id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: comment_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: reported_content
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: updated_at
+                  type: datetime
