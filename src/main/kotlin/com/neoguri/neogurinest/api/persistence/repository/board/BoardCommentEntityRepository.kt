@@ -48,7 +48,7 @@ class BoardCommentEntityRepository(
         return repository.count(specification).toInt()
     }
 
-    override fun findBySpecificationUsingCursorPagination(
+    override fun findBySpecificationUsingCursor(
         cursorRequest: CursorPageRequest<BoardComment>
     ): CursorPage<BoardComment> {
 

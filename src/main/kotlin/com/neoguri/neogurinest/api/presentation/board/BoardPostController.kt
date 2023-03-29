@@ -1,11 +1,11 @@
 package com.neoguri.neogurinest.api.presentation.board
 
 import com.neoguri.neogurinest.api.application.aspect.BoardContext
+import com.neoguri.neogurinest.api.application.board.action.post.usecase.BoardPostBookmarkAddUseCase
+import com.neoguri.neogurinest.api.application.board.action.post.usecase.BoardPostLikeAddUseCase
 import com.neoguri.neogurinest.api.application.board.post.dto.*
 import com.neoguri.neogurinest.api.application.board.post.usecase.*
-import com.neoguri.neogurinest.api.application.common.dto.CursorPaginatedResultDto
-import com.neoguri.neogurinest.api.application.common.dto.CursorPaginationDto
-import com.neoguri.neogurinest.api.application.common.dto.CursorPaginationRequestDto
+import com.neoguri.neogurinest.api.application.common.dto.*
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotAvailableStatusException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundException
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
@@ -25,8 +25,8 @@ import java.net.URI
 class BoardPostController(
     val add: BoardPostAddUseCase,
     val get: BoardPostGetUseCase,
-    val getManyUsingCursorPagination: BoardPostGetManyUsingCursorUseCase,
-    val cursorStringParser: CursorStringParser,
+    val getManyUsingPagination: BoardPostGetManyUsingPaginationUseCase,
+    val getManyUsingCursor: BoardPostGetManyUsingCursorUseCase,
     val update: BoardPostUpdateUseCase,
     val statusUpdate: BoardPostStatusUpdateUseCase
 ) : BaseController() {
@@ -46,27 +46,42 @@ class BoardPostController(
         }
     }
 
-    @GetMapping
+
+    @GetMapping("/paginated")
+    fun getManyUsingPagination(
+        @ModelAttribute filter: BoardPostFilterDto,
+        @ModelAttribute pagination: PaginationRequestDto
+    ): ResponseEntity<PaginatedResultDto<BoardPostDto>> {
+        val boardContext = BoardContext.getInstance()
+
+        val payload = getManyUsingPagination.execute(
+            filter,
+            PaginationDto.of(pagination),
+            boardContext.actor
+        )
+        return ResponseEntity.ok().body(payload)
+    }
+
+
+    @GetMapping("/cursor-paginated")
     fun getManyUsingCursorPagination(
         @ModelAttribute filter: BoardPostFilterDto,
-        @ModelAttribute cursorPaginationRequest: CursorPaginationRequestDto,
+        @ModelAttribute paginationRequest: CursorPaginationRequestDto,
     ): ResponseEntity<CursorPaginatedResultDto<BoardPostDto>> {
         val boardContext = BoardContext.getInstance()
-        val cursorPaginationDto = CursorPaginationDto(
-            cursorStringParser.parse(cursorPaginationRequest.cursor?.let { Decoder decodes it }),
-            cursorPaginationRequest.size
+        val pagination = CursorPaginationDto(
+            cursorStringParser.parse(paginationRequest.cursor?.let { Decoder decodes it }),
+            paginationRequest.size
         )
-
-        val orders = OrderDtoBuilder(cursorPaginationRequest.order).build()
-
-        return try {
-            val payload = getManyUsingCursorPagination.execute(filter, cursorPaginationDto, orders, boardContext.actor)
-            ResponseEntity
-                .ok()
-                .body(payload)
-        } catch (e: DuplicatedEntityException) {
-            throw ConflictException(e.message!!)
-        }
+        val payload = getManyUsingCursor.execute(
+            filter,
+            pagination,
+            OrderDtoBuilder(paginationRequest.order).build(),
+            boardContext.actor
+        )
+        return ResponseEntity
+            .ok()
+            .body(payload)
     }
 
     @PostMapping

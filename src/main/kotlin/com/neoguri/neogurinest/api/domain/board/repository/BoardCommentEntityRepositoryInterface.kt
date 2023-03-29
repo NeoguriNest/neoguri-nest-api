@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
 interface BoardCommentEntityRepositoryInterface : AggregateRootRepository<BoardComment, String> {
 
@@ -22,7 +21,7 @@ interface BoardCommentEntityRepositoryInterface : AggregateRootRepository<BoardC
 
     fun countBySpecification(specification: Specification<BoardComment>?): Int
 
-    fun findBySpecificationUsingCursorPagination(
+    fun findBySpecificationUsingCursor(
         cursorRequest: CursorPageRequest<BoardComment>
     ): CursorPage<BoardComment>
 

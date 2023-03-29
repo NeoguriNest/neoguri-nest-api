@@ -9,7 +9,9 @@ import com.neoguri.neogurinest.api.domain.board.repository.jpa.BoardPostReposito
 import com.neoguri.neogurinest.api.domain.common.Cursor
 import com.neoguri.neogurinest.api.domain.common.CursorBuilder
 import com.neoguri.neogurinest.api.domain.common.CursorPageRequest
-import com.neoguri.neogurinest.api.persistence.specification.CursorSpecificationBuilder
+import com.neoguri.neogurinest.api.persistence.repository.AbstractCursorPaginationRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Repository
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Repository
 class BoardPostEntityRepository(
     val repository: BoardPostRepositoryInterface,
     val hashTagRepository: BoardPostHashtagRepositoryInterface
-) : BoardPostEntityRepositoryInterface {
+) : AbstractCursorPaginationRepository<BoardPost>(), BoardPostEntityRepositoryInterface {
 
     override fun save(entity: BoardPost): BoardPost {
         if (!entity.hashTags.isEmpty()) {
@@ -52,42 +54,21 @@ class BoardPostEntityRepository(
         return repository.count(specification).toInt()
     }
 
-    override fun findBySpecificationUsingCursorPagination(
-        cursorRequest: CursorPageRequest<BoardPost>
-    ): CursorPage<BoardPost> {
-
-        val cursors = cursorRequest.cursors
-        val cursorSpec = CursorSpecificationBuilder<BoardPost>().build(cursors)
-
-        val filterSpec = cursorRequest.specification
-        val specification = combineSpecifications(cursorSpec, filterSpec)
-        val totalCount = countBySpecification(filterSpec)
-        val cursorCount = countBySpecification(specification)
-
-        return if (cursorCount < 1) {
-            CursorPage.emptyPage(totalCount)
-        } else {
-
-            val page = repository.findAll(specification, cursorRequest.page)
-
-            val newCursor =
-                CursorBuilder(
-                    if (CursorBuilder(cursors).cursors.isEmpty()) {
-                        cursorRequest.page.sort.map { Cursor(it, 0 as Comparable<Any>) }.toList()
-                    } else {
-                        cursors
-                    }
-                ).fromEntity(page.last())
-
-            CursorPage(newCursor, page.toList(), totalCount)
-        }
+    override fun findBySpecificationUsingPagination(specification: Specification<BoardPost>?, page: Pageable): Page<BoardPost> {
+        return repository.findAll(specification, page)
     }
 
-    private fun combineSpecifications(vararg specs: Specification<BoardPost>?): Specification<BoardPost>? {
-        return if (specs.filterNotNull().isEmpty()) {
-            null
-        } else {
-            specs.filterNotNull().reduce { it, acc -> acc.and(it) }
-        }
+    override fun findBySpecificationUsingCursor(cursorRequest: CursorPageRequest<BoardPost>): CursorPage<BoardPost> {
+        return this.findBySpecificationUsingCursorImpl(cursorRequest)
+    }
+
+    override fun buildNewCursor(cursors: List<Cursor>, sort: Sort, lastEntity: BoardPost): List<Cursor> {
+        return CursorBuilder(
+            if (CursorBuilder(cursors).cursors.isEmpty()) {
+                sort.map { Cursor(it, 0 as Comparable<Any>) }.toList()
+            } else {
+                cursors
+            }
+        ).fromEntity(lastEntity)
     }
 }
