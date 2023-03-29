@@ -106,13 +106,13 @@ databaseChangeLog:
 
               - column:
                   name: content
-                  type: TEXT
+                  type: longtext
                   constraints:
                     nullable: false
 
               - column:
                   name: reported_content
-                  type: TEXT
+                  type: longtext
                   constraints:
                     nullable: false
 
@@ -161,13 +161,13 @@ databaseChangeLog:
 
               - column:
                   name: content
-                  type: TEXT
+                  type: longtext
                   constraints:
                     nullable: false
 
               - column:
                   name: reported_content
-                  type: TEXT
+                  type: longtext
                   constraints:
                     nullable: false
 
