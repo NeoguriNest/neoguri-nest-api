@@ -19,16 +19,16 @@ class BoardPostStatusUpdate(
 ) : BoardPostStatusUpdateUseCase {
 
     @Throws(BoardPostNotFoundException::class, BoardPostCannotUpdateException::class, ModifyingOtherUsersPostException::class)
-    override fun execute(statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto {
+    override fun execute(postId: String, statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto {
 
-        return executeImpl(statusUpdateDto, actor)
+        return executeImpl(postId, statusUpdateDto, actor)
     }
 
     @Retryable(maxAttempts = 3)
     @Transactional
-    protected fun executeImpl(statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto {
-        val post = boardPostRepository.findByIdOrFail(statusUpdateDto.postId)
-        if (post.userId != actor.id) {
+    protected fun executeImpl(postId: String, statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto {
+        val post = boardPostRepository.findByIdOrFail(postId)
+        if (post.userId != actor.user.id) {
             throw ModifyingOtherUsersPostException()
         }
 

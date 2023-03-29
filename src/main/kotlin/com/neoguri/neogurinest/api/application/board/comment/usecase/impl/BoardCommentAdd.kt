@@ -9,7 +9,6 @@ import com.neoguri.neogurinest.api.domain.board.exception.BoardPostStatusNotComm
 import com.neoguri.neogurinest.api.domain.board.repository.BoardCommentEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.board.repository.BoardPostEntityRepositoryInterface
 import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
-import com.neoguri.neogurinest.api.domain.user.repository.UserEntityRepositoryInterface
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.retry.annotation.Retryable
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class BoardCommentAdd(
     private val repository: BoardCommentEntityRepositoryInterface,
-    private val userRepository: UserEntityRepositoryInterface,
     private val boardPostRepository: BoardPostEntityRepositoryInterface
 ) : BoardCommentAddUseCase {
 
@@ -42,7 +40,6 @@ class BoardCommentAdd(
     @Transactional
     fun closure(addDto: BoardCommentAddDto, actor: BoardActor): BoardCommentDto {
 
-        val actor = userRepository.findByIdOrFail(actor.id)
         val post = boardPostRepository.findByIdOrFail(addDto.postId)
         if (!post.status!!.isCommentable()) {
             throw BoardPostStatusNotCommentableException()
@@ -54,7 +51,7 @@ class BoardCommentAdd(
             repository.findById(addDto.commentId)
         }
 
-        val comment = BoardComment.create(actor, addDto, post, parent)
+        val comment = BoardComment.create(actor.user, addDto, post, parent)
         repository.save(comment)
         return BoardCommentDto.of(comment)
     }

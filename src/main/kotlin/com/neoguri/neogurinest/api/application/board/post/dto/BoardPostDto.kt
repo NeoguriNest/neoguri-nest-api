@@ -37,7 +37,7 @@ data class BoardPostDto(
                     }
                 ),
                 entity.hashTags.map { BoardHashtagDto.of(it.hashTag!!) },
-                entity.userId?.let { BoardActorDto(entity.userId!!, "-") },
+                entity.user?.let { BoardActorDto(it.id!!, it.nickname) },
                 entity.createdAt!!.toString(),
                 entity.updatedAt?.toString()
             )

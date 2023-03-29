@@ -43,7 +43,7 @@ class BoardPostAdd(
         boardHashtagRepository.saveAll(newHashtags)
 
         val hashtags = registeredHashtags + newHashtags
-        val post = boardPostRepository.save(BoardPost.create(addDto, board, actor))
+        val post = boardPostRepository.save(BoardPost.create(addDto, board, actor?.user))
 
         val boardPostHashtags: List<BoardPostHashtag> =
             hashtags.map {

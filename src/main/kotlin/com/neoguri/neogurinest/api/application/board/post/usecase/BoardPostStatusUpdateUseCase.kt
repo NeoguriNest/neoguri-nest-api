@@ -9,5 +9,5 @@ import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundExcep
 interface BoardPostStatusUpdateUseCase {
 
     @Throws(BoardPostNotFoundException::class, BoardPostCannotUpdateException::class)
-    fun execute(statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto
+    fun execute(postId: String, statusUpdateDto: BoardPostStatusUpdateDto, actor: BoardActor): BoardPostDto
 }

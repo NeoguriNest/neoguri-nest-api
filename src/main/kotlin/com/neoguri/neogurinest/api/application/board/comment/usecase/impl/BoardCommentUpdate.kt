@@ -26,7 +26,7 @@ class BoardCommentUpdate(
     protected fun closure(commentId: String, updateDto: BoardCommentUpdateDto, actor: BoardActor): BoardCommentDto {
 
         val comment = repository.findByIdOrFail(commentId)
-        if (comment.user!!.id != actor.id) {
+        if (comment.user!!.id != actor.user.id) {
             throw ModifyingOtherUsersCommentException()
         }
 

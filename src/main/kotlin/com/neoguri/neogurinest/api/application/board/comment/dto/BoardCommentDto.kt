@@ -4,7 +4,6 @@ import com.neoguri.neogurinest.api.application.board.dto.BoardActorDto
 import com.neoguri.neogurinest.api.application.common.dto.DescribedEnumDto
 import com.neoguri.neogurinest.api.domain.board.entity.BoardComment
 import com.neoguri.neogurinest.api.domain.board.enum.BoardCommentStatus
-import com.neoguri.neogurinest.api.util.DateFormatUtil
 
 data class BoardCommentDto(
     val id: String,
@@ -18,7 +17,6 @@ data class BoardCommentDto(
 ) {
     companion object {
         fun of(entity: BoardComment): BoardCommentDto {
-            val user = entity.user
             return BoardCommentDto(
                 entity.id!!,
                 entity.nestId,
@@ -33,11 +31,7 @@ data class BoardCommentDto(
                         else -> "-"
                     }
                 ),
-                if (user != null) {
-                    BoardActorDto(user.id!!, user.nickname!!)
-                } else {
-                    null
-                },
+                entity.user?.let { BoardActorDto(it.id!!, it.nickname) },
                 entity.createdAt!!.toString(),
                 entity.updatedAt?.toString()
             )

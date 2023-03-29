@@ -26,7 +26,7 @@ class BoardActorAspect(
             val loginUser = (authentication.details as LoginUserDto)
 
             val actorUser = userRepository.findByIdOrFail(loginUser.userId)
-            val actor = BoardActor(loginUser.userId, actorUser.nickname, loginUser.nestIds.toList(), emptyList())
+            val actor = BoardActor(actorUser, authentication.authorities.toList())
 
             BoardContext.getInstance().actor = actor
         }

@@ -1,6 +1,5 @@
 package com.neoguri.neogurinest.api.domain.board.entity
 
-import com.neoguri.neogurinest.api.domain.board.bean.BoardActor
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostAddDto
 import com.neoguri.neogurinest.api.application.board.post.dto.BoardPostUpdateDto
 import com.neoguri.neogurinest.api.domain.board.enum.BoardPostStatus
@@ -56,7 +55,7 @@ open class BoardPost {
     open var hashTags: MutableList<BoardPostHashtag> = mutableListOf()
 
     companion object {
-        fun create(boardPostAddDto: BoardPostAddDto, channel: BoardChannel, actor: BoardActor?): BoardPost {
+        fun create(boardPostAddDto: BoardPostAddDto, channel: BoardChannel, actor: User?): BoardPost {
             val entity = BoardPost()
 
             entity.id = StringGenerator.getUuid(false)

@@ -39,7 +39,7 @@ class BoardPostUpdate(
     @Transactional
     fun executeImpl(updateDto: BoardPostUpdateDto, actor: BoardActor): BoardPostDto {
         val post = boardPostRepository.findByIdOrFail(updateDto.postId)
-        if (post.userId != actor.id) {
+        if (post.userId != actor.user.id) {
             throw ModifyingOtherUsersPostException()
         }
 

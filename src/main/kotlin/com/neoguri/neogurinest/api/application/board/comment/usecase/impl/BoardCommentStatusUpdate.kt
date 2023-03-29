@@ -34,7 +34,7 @@ class BoardCommentStatusUpdate(
 
         val comment = repository.findByIdOrFail(commentId)
 
-        if (actor.id != comment.user!!.id) {
+        if (actor.user.id != comment.user!!.id) {
             throw ModifyingOtherUsersCommentException()
         }
 
