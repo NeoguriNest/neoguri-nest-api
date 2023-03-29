@@ -16,7 +16,7 @@ open class TermsAndAgreement {
     @Column(name = "created_at", nullable = false)
     open var createdAt: Instant? = null
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     open var updatedAt: Instant? = null
 
     @Column(name = "type", nullable = false)

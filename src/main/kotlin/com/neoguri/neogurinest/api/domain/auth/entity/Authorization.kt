@@ -41,7 +41,7 @@ class Authorization {
     @Column(name = "created_at", nullable = false)
     var createdAt: Instant? = null
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     var updatedAt: Instant? = null
 
     companion object {
