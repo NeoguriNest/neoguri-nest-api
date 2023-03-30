@@ -11,9 +11,11 @@ import com.neoguri.neogurinest.api.domain.board.exception.BoardChannelNotFoundEx
 import com.neoguri.neogurinest.api.domain.board.exception.BoardPostNotFoundException
 import com.neoguri.neogurinest.api.domain.board.exception.ModifyingOtherUsersPostException
 import com.neoguri.neogurinest.api.domain.common.CursorStringParser
-import com.neoguri.neogurinest.api.domain.common.exception.DuplicatedEntityException
 import com.neoguri.neogurinest.api.presentation.BaseController
-import com.neoguri.neogurinest.api.presentation.exception.*
+import com.neoguri.neogurinest.api.presentation.exception.BadRequestException
+import com.neoguri.neogurinest.api.presentation.exception.ForbiddenException
+import com.neoguri.neogurinest.api.presentation.exception.NotFoundException
+import com.neoguri.neogurinest.api.presentation.exception.UnauthorizedException
 import com.neoguri.neogurinest.api.presentation.param.OrderDtoBuilder
 import com.neoguri.neogurinest.api.util.Decoder
 import org.springframework.http.ResponseEntity
@@ -28,7 +30,10 @@ class BoardPostController(
     val getManyUsingPagination: BoardPostGetManyUsingPaginationUseCase,
     val getManyUsingCursor: BoardPostGetManyUsingCursorUseCase,
     val update: BoardPostUpdateUseCase,
-    val statusUpdate: BoardPostStatusUpdateUseCase
+    val statusUpdate: BoardPostStatusUpdateUseCase,
+    val likeAdd: BoardPostLikeAddUseCase,
+    val bookmarkAdd: BoardPostBookmarkAddUseCase,
+    val cursorStringParser: CursorStringParser
 ) : BaseController() {
 
     @GetMapping("{postId}")
@@ -133,14 +138,17 @@ class BoardPostController(
     }
 
     @PatchMapping("/{postId}/status")
-    fun updateStatus(@RequestBody boardPostStatusUpdateDto: BoardPostStatusUpdateDto): ResponseEntity<BoardPostDto> {
+    fun updateStatus(
+        @PathVariable("postId") postId: String,
+        @RequestBody boardPostStatusUpdateDto: BoardPostStatusUpdateDto
+    ): ResponseEntity<BoardPostDto> {
         val boardContext = BoardContext.getInstance()
         if (boardContext.isAnonymous()) {
             throw UnauthorizedException("You must be authorized for this api")
         }
 
         return try {
-            ResponseEntity.ok(statusUpdate.execute(boardPostStatusUpdateDto, boardContext.actor!!))
+            ResponseEntity.ok(statusUpdate.execute(postId, boardPostStatusUpdateDto, boardContext.actor!!))
         } catch (e: BoardPostNotFoundException) {
             throw NotFoundException(e.message!!)
         } catch (e: BoardChannelNotAvailableStatusException) {
@@ -150,4 +158,43 @@ class BoardPostController(
         }
     }
 
+    @PostMapping("/{postId}/likes")
+    fun like(
+        @PathVariable("postId") postId: String
+    ): ResponseEntity<Boolean> {
+        val boardContext = BoardContext.getInstance()
+        if (boardContext.isAnonymous()) {
+            throw UnauthorizedException("You must be authorized for this api")
+        }
+
+        return try {
+            ResponseEntity.ok(likeAdd.execute(postId, boardContext.actor!!))
+        } catch (e: BoardPostNotFoundException) {
+            throw NotFoundException(e.message!!)
+        } catch (e: BoardChannelNotAvailableStatusException) {
+            throw BadRequestException(e.message!!)
+        } catch (e: ModifyingOtherUsersPostException) {
+            throw ForbiddenException(e.message!!)
+        }
+    }
+
+    @PostMapping("/{postId}/bookmarks")
+    fun bookmark(
+        @PathVariable("postId") postId: String
+    ): ResponseEntity<Boolean> {
+        val boardContext = BoardContext.getInstance()
+        if (boardContext.isAnonymous()) {
+            throw UnauthorizedException("You must be authorized for this api")
+        }
+
+        return try {
+            ResponseEntity.ok(bookmarkAdd.execute(postId, boardContext.actor!!))
+        } catch (e: BoardPostNotFoundException) {
+            throw NotFoundException(e.message!!)
+        } catch (e: BoardChannelNotAvailableStatusException) {
+            throw BadRequestException(e.message!!)
+        } catch (e: ModifyingOtherUsersPostException) {
+            throw ForbiddenException(e.message!!)
+        }
+    }
 }

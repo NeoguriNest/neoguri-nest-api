@@ -12,6 +12,10 @@ enum class BoardPostStatus(val value: Int) {
     fun isCommentable(): Boolean {
         return (arrayListOf(CREATED).firstOrNull { it.value == this.value } != null)
     }
+
+    fun isActionable(): Boolean {
+        return (arrayListOf(CREATED).firstOrNull { it.value == this.value } != null)
+    }
 }
 
 @Converter(autoApply = true)

@@ -7,12 +7,12 @@ import javax.persistence.Column
 import javax.persistence.Embeddable
 
 @Embeddable
-open class BoardPostLikeId : Serializable {
+open class BoardPostLikeId(
     @Column(name = "post_id", nullable = false, length = 36)
-    open var postId: String? = null
-
+    open var postId: String? = null,
     @Column(name = "user_id", nullable = false)
     open var userId: Int? = null
+) : Serializable {
 
     override fun hashCode(): Int = Objects.hash(postId, userId)
     override fun equals(other: Any?): Boolean {
