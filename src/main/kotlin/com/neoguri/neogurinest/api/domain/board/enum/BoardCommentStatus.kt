@@ -9,6 +9,10 @@ enum class BoardCommentStatus(val value: Int) {
     BLOCKED(-1),
     CREATED(0);
 
+    fun isActionable(): Boolean {
+        return (arrayListOf(CREATED).firstOrNull { it.value == this.value } != null)
+    }
+
     companion object {
         fun getConvertable(to: BoardCommentStatus): List<BoardCommentStatus> {
             return when (to) {
